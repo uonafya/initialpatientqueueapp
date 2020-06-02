@@ -2,5 +2,6 @@
 /home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/PatientqueuappActivator.java
 /home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/Item.java
 /home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/api/impl/PatientqueuappServiceImpl.java
+/home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/PatientQueueUtils.java
 /home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/api/dao/PatientqueuappDao.java
 /home/bu5h15ky/_git/patientqueueapp/api/src/main/java/org/openmrs/module/patientqueuapp/PatientqueuappConfig.java
