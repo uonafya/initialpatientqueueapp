@@ -25,6 +25,14 @@
 
     <context:component-scan base-package="org.openmrs.module.patientqueuapp" />
 
+    <bean id="patientqueuapp.app.patientqueuapp.queue" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+        <constructor-arg value="patientqueuapp.queue" />
+        <constructor-arg value="Patient Queue" />
+        <constructor-arg value="patientqueuapp/patientQueueHome.page" />
+        <constructor-arg value="patientqueuapp:apps/queue.png" />
+        <constructor-arg value="2000" />
+    </bean>
+
     <!-- Wraps PatientqueuappService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
     <bean id="patientqueuapp.PatientqueuappService"
