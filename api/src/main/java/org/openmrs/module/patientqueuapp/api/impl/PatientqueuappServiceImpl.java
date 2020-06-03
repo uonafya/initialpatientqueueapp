@@ -17,4 +17,11 @@ public class PatientqueuappServiceImpl extends BaseOpenmrsService implements Pat
 	
 	PatientqueuappDao dao;
 	
+	/**
+	 * Injected in moduleApplicationContext.xml
+	 */
+	public void setDao(PatientqueuappDao dao) {
+		this.dao = dao;
+	}
+	
 }
