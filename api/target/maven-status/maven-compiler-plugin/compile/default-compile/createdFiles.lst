@@ -1,7 +1,0 @@
-org/openmrs/module/patientqueuapp/api/impl/PatientqueuappServiceImpl.class
-org/openmrs/module/patientqueuapp/api/dao/PatientqueuappDao.class
-org/openmrs/module/patientqueuapp/PatientqueuappConfig.class
-org/openmrs/module/patientqueuapp/PatientqueuappActivator.class
-org/openmrs/module/patientqueuapp/PatientQueueUtils.class
-org/openmrs/module/patientqueuapp/Item.class
-org/openmrs/module/patientqueuapp/api/PatientqueuappService.class
