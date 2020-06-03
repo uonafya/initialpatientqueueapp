@@ -2,4 +2,16 @@
     ui.decorateWith("kenyaemr", "standardPage", [ layout: "sidebar" ])
 %>
 
-<H1>You can poppulate your logic here controlled by a java class</H1>
+    <div class="ke-page-sidebar">
+        ${ ui.includeFragment("kenyaemr", "patient/patientSearchForm", [ defaultWhich: "checked-in" ]) }
+    </div>
+
+    <div class="ke-page-content">
+
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function() {
+            jQuery('input[name="query"]').focus();
+        });
+    </script> by a java class</H1>
