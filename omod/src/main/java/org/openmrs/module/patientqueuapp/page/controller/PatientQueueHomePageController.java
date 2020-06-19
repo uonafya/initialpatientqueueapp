@@ -18,7 +18,7 @@ import org.openmrs.ui.framework.page.PageModel;
  * Hope page for the patient queue app
  */
 @AppPage(PatientQueueConstants.APP_PATIENT_QUEUE)
-public class patientQueueHomePageController {
+public class PatientQueueHomePageController {
 	
 	public void controller(UiUtils ui, PageModel model) {
 		

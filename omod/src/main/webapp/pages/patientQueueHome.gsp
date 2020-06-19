@@ -14,4 +14,4 @@
         jQuery(function() {
             jQuery('input[name="query"]').focus();
         });
-    </script> by a java class</H1>
+    </script>
