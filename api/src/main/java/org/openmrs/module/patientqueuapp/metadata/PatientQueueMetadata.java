@@ -4,6 +4,8 @@ import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.openmrs.module.metadatadeploy.bundle.Requires;
 import org.springframework.stereotype.Component;
 
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterType;
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.form;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.idSet;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.privilege;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.role;
@@ -25,6 +27,18 @@ public class PatientQueueMetadata extends AbstractMetadataBundle {
 		public static final String APPLICATION_PQ_MODULE = "Patient Queueing Module";
 	}
 	
+	//encounter type here
+	public static class _EncounterTypes {
+		
+		public static final String PATIENT_QUEUE_INITIAL = "356d447a-b494-11ea-8337-f7bcaf3e8fec";
+	}
+	
+	//form here
+	public static class _Form {
+		
+		public static final String PATIENT_QUEUE_INITIAL = "f025e43a-b470-11ea-8a58-e7fc06ee7901";
+	}
+	
 	/**
 	 * @see AbstractMetadataBundle#install()
 	 */
@@ -35,5 +49,11 @@ public class PatientQueueMetadata extends AbstractMetadataBundle {
 		install(role(_Role.APPLICATION_PQ_MODULE, "Can access Key patient queue module App",
 		    idSet(org.openmrs.module.kenyaemr.metadata.SecurityMetadata._Role.API_PRIVILEGES_VIEW_AND_EDIT),
 		    idSet(_Privilege.APP_PQ_MODULE_APP)));
+		
+		//install the encounter types
+		install(encounterType("Patient queue initial", "Initial Patient Queuing", _EncounterTypes.PATIENT_QUEUE_INITIAL));
+		//install the forms
+		install(form("Patient queue initial", "The first form that is filled when queueing patients",
+		    _EncounterTypes.PATIENT_QUEUE_INITIAL, "1", _Form.PATIENT_QUEUE_INITIAL));
 	}
 }

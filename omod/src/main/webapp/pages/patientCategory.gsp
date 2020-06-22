@@ -14,7 +14,7 @@
                 ${ ui.includeFragment("kenyaemr", "visitMenu", [ patient: currentPatient, visit: activeVisit ]) }
 
                 <% if (activeVisit) { %>
-                ${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }N
+                ${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }
                 ${ ui.includeFragment("kenyaemr", "visitCompletedForms", [ visit: activeVisit ]) }
                 <% } %>
             </td>

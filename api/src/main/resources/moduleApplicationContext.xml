@@ -32,6 +32,28 @@
         <constructor-arg value="patientqueuapp:apps/queue.png" />
         <constructor-arg value="2000" />
     </bean>
+    <bean id="patientqueuapp.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
+        <property name="commonPatientForms">
+            <set>
+            </set>
+        </property>
+        <property name="commonVisitForms">
+            <set>
+                <ref bean="patientqueuapp.common.form.queue" />
+            </set>
+        </property>
+    </bean>
+    <bean id="patientqueuapp.common.form.queue" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+        <property name="targetUuid" value="f025e43a-b470-11ea-8a58-e7fc06ee7901" />
+        <property name="apps">
+            <set>
+                <ref bean="patientqueuapp.app.patientqueuapp.queue" />
+            </set>
+        </property>
+        <property name="icon" value="kenyaui:forms/generic.png" />
+        <property name="htmlform" value="patientqueuapp:queue.html" />
+        <property name="order" value="1000" />
+    </bean>
 
     <!-- Wraps PatientqueuappService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
