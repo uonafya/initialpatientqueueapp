@@ -1,6 +1,24 @@
 <%
     ui.decorateWith("kenyaui", "panel", [ heading: "Queue Patient" ])
 %>
+<script type="text/javascript">
+    var MODEL,
+        arrey,
+        alley,
+        age,
+        emrMessages = {};
+
+    var oRegX = /^[a-zA-Z-` ]*\$/;
+    emrMessages["requiredField"] = "Required";
+    jq(document).ready(function () {
+        MODEL = {
+            TRIAGE: "${TRIAGE}",
+            OPDs: "${OPDs}",
+            SPECIALCLINIC: "${SPECIALCLINIC}"
+        }
+    });
+</script>
+
 <h2>Room to Visit</h2>
 <div class="onerow" style="margin-top:10px;">
     <div class="col4">
@@ -42,5 +60,11 @@
     <div class="col4 last">
         <field><input type="text" id="rooms3" name="rooms3" value="N/A" placeholder="FILE NUMBER"
                       readonly=""/></field>
+    </div>
+    <div>
+        <a class="button confirm" onclick="PAGE.submit();"
+           style="float:right; display:inline-block; margin-left: 5px;">
+            <span>QUEUE PATIENT</span>
+        </a>
     </div>
 </div>
