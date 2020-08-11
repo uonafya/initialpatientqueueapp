@@ -98,25 +98,25 @@
 </header>
 <body>
 	<div class="clear"></div>
-	<div class="container">
+	<!--div class="container">
 		<div class="example">
 			<ul id="breadcrumbs">
 				<li>
 					<a href="${ui.pageLink('referenceapplication','home')}">
 						<i class="icon-home small"></i></a>
 				</li>
-				
+
 				<li>
 					<i class="icon-chevron-right link"></i>
 					<a>Triage Queue</a>
 				</li>
-				
+
 				<li>
 					<i class="icon-chevron-right link"></i>
 					Select Patient
 				</li>
 			</ul>
-		</div>
+		</div-->
 		
 		<div class="patient-header new-patient-header">
 			<div class="demographics">
