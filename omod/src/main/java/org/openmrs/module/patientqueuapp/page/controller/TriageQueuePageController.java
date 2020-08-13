@@ -1,33 +1,31 @@
 package org.openmrs.module.patientqueuapp.page.controller;
 
-import org.openmrs.module.kenyaui.annotation.AppPage;
-import org.openmrs.module.patientqueuapp.PatientQueueConstants;
-import java.lang.ref.Reference;
-import java.util.*;
-
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.hospitalcore.util.ConceptAnswerComparator;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by Bush Odhiambo.
  */
 
-   public class TriageQueuePageController {
+public class TriageQueuePageController {
 	
 	public String get(@RequestParam("app") AppDescriptor appDescriptor, UiSessionContext sessionContext, PageModel model,
-					  HttpSession session, PageRequest pageRequest, UiUtils ui) {
-		pageRequest.getSession().setAttribute(ReferenceApplicationWebConstants.SESSION_ATTRIBUTE_REDIRECT_URL, ui.thisUrl());
-		sessionContext.requireAuthentication();
+	        HttpSession session, PageRequest pageRequest, UiUtils ui) {
 		Boolean isPriviledged = Context.hasPrivilege("Access Triage");
 		if (!isPriviledged) {
 			return "redirect: index.htm";
