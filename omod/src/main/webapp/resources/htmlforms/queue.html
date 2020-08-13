@@ -12,11 +12,42 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 -->
 <htmlform>
-    <script type="text/javascript">
-        jQuery(function () {
 
-        });
+    <script type="text/javascript">
+
+
+        if(jQuery)
+        {
+            $j(document).ready(function() {
+
+
+                /*
+                Bush Odhiambo - When legal Medical Case = No, Hide case description
+                */
+                var legalMedicalCaseCheckBoxYes=$j('#legal_medical_case').find("input[type='radio'][value=1065]");
+                var legalMedicalCaseCheckBoxNo=$j('#legal_medical_case').find("input[type='radio'][value=1066]");
+                var caseDescriptionDiv=$j('#case_description');
+
+                legalMedicalCaseCheckBoxYes.click(function(){
+                    if (legalMedicalCaseCheckBoxYes.attr('checked')==true)
+                    {
+                        //caseDescriptionDiv.removeAttr('hidden');
+                        caseDescriptionDiv.attr('hidden','true');
+                    }
+                });
+                //..
+                legalMedicalCaseCheckBoxNo.click(function(){
+                    if (legalMedicalCaseCheckBoxNo.attr('checked')==true)
+                    {
+                        //caseDescriptionDiv.attr('hidden','true');
+                        caseDescriptionDiv.removeAttr('hidden');
+                    }
+                });
+            })
+        }
+
     </script>
+
     <div class="ke-form-header">
         <table style="width: 100%">
             <tr>
@@ -32,15 +63,41 @@
     <div class="ke-form-content">
         <fieldset>
             <legend>Paying Category</legend>
+            <table >
+                <tr>
+                    <td>Paying:</td><td><obs conceptId="165369" answerConceptIds="1065,1066" answerLabels="YES,NO" style="radio"/></td>
+                </tr>
+            </table>
         </fieldset>
         <fieldset>
             <legend>Legal Information</legend>
+            <table>
+                <tr>
+                    <td>Medical Legal Case:</td><td><obs conceptId="165375" answerConceptIds="1065,1066" answerLabels="YES,NO" style="radio"/></td>
+                </tr>
+                <tr>
+                    <td>Case Description:</td><td><obs conceptId="165376" answerConceptIds="146623,86,127910,150410,146628,148143,155177" answerLabels="BURNS,MOTOR VEHICLE ACCIDENT,RAPE,ACCIDENT CAUSED BY MACHINERY,ACCIDENT CAUSED BY HOT WATER,ATTEMPTED SUICIDE,ASSAULT BY BLUNT OBJECT" style="dropdown"/></td>
+                </tr>
+            </table>
         </fieldset>
         <fieldset>
             <legend>Referral Information</legend>
+         <table>
+            <tr>
+                <td>Patient Referred:</td><td><obs conceptId="165374" answerConceptIds="1065,1066" answerLabels="YES,NO" style="radio"/></td>
+            </tr>
+            <tr>
+                <td>Referral Type:</td><td><obs conceptId="165370" answerConceptIds="5497,159619,1610,1611" answerLabels="CD4 COUNT,Surgical Procedure,REFERRAL FOR ANTIRETROVIRAL THERAPY,REFERRAL FOR OPPORTUNISTIC INFECTION TREATMENT" style="dropdown"/></td>
+            </tr>
+         </table>
         </fieldset>
         <fieldset>
             <legend>Room to visit</legend>
+         <table>
+            <tr>
+                <td>Room to Visit:</td><td><obs conceptId="165371" answerConceptIds="160542,165372,165373" answerLabels="OPD ROOM,TRIAGE ROOM,SPECIAL CLINIC" style="dropdown"/></td>
+            </tr>
+         </table>
         </fieldset>
     </div>
     <div class="ke-form-footer">
