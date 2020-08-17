@@ -17,15 +17,15 @@
 
         if(jQuery)
         {
-            $j(document).ready(function() {
+            $(document).ready(function() {
 
 
                 /*
                 Bush Odhiambo - When legal Medical Case = No, Hide case description
                 */
-                var legalMedicalCaseCheckBoxYes=$j('#legal_medical_case').find("input[type='radio'][value=1065]");
-                var legalMedicalCaseCheckBoxNo=$j('#legal_medical_case').find("input[type='radio'][value=1066]");
-                var caseDescriptionDiv=$j('#case_description');
+                let legalMedicalCaseCheckBoxYes=$('#legal_medical_case').find("input[type='radio'][value=1065]");
+                let legalMedicalCaseCheckBoxNo=$('#legal_medical_case').find("input[type='radio'][value=1066]");
+                let caseDescriptionDiv=$('#case_description');
 
                 legalMedicalCaseCheckBoxYes.click(function(){
                     if (legalMedicalCaseCheckBoxYes.attr('checked')==true)
@@ -62,7 +62,8 @@
             <legend>Paying Category</legend>
             <table >
                 <tr>
-                    <td>Paying:</td><td><obs conceptId="165369" answerConceptIds="1065,1066" answerLabels="YES,NO" style="radio"/></td>
+                    <td>Paying:</td><td><obs conceptId="165369" answerConceptIds="1065,1066" answerLabels="PAYING,NON-PAYING,SPECIAL SCHEMES" style="radio"/></td>
+
                 </tr>
             </table>
         </fieldset>
