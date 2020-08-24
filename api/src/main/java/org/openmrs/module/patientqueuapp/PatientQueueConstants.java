@@ -17,17 +17,17 @@ public class PatientQueueConstants {
 	public static final String MODULE_ID = "patientqueuapp";
 	
 	public static final String APP_PATIENT_QUEUE = MODULE_ID + ".queue";
-
+	
 	public static final String CONCEPT_NAME_TRIAGE = "TRIAGE";
-
+	
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
-
+	
 	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "SPECIAL CLINIC";
-
+	
 	public static final String PROPERTY_ENCOUNTER_TYPE_REGINIT = MODULE_ID + ".encounterType.init";
-
+	
 	public static final String PROPERTY_ENCOUNTER_TYPE_REVISIT = MODULE_ID + ".encounterType.revisit";
-
+	
 	public static final String PROPERTY_LOCATION = MODULE_ID + ".location";
-
+	
 }

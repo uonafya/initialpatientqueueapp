@@ -25,16 +25,16 @@ import org.openmrs.ui.framework.page.PageRequest;
  * 4 Fragment to process the queueing information for a patient return processed patients
  */
 public class QueuePatientFragmentController {
+	
 	private static Log logger = LogFactory.getLog(QueuePatientFragmentController.class);
 	
 	public void controller(@FragmentParam("patient") Patient patient, FragmentModel model, PageRequest request,
 	        @SpringBean FormManager formManager, @SpringBean KenyaUiUtils kenyaUi) {
-
+		
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(PatientQueueConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(PatientQueueConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("SPECIALCLINIC",
-				RegistrationWebUtils.getSubConcepts(PatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC));
-
-
+		    RegistrationWebUtils.getSubConcepts(PatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC));
+		
 	}
 }
