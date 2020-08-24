@@ -88,7 +88,11 @@
 			<scope>provided</scope>
 			<classifier>tests</classifier>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>hospitalcore-api</artifactId>
+		</dependency>
+		</dependencies>
 
 	<build>
 		<finalName>${project.parent.artifactId}-${project.parent.version}</finalName>
