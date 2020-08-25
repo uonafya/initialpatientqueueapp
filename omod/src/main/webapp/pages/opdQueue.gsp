@@ -16,7 +16,6 @@
     function handlePatientRowSelection() {
         this.handle = function (row) {
             console.log("Row status: " + row.status);
-            location.href = '/' + OPENMRS_CONTEXT_PATH + emr.applyContextModel('${ ui.escapeJs(afterSelectedUrl) }', { patientId: row.patient.id, queueId: row.id, opdId: jq('#queue-choice').val()});
         }
     }
 	
@@ -24,7 +23,7 @@
 	var opdQueueLabel = "OPD PATIENT QUEUE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
 	var patientInSystemLabel = "PATIENTS IN SYSTEM &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"
 
-	
+
 	jq(document).ready(function () {
 
 		toggleQueueSystemTables()
