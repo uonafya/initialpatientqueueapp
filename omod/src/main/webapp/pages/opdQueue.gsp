@@ -3,11 +3,11 @@
 	
     ui.includeCss("uicommons", "datatables/dataTables_jui.css")
     ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
-	ui.includeCss("registration", "onepcssgrid.css")
-	ui.includeCss("registration", "main.css")
+	ui.includeCss("patientqueuapp", "onepcssgrid.css")
+	ui.includeCss("patientqueuapp", "main.css")
 	
-    ui.includeJavascript("billingui", "moment.js")
-    ui.includeJavascript("patientqueueapp", "jquery.dataTables.min.js")
+    ui.includeJavascript("ehrcashier", "moment.js")
+    ui.includeJavascript("ehrcashier", "jquery.dataTables.min.js")
     ui.includeJavascript("patientqueueapp", "queue.js")
     ui.includeJavascript("patientqueueapp", "searchInSystem.js")
     ui.includeJavascript("patientqueueapp", "jquery.session.js")
@@ -270,24 +270,6 @@
 <body>
 	<div class="clear"></div>
 	<div class="container">
-		<div class="example">
-			<ul id="breadcrumbs">
-				<li>
-					<a href="${ui.pageLink('referenceapplication','home')}">
-						<i class="icon-home small"></i></a>
-				</li>
-				
-				<li>
-					<i class="icon-chevron-right link"></i>
-					<a>OPD Queue</a>
-				</li>
-				
-				<li>
-					<i class="icon-chevron-right link"></i>
-					Select Patient
-				</li>
-			</ul>
-		</div>
 		
 		<div class="patient-header new-patient-header">
 			<div class="demographics">
@@ -295,7 +277,6 @@
 					<span class="page-label">OPD PATIENT QUEUE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
 				</h1>
 			</div>
-
 			<div class="identifiers">
 				<em>Current Time:</em>
 				<span>${date}</span>
