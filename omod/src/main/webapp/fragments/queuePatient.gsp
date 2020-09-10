@@ -66,5 +66,6 @@
            style="float:right; display:inline-block; margin-left: 5px;">
             <span>QUEUE PATIENT</span>
         </a>
+    </a>
     </div>
 </div>
