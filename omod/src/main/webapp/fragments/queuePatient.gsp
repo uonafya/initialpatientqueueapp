@@ -1,5 +1,5 @@
 <%
-    ui.decorateWith("kenyaui", "panel", [ heading: "Queue Patient" ])
+    ui.decorateWith("kenyaui", "panel", [ heading: "Initial Patient Queueing" ])
 %>
 <script type="text/javascript">
     var MODEL,

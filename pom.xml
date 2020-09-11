@@ -18,9 +18,9 @@
 	<url>https://wiki.openmrs.org/x/FQ4z</url>
 
 	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-module-patientqueuapp.git</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-patientqueuapp.git</developerConnection>
-		<url>https://github.com/openmrs/openmrs-module-patientqueuapp/</url>
+		<connection>scm:git:https://github.com/uonafya/initialpatientqueueapp.git</connection>
+		<developerConnection>scm:git:https://github.com/uonafya/initialpatientqueueapp.git</developerConnection>
+		<url>https://github.com/uonafya/initialpatientqueueapp.git</url>
 		<tag>HEAD</tag>
 	</scm>
 
