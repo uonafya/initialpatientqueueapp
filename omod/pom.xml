@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openmrs.module</groupId>
-		<artifactId>patientqueuapp</artifactId>
+		<artifactId>initialpatientqueuapp</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>patientqueuapp-omod</artifactId>
+	<artifactId>initialpatientqueuapp-omod</artifactId>
 	<packaging>jar</packaging>
 	<name>Patientqueuapp OMOD</name>
 	<description>Omod submodule for Patientqueuapp</description>
@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>patientqueuapp-api</artifactId>
+			<artifactId>initialpatientqueuapp-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
