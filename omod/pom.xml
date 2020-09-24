@@ -9,7 +9,7 @@
 
 	<artifactId>initialpatientqueuapp-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>Patientqueuapp OMOD</name>
+	<name>Initial Patient Queue App OMOD</name>
 	<description>Omod submodule for Patientqueuapp</description>
 
 	<dependencies>

@@ -9,8 +9,8 @@
 
 	<artifactId>initialpatientqueuapp-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Patientqueuapp API</name>
-	<description>API project for Patientqueuapp</description>
+	<name>Initial Patient Queue App API</name>
+	<description>API project for Patient Queue App</description>
 	<dependencies>
 		<!-- Begin OpenMRS modules -->
 		<dependency>

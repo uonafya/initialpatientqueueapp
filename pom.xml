@@ -12,8 +12,8 @@
 	<artifactId>initialpatientqueuapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Patientqueuapp</name>
-	<description>KenyaEMR patient queue app</description>
+	<name>Initial Patient Queue App</name>
+	<description>EHR Initial patient queue app</description>
 
 	<url>https://wiki.openmrs.org/x/FQ4z</url>
 
