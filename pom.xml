@@ -9,7 +9,7 @@
 	</parent>
 
 	<groupId>org.openmrs.module</groupId>
-	<artifactId>patientqueuapp</artifactId>
+	<artifactId>initialpatientqueuapp</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Patientqueuapp</name>

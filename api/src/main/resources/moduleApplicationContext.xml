@@ -30,7 +30,7 @@
         <constructor-arg value="Queue Patient" />
         <constructor-arg value="initialpatientqueuapp/patientQueueHome.page" />
         <constructor-arg value="initialpatientqueuapp:apps/queue.png" />
-        <constructor-arg value="20" />
+        <constructor-arg value="1500" />
     </bean>
     <bean id="initialpatientqueuapp.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
         <property name="commonPatientForms">
