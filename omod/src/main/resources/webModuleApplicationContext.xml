@@ -22,6 +22,6 @@
 
 	<context:component-scan base-package="org.openmrs.module.initialpatientqueueapp.web.controller" />
 	<bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
-		<property name="moduleId" value="initialpatientqueuapp"/>
+		<property name="moduleId" value="initialpatientqueueapp"/>
 	</bean>
 </beans>

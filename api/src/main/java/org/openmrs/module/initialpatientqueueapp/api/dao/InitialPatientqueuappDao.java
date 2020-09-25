@@ -12,7 +12,7 @@ package org.openmrs.module.initialpatientqueueapp.api.dao;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-@Repository("initialpatientqueuapp.InitialPatientqueuappDao")
+@Repository("initialpatientqueueapp.InitialPatientqueuappDao")
 public class InitialPatientqueuappDao {
 	
 	private SessionFactory sessionFactory;

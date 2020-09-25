@@ -25,46 +25,46 @@
 
     <context:component-scan base-package="org.openmrs.module.initialpatientqueueapp" />
 
-    <bean id="initialpatientqueuapp.app.initialpatientqueuapp.queue" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-        <constructor-arg value="initialpatientqueuapp.queue" />
+    <bean id="initialpatientqueueapp.app.initialpatientqueueapp.queue" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+        <constructor-arg value="initialpatientqueueapp.queue" />
         <constructor-arg value="Queue Patient" />
-        <constructor-arg value="initialpatientqueuapp/patientQueueHome.page" />
-        <constructor-arg value="initialpatientqueuapp:apps/queue.png" />
+        <constructor-arg value="initialpatientqueueapp/patientQueueHome.page" />
+        <constructor-arg value="initialpatientqueueapp:apps/queue.png" />
         <constructor-arg value="1500" />
     </bean>
-    <bean id="initialpatientqueuapp.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
+    <bean id="initialpatientqueueapp.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
         <property name="commonPatientForms">
             <set>
             </set>
         </property>
         <property name="commonVisitForms">
             <set>
-                <ref bean="initialpatientqueuapp.common.form.queue" />
+                <ref bean="initialpatientqueueapp.common.form.queue" />
             </set>
         </property>
     </bean>
-    <bean id="initialpatientqueuapp.common.form.queue" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+    <bean id="initialpatientqueueapp.common.form.queue" class="org.openmrs.module.kenyacore.form.FormDescriptor">
         <property name="targetUuid" value="f025e43a-b470-11ea-8a58-e7fc06ee7901" />
         <property name="apps">
             <set>
-                <ref bean="initialpatientqueuapp.app.initialpatientqueuapp.queue" />
+                <ref bean="initialpatientqueueapp.app.initialpatientqueueapp.queue" />
             </set>
         </property>
         <property name="icon" value="kenyaui:forms/generic.png" />
-        <property name="htmlform" value="initialpatientqueuapp:queue.html" />
+        <property name="htmlform" value="initialpatientqueueapp:queue.html" />
         <property name="order" value="1000" />
     </bean>
 
     <!-- Wraps PatientqueuappService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="initialpatientqueuapp.InitialPatientqueuappService"
+    <bean id="initialpatientqueueapp.InitialPatientqueuappService"
             class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
         </property>
         <property name="target">
             <bean class="org.openmrs.module.initialpatientqueueapp.api.impl.InitialPatientqueuappServiceImpl">
-                <property name="dao" ref="initialpatientqueuapp.InitialPatientqueuappDao" />
+                <property name="dao" ref="initialpatientqueueapp.InitialPatientqueuappDao" />
             </bean>
         </property>
         <property name="preInterceptors">
@@ -81,7 +81,7 @@
         <property name="moduleService">
             <list>
                 <value>org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueuappService</value>
-                <ref bean="initialpatientqueuapp.InitialPatientqueuappService" />
+                <ref bean="initialpatientqueueapp.InitialPatientqueuappService" />
             </list>
         </property>
     </bean>

@@ -14,7 +14,7 @@ public class InitialPatientQueueConstants {
 	/**
 	 * Module ID
 	 */
-	public static final String MODULE_ID = "initialpatientqueuapp";
+	public static final String MODULE_ID = "initialpatientqueueapp";
 	
 	public static final String APP_PATIENT_QUEUE = MODULE_ID + ".queue";
 	
