@@ -98,7 +98,7 @@ form textarea:focus, .form textarea:focus{
                 ${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }
                 ${ ui.includeFragment("kenyaemr", "visitCompletedForms", [ visit: activeVisit ]) }
                 <div class="onepcssgrid-1000">
-                ${ ui.includeFragment("patientqueuapp", "queuePatient", [patient: currentPatient])}
+                ${ ui.includeFragment("initialpatientqueuapp", "queuePatient", [patient: currentPatient])}
             </div>
             </td>
             <td width="15%" valign="top" style="padding-left: 5px">
