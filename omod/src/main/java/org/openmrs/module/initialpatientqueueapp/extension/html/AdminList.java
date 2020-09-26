@@ -17,7 +17,7 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "patientqueuapp.title" heading. This extension is enabled by defining (uncommenting) it in the
+ * "patientqueueapp.title" heading. This extension is enabled by defining (uncommenting) it in the
  * config.xml file.
  */
 public class AdminList extends AdministrationSectionExt {
@@ -33,7 +33,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "initialpatientqueuapp.title";
+		return "initialpatientqueueapp.title";
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/initialpatientqueuapp/patientqueuapp.form", "initialpatientqueuapp.title");
+		map.put("module/initialpatientqueueapp/patientqueueapp.form", "initialpatientqueueapp.title");
 		
 		return map;
 	}

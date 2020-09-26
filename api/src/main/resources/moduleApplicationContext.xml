@@ -55,16 +55,16 @@
         <property name="order" value="1000" />
     </bean>
 
-    <!-- Wraps PatientqueuappService methods in DB transactions and OpenMRS interceptors,
+    <!-- Wraps PatientqueueappService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="initialpatientqueueapp.InitialPatientqueuappService"
+    <bean id="initialpatientqueueapp.InitialPatientqueueappService"
             class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
         </property>
         <property name="target">
-            <bean class="org.openmrs.module.initialpatientqueueapp.api.impl.InitialPatientqueuappServiceImpl">
-                <property name="dao" ref="initialpatientqueueapp.InitialPatientqueuappDao" />
+            <bean class="org.openmrs.module.initialpatientqueueapp.api.impl.InitialPatientqueueappServiceImpl">
+                <property name="dao" ref="initialpatientqueueapp.InitialPatientqueueappDao" />
             </bean>
         </property>
         <property name="preInterceptors">
@@ -75,13 +75,13 @@
         </property>
     </bean>
 
-    <!-- Adds PatientqueuappService to OpenMRS context so it can be accessed
-    calling Context.getService(PatientqueuappService.class) -->
+    <!-- Adds PatientqueueappService to OpenMRS context so it can be accessed
+    calling Context.getService(PatientqueueappService.class) -->
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
-                <value>org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueuappService</value>
-                <ref bean="initialpatientqueueapp.InitialPatientqueuappService" />
+                <value>org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueueappService</value>
+                <ref bean="initialpatientqueueapp.InitialPatientqueueappService" />
             </list>
         </property>
     </bean>
