@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 /**
  * Contains module's config.
  */
-@Component("patientqueuapp.PatientqueuappConfig")
-public class InitialPatientqueuappConfig {
+@Component("patientqueueapp.patientqueueappConfig")
+public class InitialPatientqueueappConfig {
 	
-	public final static String MODULE_PRIVILEGE = "Patientqueuapp Privilege";
+	public final static String MODULE_PRIVILEGE = "patientqueueapp Privilege";
 }

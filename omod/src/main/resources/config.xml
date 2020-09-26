@@ -12,7 +12,7 @@
 			Initial patient queing when seen at registration desk
 	</description>
 
-	<activator>org.openmrs.module.initialpatientqueueapp.InitialPatientqueuappActivator</activator>
+	<activator>org.openmrs.module.initialpatientqueueapp.InitialPatientqueueappActivator</activator>
 	
 	<!-- <updateURL>https://modules.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
 	<!-- /Base Module Properties -->
