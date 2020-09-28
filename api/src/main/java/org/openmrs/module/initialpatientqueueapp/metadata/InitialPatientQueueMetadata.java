@@ -19,7 +19,7 @@ public class InitialPatientQueueMetadata extends AbstractMetadataBundle {
 	
 	public static class _Privilege {
 		
-		public static final String APP_PQ_MODULE_APP = "App: patientqueuapp.queue";
+		public static final String APP_PQ_MODULE_APP = "App: patientqueueapp.queue";
 	}
 	
 	public static final class _Role {

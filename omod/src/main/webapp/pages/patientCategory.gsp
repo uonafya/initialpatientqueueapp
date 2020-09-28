@@ -2,20 +2,20 @@
     ui.decorateWith("kenyaemr", "standardPage", [ patient: currentPatient ])
 %>
 <%
-    ui.includeCss("patientqueuapp", "onepcssgrid.css")
-    ui.includeCss("patientqueuapp", "main.css")
-    ui.includeCss("patientqueuapp", "jquery.steps.css")
+    ui.includeCss("patientqueueapp", "onepcssgrid.css")
+    ui.includeCss("patientqueueapp", "main.css")
+    ui.includeCss("patientqueueapp", "jquery.steps.css")
 
 %>
 <%
-    ui.includeJavascript("patientqueuapp", "custom.js")
-    ui.includeJavascript("patientqueuapp", "jquery.cookie-1.3.1.js")
-    ui.includeJavascript("patientqueuapp", "jquery.steps.min.js")
-    ui.includeJavascript("patientqueuapp", "modernizr-2.6.2.min.js")
-    ui.includeJavascript("patientqueuapp", "jquery.validate.min.js")
-    ui.includeJavascript("patientqueuapp", "validations.js")
-    ui.includeJavascript("patientqueuapp", "jquery.loadmask.min.js")
-    ui.includeJavascript("patientqueuapp", "jquery.formfilling.js")
+    ui.includeJavascript("patientqueueapp", "custom.js")
+    ui.includeJavascript("patientqueueapp", "jquery.cookie-1.3.1.js")
+    ui.includeJavascript("patientqueueapp", "jquery.steps.min.js")
+    ui.includeJavascript("patientqueueapp", "modernizr-2.6.2.min.js")
+    ui.includeJavascript("patientqueueapp", "jquery.validate.min.js")
+    ui.includeJavascript("patientqueueapp", "validations.js")
+    ui.includeJavascript("patientqueueapp", "jquery.loadmask.min.js")
+    ui.includeJavascript("patientqueueapp", "jquery.formfilling.js")
 %>
 <style type="text/css">
 body {
@@ -98,7 +98,7 @@ form textarea:focus, .form textarea:focus{
                 ${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }
                 ${ ui.includeFragment("kenyaemr", "visitCompletedForms", [ visit: activeVisit ]) }
                 <div class="onepcssgrid-1000">
-                ${ ui.includeFragment("initialpatientqueuapp", "queuePatient", [patient: currentPatient])}
+                ${ ui.includeFragment("initialpatientqueueapp", "queuePatient", [patient: currentPatient])}
             </div>
             </td>
             <td width="15%" valign="top" style="padding-left: 5px">

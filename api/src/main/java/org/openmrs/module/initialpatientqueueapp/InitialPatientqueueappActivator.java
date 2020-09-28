@@ -16,7 +16,7 @@ import org.openmrs.module.BaseModuleActivator;
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
-public class InitialPatientqueuappActivator extends BaseModuleActivator {
+public class InitialPatientqueueappActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -24,14 +24,14 @@ public class InitialPatientqueuappActivator extends BaseModuleActivator {
 	 * @see #started()
 	 */
 	public void started() {
-		log.info("Started Patientqueuapp");
+		log.info("Started patientqueueapp");
 	}
 	
 	/**
 	 * @see #shutdown()
 	 */
 	public void shutdown() {
-		log.info("Shutdown Patientqueuapp");
+		log.info("Shutdown patientqueueapp");
 	}
 	
 }

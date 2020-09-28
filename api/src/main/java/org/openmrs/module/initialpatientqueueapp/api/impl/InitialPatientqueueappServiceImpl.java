@@ -10,17 +10,17 @@
 package org.openmrs.module.initialpatientqueueapp.api.impl;
 
 import org.openmrs.api.impl.BaseOpenmrsService;
-import org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueuappService;
-import org.openmrs.module.initialpatientqueueapp.api.dao.InitialPatientqueuappDao;
+import org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueueappService;
+import org.openmrs.module.initialpatientqueueapp.api.dao.InitialPatientqueueappDao;
 
-public class InitialPatientqueuappServiceImpl extends BaseOpenmrsService implements InitialPatientqueuappService {
+public class InitialPatientqueueappServiceImpl extends BaseOpenmrsService implements InitialPatientqueueappService {
 	
-	InitialPatientqueuappDao dao;
+	InitialPatientqueueappDao dao;
 	
 	/**
 	 * Injected in moduleApplicationContext.xml
 	 */
-	public void setDao(InitialPatientqueuappDao dao) {
+	public void setDao(InitialPatientqueueappDao dao) {
 		this.dao = dao;
 	}
 	

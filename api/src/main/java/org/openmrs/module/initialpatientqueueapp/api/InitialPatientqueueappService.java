@@ -15,6 +15,6 @@ import org.openmrs.api.OpenmrsService;
  * The main service of this module, which is exposed for other modules. See
  * moduleApplicationContext.xml on how it is wired up.
  */
-public interface InitialPatientqueuappService extends OpenmrsService {
+public interface InitialPatientqueueappService extends OpenmrsService {
 	
 }
