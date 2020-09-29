@@ -32,4 +32,19 @@ public class InitialPatientQueueConstants {
 	
 	public static final String PROPERTY_LOCATION = MODULE_ID + ".location";
 	
+	public static final String CONCEPT_NAME_PAYING_CATEGORY = "PAYING CATEGORY";
+	
+	public static final String CONCEPT_NAME_SPECIAL_SCHEME = "SPECIAL SCHEME";
+	
+	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "NON-PAYING CATEGORY";
+	
+	public static final String CONCEPT_NAME_LIST_OF_UNIVERSITIES = "LIST OF UNIVERSITIES";
+	
+	public static final String PROPERTY_INITIAL_REGISTRATION_FEE = MODULE_ID + ".initialVisitRegistrationFee";
+	
+	public static final String PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE = MODULE_ID
+	        + ".childLessThanFiveYearRegistrationFee";
+	
+	public static final String PROPERTY_SPECIALCLINIC_REGISTRATION_FEE = MODULE_ID + ".specialClinicRegistrationFee";
+	
 }
