@@ -1,8 +1,42 @@
 package org.openmrs.module.initialpatientqueueapp.util;
 
-public class RegistrationWebUtils {
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    /**
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.jaxen.JaxenException;
+import org.jaxen.XPath;
+import org.jaxen.dom4j.Dom4jXPath;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Location;
+import org.openmrs.Patient;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.PatientQueueService;
+import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
+import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
+import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
+import org.openmrs.ui.framework.page.PageModel;
+import org.openmrs.util.OpenmrsUtil;
+import org.springframework.ui.Model;
+
+public class InitialPatientQueueWebUtils {
+	
+	/**
 	 * Optimize the request's parameters
 	 * 
 	 * @param request
@@ -42,16 +76,17 @@ public class RegistrationWebUtils {
 			sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
 		}
 		return sb.toString();
-    }
-    
-    /**
+	}
+	
+	/**
 	 * Send patient for OPD Queue
 	 * 
 	 * @param patient
 	 * @param selectedOPDConcept
 	 * @param revisit
 	 */
-	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit, String selectedCategory) {
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit,
+	        String selectedCategory) {
 		Concept visitStatus = null;
 		if (!revisit) {
 			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
@@ -70,13 +105,10 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-			if(null!=patient.getMiddleName())
-			{
-				queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
-			}
-			else
-			{
-				queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName());
+			if (null != patient.getMiddleName()) {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
+			} else {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
 			}
 			//queue.setReferralConcept(referralConcept);
 			//queue.setReferralConceptName(referralConcept.getName().getName());
@@ -90,7 +122,8 @@ public class RegistrationWebUtils {
 		
 	}
 	
-	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit, String selectedCategory) {
+	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit,
+	        String selectedCategory) {
 		Concept visitStatus = null;
 		if (!revisit) {
 			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
@@ -109,13 +142,10 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setTriageConcept(selectedTriageConcept);
 			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
-			if(null!=patient.getMiddleName())
-			{
-				queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
-			}
-			else
-			{
-				queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName());
+			if (null != patient.getMiddleName()) {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
+			} else {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
 			}
 			//queue.setReferralConcept(referralConcept);
 			//queue.setReferralConceptName(referralConcept.getName().getName());
@@ -128,4 +158,24 @@ public class RegistrationWebUtils {
 		}
 		
 	}
+	
+	/**
+	 * Get String value from a specific global property. Unless the global property is found, the
+	 * defaultValue will be returned.
+	 * 
+	 * @param globalPropertyName
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String getString(String globalPropertyName, String defaultValue) {
+		String value = Context.getAdministrationService().getGlobalProperty(globalPropertyName);
+		
+		String result = defaultValue;
+		
+		if (!StringUtils.isBlank(value)) {
+			result = value;
+		}
+		return result;
+	}
+	
 }
