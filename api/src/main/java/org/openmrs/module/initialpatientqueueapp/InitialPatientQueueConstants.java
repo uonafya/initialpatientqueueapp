@@ -47,4 +47,34 @@ public class InitialPatientQueueConstants {
 	
 	public static final String PROPERTY_SPECIALCLINIC_REGISTRATION_FEE = MODULE_ID + ".specialClinicRegistrationFee";
 	
+	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
+	
+	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
+	
+	public static final String FORM_FIELD_PATIENT_SPECIAL_CLINIC = "patient.specialClinic";
+	
+	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
+	
+	public static final String FORM_FIELD_PAYMENT_CATEGORY = "person.attribute.14";
+	
+	public static final String CONCEPT_NEW_PATIENT = "New Patient";
+	
+	public static final String PROPERTY_IDENTIFIER_PREFIX = MODULE_ID + ".identifier_prefix";
+	
+	public static final String PROPERTY_PATIENT_IDENTIFIER_TYPE = MODULE_ID + ".patientIdentifierType";
+	
+	public static final String FORM_FIELD_REGISTRATION_FEE = "patient.registration.fee";
+	
+	public static final String FORM_FIELD_PAYING_CATEGORY = "person.attribute.44";
+	
+	public static final String FORM_FIELD_NONPAYING_CATEGORY = "person.attribute.45";
+	
+	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "person.attribute.46";
+	
+	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";
+	
+	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
+	
+	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
+	
 }
