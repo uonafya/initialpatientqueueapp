@@ -24,14 +24,14 @@ public class InitialPatientqueueappActivator extends BaseModuleActivator {
 	 * @see #started()
 	 */
 	public void started() {
-		log.info("Started patientqueueapp");
+		log.info("Started Initial patientqueueapp");
 	}
 	
 	/**
 	 * @see #shutdown()
 	 */
 	public void shutdown() {
-		log.info("Shutdown patientqueueapp");
+		log.info("Shutdown Initial patientqueueapp");
 	}
 	
 }

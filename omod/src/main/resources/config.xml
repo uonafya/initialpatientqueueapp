@@ -9,7 +9,7 @@
 	<package>org.openmrs.module.initialpatientqueueapp</package>
 	<author>HealthIT</author>
 	<description>
-			Initial patient queing when seen at registration desk
+			Initial patient queueing when seen at registration desk
 	</description>
 
 	<activator>org.openmrs.module.initialpatientqueueapp.InitialPatientqueueappActivator</activator>
@@ -27,6 +27,7 @@
 	<require_modules>
 		<require_module version="${kenyaemrVersion}">org.openmrs.module.kenyaemr</require_module>
 		<require_module version="${hospitalcoreVersion}">org.openmrs.module.hospitalcore</require_module>
+		<require_module version="${ehrconfigsVersion}">org.openmrs.module.ehrconfigs</require_module>
 	</require_modules>
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>

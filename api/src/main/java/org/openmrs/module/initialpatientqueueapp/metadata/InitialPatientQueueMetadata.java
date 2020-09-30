@@ -1,5 +1,6 @@
 package org.openmrs.module.initialpatientqueueapp.metadata;
 
+import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.openmrs.module.metadatadeploy.bundle.Requires;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,12 @@ public class InitialPatientQueueMetadata extends AbstractMetadataBundle {
 	
 	public static class _Privilege {
 		
-		public static final String APP_PQ_MODULE_APP = "App: patientqueueapp.queue";
+		public static final String APP_PQ_MODULE_APP = "App: "+ InitialPatientQueueConstants.MODULE_ID;
 	}
 	
 	public static final class _Role {
 		
-		public static final String APPLICATION_PQ_MODULE = "Patient Queueing Module";
+		public static final String APPLICATION_PQ_MODULE = "Initial Patient Queueing";
 	}
 	
 	//encounter type here
@@ -45,8 +46,8 @@ public class InitialPatientQueueMetadata extends AbstractMetadataBundle {
 	@Override
 	public void install() {
 		
-		install(privilege(_Privilege.APP_PQ_MODULE_APP, "Able to access Key Patient Queue module features"));
-		install(role(_Role.APPLICATION_PQ_MODULE, "Can access Key patient queue module App",
+		install(privilege(_Privilege.APP_PQ_MODULE_APP, "Able to access Key Initial Patient Queue module features"));
+		install(role(_Role.APPLICATION_PQ_MODULE, "Can access Key initial patient queue module App",
 		    idSet(org.openmrs.module.kenyaemr.metadata.SecurityMetadata._Role.API_PRIVILEGES_VIEW_AND_EDIT),
 		    idSet(_Privilege.APP_PQ_MODULE_APP)));
 		

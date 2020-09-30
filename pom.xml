@@ -112,6 +112,12 @@
 				<version>${kenyacoreVersion}</version>
 				<scope>provided</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>ehrconfigs-api</artifactId>
+				<version>${ehrconfigsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
@@ -255,5 +261,6 @@
 		<logicVersion>0.5.2</logicVersion>
 		<uilibraryVersion>2.0.4</uilibraryVersion>
 		<hospitalcoreVersion>1.0.0-SNAPSHOT</hospitalcoreVersion>
+		<ehrconfigsVersion>1.0.0-SNAPSHOT</ehrconfigsVersion>
     </properties>
 </project>

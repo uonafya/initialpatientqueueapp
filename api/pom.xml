@@ -125,5 +125,9 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>hospitalcore-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>ehrconfigs-api</artifactId>
+		</dependency>
 	</dependencies>
 </project>

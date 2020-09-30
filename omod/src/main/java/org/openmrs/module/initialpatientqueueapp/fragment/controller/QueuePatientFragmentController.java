@@ -17,20 +17,17 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
-import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.PatientQueueService;
-import org.openmrs.module.hospitalcore.matcher.RegistrationUtils;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
+import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.PatientAttributeValidatorService;
+import org.openmrs.module.initialpatientqueueapp.web.controller.utils.RegistrationWebUtils;
 import org.openmrs.module.kenyacore.form.FormManager;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
-import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
-import org.openmrs.module.initialpatientqueueapp.web.controller.utils.RegistrationWebUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -44,8 +41,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils.getPersonAddress;
-import static org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils.parseDate;
 import static org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils.savePatientSearch;
 
 /**
