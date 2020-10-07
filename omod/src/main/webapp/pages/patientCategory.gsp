@@ -1,21 +1,6 @@
 <%
     ui.decorateWith("kenyaemr", "standardPage", [ patient: currentPatient ])
-%>
-<%
-    ui.includeCss("patientqueueapp", "onepcssgrid.css")
-    ui.includeCss("patientqueueapp", "main.css")
-    ui.includeCss("patientqueueapp", "jquery.steps.css")
-
-%>
-<%
-    ui.includeJavascript("patientqueueapp", "custom.js")
-    ui.includeJavascript("patientqueueapp", "jquery.cookie-1.3.1.js")
-    ui.includeJavascript("patientqueueapp", "jquery.steps.min.js")
-    ui.includeJavascript("patientqueueapp", "modernizr-2.6.2.min.js")
-    ui.includeJavascript("patientqueueapp", "jquery.validate.min.js")
-    ui.includeJavascript("patientqueueapp", "validations.js")
-    ui.includeJavascript("patientqueueapp", "jquery.loadmask.min.js")
-    ui.includeJavascript("patientqueueapp", "jquery.formfilling.js")
+    ui.includeCss("ehrconfigs", "referenceapplication.css")
 %>
 <style type="text/css">
 body {
@@ -90,19 +75,11 @@ form textarea:focus, .form textarea:focus{
             <td width="30%" valign="top">
                 ${ ui.includeFragment("kenyaemr", "patient/patientSummary", [ patient: currentPatient ]) }
                 ${ ui.includeFragment("kenyaemr", "patient/patientRelationships", [ patient: currentPatient ]) }
-                ${ ui.includeFragment("kenyaemr", "program/programHistories", [ patient: currentPatient, showClinicalData: true ]) }
             </td>
-            <td width="55%" valign="top" style="padding-left: 5px">
-
-
-                ${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }
-                ${ ui.includeFragment("kenyaemr", "visitCompletedForms", [ visit: activeVisit ]) }
+            <td valign="top" style="padding-left: 5px">
                 <div class="onepcssgrid-1000">
                 ${ ui.includeFragment("initialpatientqueueapp", "queuePatient", [patient: currentPatient])}
             </div>
-            </td>
-            <td width="15%" valign="top" style="padding-left: 5px">
-                ${ ui.includeFragment("kenyaemr", "providerAction/providerActions") }
             </td>
         </tr>
     </table>
