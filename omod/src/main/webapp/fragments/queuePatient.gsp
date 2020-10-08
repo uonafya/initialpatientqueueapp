@@ -432,10 +432,6 @@
     PAGE = {
         /** SUBMIT */
         submit: function () {
-            // Capitalize fullname and relative name
-//            relativeNameInCaptital = StringUtils.capitalize(jq("#patientRelativeName").val());
-            relativeNameInCaptital = (jq("#patientRelativeName").val()).toUpperCase();
-            jq("#patientRelativeName").val(relativeNameInCaptital);
             // Validate and submit
             if (this.validateRegisterForm()) {
                 jq("#patientRegistrationForm").submit();
@@ -604,205 +600,14 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var str1 = '';
-            //if (StringUtils.isBlank(jq("#firstName").val())) {
-            if (!(jq("#firstName").val().trim())) {
-                jq('#firstName').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                value = jq("#firstName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#firstName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#firstName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#firstName').removeClass("red-border");
-                }
-            }
-//            if (!StringUtils.isBlank(jq("#otherName").val())) {
-            if ((jq("#otherName").val())) {
-                value = jq("#otherName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#otherName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#otherName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#otherName').removeClass("red-border");
-                }
-            }
-//            if (StringUtils.isBlank(jq("#surName").val())) {
-            if (!(jq("#surName").val().trim())) {
-                jq('#surName').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                value = jq("#surName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#surName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#surName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#surName').removeClass("red-border");
-                }
-            }
-            if (!(jq("#birthdate").val().trim())) {
-                jq('#birthdate').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                jq('#birthdate').removeClass("red-border");
-            }
-            if (jq("#patientGender").val() == 0 || jq("#patientGender").val().trim() == "") {
-                jq('#patientGender').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (select1 == 1 && select2 == 3 && jq("#patientGender").val() == "M") {
-                str1 = 'The selected Scheme Doesnt Match the Gender Selected. ';
-                jq('#patientGender').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (jq("#patientGender").val() == "M" && jq("#maritalStatus").val() == "Widow") {
-                str1 = str1 + 'Widow marital status is only for Female. ';
-                jq('#maritalStatus').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (jq("#patientGender").val() == "F" && jq("#maritalStatus").val() == "Widower") {
-                str1 = str1 + 'Widower marital status is only for Male. ';
-                jq('#maritalStatus').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else {
-                jq('#patientGender').removeClass("red-border");
-            }
-            //TAB2
-            if (!(jq("#patientPostalAddress").val().trim())) {
-                jq('#patientPostalAddress').addClass("red-border");
-                tab2++;
-                i++;
-            }
-            else if (jq("#patientPostalAddress").val().length > 255) {
-                str1 = str1 + 'Too much information provided for Physical Address. ';
-                jq('#patientPostalAddress').addClass("red-border");
-                tab2++;
-                i++;
-            }
-            else {
-                jq('#patientPostalAddress').removeClass("red-border");
-            }
-            if ((jq("#patientEmail").val().trim())) {
-                var x = jq("#patientEmail").val();
-                var regExpForEmail =
-                <%= "/^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)\$/i;" %>
-                if (regExpForEmail.test(x)) {
-                    jq('#patientEmail').removeClass("red-border");
-                }
-                else {
-                    str1 = str1 + "Please enter the patient's e-mail address in correct format. ";
-                    jq('#patientEmail').addClass("red-border");
-                    i++;
-                    tab2++;
-                }
-            }
-            //NOK HERE
-            if (!(jq("#patientRelativeName").val().trim())) {
-                jq('#patientRelativeName').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                value = jq("#patientRelativeName").val();
-                //value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                //jq("#patientRelativeName").val(value);
-                if (oRegX.test(value) == false){
-                    jq('#patientRelativeName').addClass("red-border");
-                    i++;
-                    tab2++;
-                }
-                else
-                {
-                    jq('#patientRelativeName').removeClass("red-border");
-                }
-            }
-            if (jq("#relationshipType").val() == 0 || jq("#relationshipType").val().trim() == "") {
-                jq('#relationshipType').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                jq('#relationshipType').removeClass("red-border");
-            }
-            if (jq("#relativePostalAddress").val().length > 255) {
-                str1 = str1 + "Next of Kin Physical Address should not exceed more than 255 characters. ";
-                jq('#relativePostalAddress').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                jq('#relativePostalAddress').removeClass("red-border");
-            }
             //TAB3
             if (!jq("input[name='paym_1']:checked").val() || !jq("input[name='paym_2']:checked").val()) {
                 str1 = str1 + "Kindly ensure the Payment Categories are properly filled. ";
                 i++;
                 tab3++;
             }
-            if (jq("#legal1").val() == 0) {
-                jq('#legal1').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#legal1').removeClass("red-border");
-            }
-            if ((jq("#legal1").val() == 1 && jq("#mlc").val().trim() == "") || jq('#mlc').val() == null) {
-                jq('#mlc').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#mlc').removeClass("red-border");
-            }
-            if (jq("#refer1").val() == 0) {
-                jq('#refer1').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#refer1').removeClass("red-border");
-            }
-            if ((jq("#refer1").val() == 1 && jq("#referredFrom").val().trim() == "") || jq('#referredFrom').val() == null) {
-                jq('#referredFrom').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#referredFrom').removeClass("red-border");
-            }
-            if ((jq("#refer1").val() == 1 && jq("#referralType").val().trim() == "") || jq('#referralType').val() == null) {
-                jq('#referralType').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#referralType').removeClass("red-border");
-            }
-            if (jq("#rooms1").val() == "") {
+
+            if (jq("#rooms1").val() === "") {
                 jq('#rooms1').addClass("red-border");
                 i++;
                 tab3++;
@@ -810,7 +615,7 @@
             else {
                 jq('#rooms1').removeClass("red-border");
             }
-            if (jq("#rooms2").val() == 0 || jq("#rooms2").val() == "" || jq("#rooms2").val() == null) {
+            if (jq("#rooms2").val() === 0 || jq("#rooms2").val() === "" || jq("#rooms2").val() == null) {
                 jq('#rooms2').addClass("red-border");
                 i++;
                 tab3++;
@@ -818,7 +623,7 @@
             else {
                 jq('#rooms2').removeClass("red-border");
             }
-            if (jq("#rooms1").val() == 3 && jq("#rooms3").val().trim() == "") {
+            if (jq("#rooms1").val() === 3 && jq("#rooms3").val().trim() === "") {
                 jq('#rooms3').addClass("red-border");
                 i++;
                 tab3++;
@@ -826,23 +631,8 @@
             else {
                 jq('#rooms3').removeClass("red-border");
             }
-            //submitNationalIDAndPassportNumber();
-//            if (validateNationalIDAndPassportNumber()) {
-//                return true;
-//            }
-//            else {
-//                return false;
-//            }
-            if ((jq('#rooms2').val() == '5123' || jq('#rooms2').val() == 5704) && jq('#patientGender').val() == 'M' && parseFloat(jq("#estimatedAgeInYear").val()) > 5){
-                jq().toastmessage('showErrorToast', "MCH is only valid for Women and Children under 5yrs");
-                jq('#rooms2').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else{
-                jq('#rooms2').removeClass("red-border");
-            }
-            if (i == 0) {
+
+            if (i === 0) {
                 return true;
             }
             else {
@@ -868,7 +658,6 @@
                 jq("#nonPayingCategory").val("");
                 jq("#specialScheme").val("");
                 jq("#specialSchemes").removeAttr("checked");
-                //jq("#selectedRegFeeValue").val(${initialRegFee});
                 jq("#nhifNumberRow").hide();
                 jq("#universityRow").hide();
                 jq("#studentIdRow").hide();
@@ -886,8 +675,7 @@
                 jq("#specialScheme").val("");
                 //jq("#selectedRegFeeValue").val(0);
                 var selectedNonPayingCategory = jq("#nonPayingCategory option:checked").val();
-                //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]==="NHIF CIVIL SERVANT"){
-                if (selectedNonPayingCategory == "NHIF CIVIL SERVANT") {
+                if (selectedNonPayingCategory === "NHIF CIVIL SERVANT") {
                     jq("#nhifNumberRow").show();
                 }
                 else {
@@ -908,11 +696,9 @@
                 jq("#payingCategory").val("");
                 jq("#nonPayingCategory").val("");
                 jq("#nonPaying").removeAttr("checked");
-                //jq("#selectedRegFeeValue").val(0);
                 jq("#nhifNumberRow").hide();
                 var selectedSpecialScheme = jq("#specialScheme option:checked").val();
-                //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="STUDENT SCHEME"){
-                if (selectedSpecialScheme == "STUDENT SCHEME") {
+                if (selectedSpecialScheme === "STUDENT SCHEME") {
                     jq("#universityRow").show();
                     jq("#studentIdRow").show();
                 }
@@ -920,8 +706,7 @@
                     jq("#universityRow").hide();
                     jq("#studentIdRow").hide();
                 }
-                //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="WAIVER CASE"){
-                if (selectedSpecialScheme == "WAIVER CASE") {
+                if (selectedSpecialScheme === "WAIVER CASE") {
                     jq("#waiverNumberRow").show();
                 }
                 else {
@@ -932,42 +717,6 @@
                 jq("#universityRow").hide();
                 jq("#studentIdRow").hide();
                 jq("#waiverNumberRow").hide();
-            }
-        },
-        mlcYesCheck: function () {
-            if (jq("#mlcCaseYes").is(':checked')) {
-                jq("#mlcCaseNo").removeAttr("checked");
-                jq("#mlc").show();
-            }
-            else {
-                jq("#mlc").hide();
-            }
-        },
-        mlcNoCheck: function () {
-            if (jq("#mlcCaseNo").is(':checked')) {
-                jq("#mlcCaseYes").removeAttr("checked");
-                jq("#mlc").hide();
-            }
-        },
-        referredYesCheck: function () {
-            if (jq("#referredYes").is(':checked')) {
-                jq("#referredNo").removeAttr("checked");
-                jq("#referredFromColumn").show();
-                jq("#referralTypeRow").show();
-                jq("#referralDescriptionRow").show();
-            }
-            else {
-                jq("#referredFromColumn").hide();
-                jq("#referralTypeRow").hide();
-                jq("#referralDescriptionRow").hide();
-            }
-        },
-        referredNoCheck: function () {
-            if (jq("#referredNo").is(':checked')) {
-                jq("#referredYes").removeAttr("checked");
-                jq("#referredFromColumn").hide();
-                jq("#referralTypeRow").hide();
-                jq("#referralDescriptionRow").hide();
             }
         },
         triageRoomCheck: function () {
@@ -1015,71 +764,9 @@
                 jq("#specialClinicField").hide();
                 jq("#fileNumberField").hide();
             }
-        },
-        copyaddress: function () {
-            if (jq("#sameAddress").is(':checked')) {
-                jq("#relativePostalAddress").val(jq("#patientPostalAddress").val());
-            }
-            else {
-                jq("#relativePostalAddress").val('');
-            }
-        },
-        /*
-         * Check patient gender
-         */
-        genderCheck: function () {
-            jq("#patientRelativeNameSection").empty();
-            if (jq("#patientGender").val() == "M") {
-                jq("#patientRelativeNameSection")
-                    .html(
-                        '<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
-            } else if (jq("#patientGender").val() == "F") {
-                jq("#patientRelativeNameSection")
-                    .html(
-                        '<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
-            }
         }
     };
-    function showOtherNationality() {
-        var optionValue = jq("#patientNation option:selected").text();
-        if (optionValue == "Other") {
-            jq("#otherNationality").show();
-            jq('#otherNationalityId').removeClass("disabled");
-        }
-        else {
-            jq("#otherNationality").hide();
-            jq('#otherNationalityId').addClass("disabled");
-        }
-    }
-    function submitNationalID() {
-        PAGE.checkNationalID();
-    }
-    function validateNationalID(data) {
-        if (data.nid == "1") {
-            document.getElementById("nationalIdValidationMessage").innerHTML = "Patient already registered with this National ID";
-            jq("#nationalIdValidationMessage").show();
-            return false;
-        }
-        else {
-            jq("#nationalIdValidationMessage").hide();
-        }
-    }
-    function submitPassportNumber() {
-        PAGE.checkPassportNumber();
-    }
-    function validatePassportNumber(data) {
-        if (data.pnum == "1") {
-            document.getElementById("passportNumberValidationMessage").innerHTML = "Patient already registered with this Passport Number";
-            jq("#passportNumberValidationMessage").show();
-            return false;
-        }
-        else {
-            jq("#passportNumberValidationMessage").hide();
-        }
-    }
-    function submitNationalIDAndPassportNumber() {
-        PAGE.checkNationalIDAndPassportNumber();
-    }
+
     function payingCategorySelection() {
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
