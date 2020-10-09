@@ -353,9 +353,9 @@
         jq("#universityRow").hide();
         jq("#studentIdRow").hide();
         jq("#waiverNumberRow").hide();
-        LoadLegalCases();
-        LoadReferralCases();
-        showOtherNationality();
+        //LoadLegalCases();
+        //LoadReferralCases();
+        //showOtherNationality();
         LoadPayCatg();
         LoadRoomsTypes();
         //stans
@@ -432,12 +432,6 @@
     PAGE = {
         /** SUBMIT */
         submit: function () {
-<<<<<<< HEAD
-=======
-            // Capitalize fullname and relative name
-//            relativeNameInCaptital = StringUtils.capitalize(jq("#patientRelativeName").val());
-    
->>>>>>> c9418f0603f2a8c1ff53263a7e5dd633b6287495
             // Validate and submit
             if (this.validateRegisterForm()) {
                 jq("#patientRegistrationForm").submit();
@@ -606,7 +600,7 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var str1 = '';
-<<<<<<< HEAD
+
             //TAB3
             if (!jq("input[name='paym_1']:checked").val() || !jq("input[name='paym_2']:checked").val()) {
                 str1 = str1 + "Kindly ensure the Payment Categories are properly filled. ";
@@ -615,10 +609,6 @@
             }
 
             if (jq("#rooms1").val() === "") {
-=======
- 
-            if (jq("#rooms1").val() == "") {
->>>>>>> c9418f0603f2a8c1ff53263a7e5dd633b6287495
                 jq('#rooms1').addClass("red-border");
                 i++;
                 tab3++;
