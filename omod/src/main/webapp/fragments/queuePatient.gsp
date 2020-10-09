@@ -144,19 +144,19 @@
         }
         // Paying Category Map
         var _payingCategoryMap = new Array();
-        var payingCategoryMap = "${payingCategoryMap}";
+         var payingCategoryMap = "${payingCategoryMap}";
         <% payingCategoryMap.each { k, v -> %>
         _payingCategoryMap[${k}] = '${v}';
         <%}%>
         // NonPaying Category Map
         var _nonPayingCategoryMap = new Array();
-        var nonPayingCategoryMap = "${nonPayingCategoryMap}";
+         var nonPayingCategoryMap = "${nonPayingCategoryMap}";
         <% nonPayingCategoryMap.each { k, v -> %>
         _nonPayingCategoryMap[${k}] = '${v}';
         <%}%>
         // Special Scheme Map
         var _specialSchemeMap = new Array();
-        var specialSchemeMap = "${specialSchemeMap}";
+         var specialSchemeMap = "${specialSchemeMap}";
         <% specialSchemeMap.each { k, v -> %>
         _specialSchemeMap[${k}] = '${v}';
         <%}%>
@@ -434,8 +434,7 @@
         submit: function () {
             // Capitalize fullname and relative name
 //            relativeNameInCaptital = StringUtils.capitalize(jq("#patientRelativeName").val());
-            relativeNameInCaptital = (jq("#patientRelativeName").val()).toUpperCase();
-            jq("#patientRelativeName").val(relativeNameInCaptital);
+    
             // Validate and submit
             if (this.validateRegisterForm()) {
                 jq("#patientRegistrationForm").submit();
@@ -604,204 +603,7 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var str1 = '';
-            //if (StringUtils.isBlank(jq("#firstName").val())) {
-            if (!(jq("#firstName").val().trim())) {
-                jq('#firstName').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                value = jq("#firstName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#firstName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#firstName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#firstName').removeClass("red-border");
-                }
-            }
-//            if (!StringUtils.isBlank(jq("#otherName").val())) {
-            if ((jq("#otherName").val())) {
-                value = jq("#otherName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#otherName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#otherName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#otherName').removeClass("red-border");
-                }
-            }
-//            if (StringUtils.isBlank(jq("#surName").val())) {
-            if (!(jq("#surName").val().trim())) {
-                jq('#surName').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                value = jq("#surName").val();
-                value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                jq("#surName").val(value);
-                if (oRegX.test(value) == false) {
-                    jq('#surName').addClass("red-border");
-                    tab1++;
-                    i++;
-                }
-                else {
-                    jq('#surName').removeClass("red-border");
-                }
-            }
-            if (!(jq("#birthdate").val().trim())) {
-                jq('#birthdate').addClass("red-border");
-                tab1++;
-                i++;
-            }
-            else {
-                jq('#birthdate').removeClass("red-border");
-            }
-            if (jq("#patientGender").val() == 0 || jq("#patientGender").val().trim() == "") {
-                jq('#patientGender').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (select1 == 1 && select2 == 3 && jq("#patientGender").val() == "M") {
-                str1 = 'The selected Scheme Doesnt Match the Gender Selected. ';
-                jq('#patientGender').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (jq("#patientGender").val() == "M" && jq("#maritalStatus").val() == "Widow") {
-                str1 = str1 + 'Widow marital status is only for Female. ';
-                jq('#maritalStatus').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else if (jq("#patientGender").val() == "F" && jq("#maritalStatus").val() == "Widower") {
-                str1 = str1 + 'Widower marital status is only for Male. ';
-                jq('#maritalStatus').addClass("red-border");
-                i++;
-                tab1++;
-            }
-            else {
-                jq('#patientGender').removeClass("red-border");
-            }
-            //TAB2
-            if (!(jq("#patientPostalAddress").val().trim())) {
-                jq('#patientPostalAddress').addClass("red-border");
-                tab2++;
-                i++;
-            }
-            else if (jq("#patientPostalAddress").val().length > 255) {
-                str1 = str1 + 'Too much information provided for Physical Address. ';
-                jq('#patientPostalAddress').addClass("red-border");
-                tab2++;
-                i++;
-            }
-            else {
-                jq('#patientPostalAddress').removeClass("red-border");
-            }
-            if ((jq("#patientEmail").val().trim())) {
-                var x = jq("#patientEmail").val();
-                var regExpForEmail =
-                <%= "/^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)\$/i;" %>
-                if (regExpForEmail.test(x)) {
-                    jq('#patientEmail').removeClass("red-border");
-                }
-                else {
-                    str1 = str1 + "Please enter the patient's e-mail address in correct format. ";
-                    jq('#patientEmail').addClass("red-border");
-                    i++;
-                    tab2++;
-                }
-            }
-            //NOK HERE
-            if (!(jq("#patientRelativeName").val().trim())) {
-                jq('#patientRelativeName').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                value = jq("#patientRelativeName").val();
-                //value = value.substr(0, 1).toUpperCase() + value.substr(1);
-                //jq("#patientRelativeName").val(value);
-                if (oRegX.test(value) == false){
-                    jq('#patientRelativeName').addClass("red-border");
-                    i++;
-                    tab2++;
-                }
-                else
-                {
-                    jq('#patientRelativeName').removeClass("red-border");
-                }
-            }
-            if (jq("#relationshipType").val() == 0 || jq("#relationshipType").val().trim() == "") {
-                jq('#relationshipType').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                jq('#relationshipType').removeClass("red-border");
-            }
-            if (jq("#relativePostalAddress").val().length > 255) {
-                str1 = str1 + "Next of Kin Physical Address should not exceed more than 255 characters. ";
-                jq('#relativePostalAddress').addClass("red-border");
-                i++;
-                tab2++;
-            }
-            else {
-                jq('#relativePostalAddress').removeClass("red-border");
-            }
-            //TAB3
-            if (!jq("input[name='paym_1']:checked").val() || !jq("input[name='paym_2']:checked").val()) {
-                str1 = str1 + "Kindly ensure the Payment Categories are properly filled. ";
-                i++;
-                tab3++;
-            }
-            if (jq("#legal1").val() == 0) {
-                jq('#legal1').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#legal1').removeClass("red-border");
-            }
-            if ((jq("#legal1").val() == 1 && jq("#mlc").val().trim() == "") || jq('#mlc').val() == null) {
-                jq('#mlc').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#mlc').removeClass("red-border");
-            }
-            if (jq("#refer1").val() == 0) {
-                jq('#refer1').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#refer1').removeClass("red-border");
-            }
-            if ((jq("#refer1").val() == 1 && jq("#referredFrom").val().trim() == "") || jq('#referredFrom').val() == null) {
-                jq('#referredFrom').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#referredFrom').removeClass("red-border");
-            }
-            if ((jq("#refer1").val() == 1 && jq("#referralType").val().trim() == "") || jq('#referralType').val() == null) {
-                jq('#referralType').addClass("red-border");
-                i++;
-                tab3++;
-            }
-            else {
-                jq('#referralType').removeClass("red-border");
-            }
+ 
             if (jq("#rooms1").val() == "") {
                 jq('#rooms1').addClass("red-border");
                 i++;
