@@ -144,19 +144,19 @@
         }
         // Paying Category Map
         var _payingCategoryMap = new Array();
-        var payingCategoryMap = "${payingCategoryMap}";
+         var payingCategoryMap = "${payingCategoryMap}";
         <% payingCategoryMap.each { k, v -> %>
         _payingCategoryMap[${k}] = '${v}';
         <%}%>
         // NonPaying Category Map
         var _nonPayingCategoryMap = new Array();
-        var nonPayingCategoryMap = "${nonPayingCategoryMap}";
+         var nonPayingCategoryMap = "${nonPayingCategoryMap}";
         <% nonPayingCategoryMap.each { k, v -> %>
         _nonPayingCategoryMap[${k}] = '${v}';
         <%}%>
         // Special Scheme Map
         var _specialSchemeMap = new Array();
-        var specialSchemeMap = "${specialSchemeMap}";
+         var specialSchemeMap = "${specialSchemeMap}";
         <% specialSchemeMap.each { k, v -> %>
         _specialSchemeMap[${k}] = '${v}';
         <%}%>
@@ -432,6 +432,12 @@
     PAGE = {
         /** SUBMIT */
         submit: function () {
+<<<<<<< HEAD
+=======
+            // Capitalize fullname and relative name
+//            relativeNameInCaptital = StringUtils.capitalize(jq("#patientRelativeName").val());
+    
+>>>>>>> c9418f0603f2a8c1ff53263a7e5dd633b6287495
             // Validate and submit
             if (this.validateRegisterForm()) {
                 jq("#patientRegistrationForm").submit();
@@ -600,6 +606,7 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var str1 = '';
+<<<<<<< HEAD
             //TAB3
             if (!jq("input[name='paym_1']:checked").val() || !jq("input[name='paym_2']:checked").val()) {
                 str1 = str1 + "Kindly ensure the Payment Categories are properly filled. ";
@@ -608,6 +615,10 @@
             }
 
             if (jq("#rooms1").val() === "") {
+=======
+ 
+            if (jq("#rooms1").val() == "") {
+>>>>>>> c9418f0603f2a8c1ff53263a7e5dd633b6287495
                 jq('#rooms1').addClass("red-border");
                 i++;
                 tab3++;
