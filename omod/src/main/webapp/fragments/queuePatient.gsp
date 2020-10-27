@@ -1630,126 +1630,151 @@ a.tooltip span {
 </style>
 <div id="content" class="container">
     <form class="simple-form-ui" id="patientRegistrationForm" method="post">
-        <fieldset class="no-confirmation">
-            <legend>Patient Category</legend>
-            <div>
-                <h2>Patient Category</h2>
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td>
+                            <div class="col4">
+                                <div class="tasks">
+                                    <header class="tasks-header">
+                                        <span class="tasks-title">Patients Category</span>
+                                        <a class="tasks-lists"></a>
+                                    </header>
 
-                <div class="onerow">
-                    <div class="col4">
-                        <div class="tasks">
-                            <header class="tasks-header">
-                                <span class="tasks-title">Patients Category</span>
-                                <a class="tasks-lists"></a>
-                            </header>
+                                    <div class="tasks-list parent-items">
+                                        <label class="tasks-list-item">
+                                            <input style="display:none!important" type="radio" name="paym_1" value="1"
+                                                   class="tasks-list-cb">
+                                            <span class="tasks-list-mark"></span>
+                                            <span class="tasks-list-desc">PAYING</span>
+                                        </label>
 
-                            <div class="tasks-list parent-items">
-                                <label class="tasks-list-item">
-                                    <input style="display:none!important" type="radio" name="paym_1" value="1"
-                                           class="tasks-list-cb">
-                                    <span class="tasks-list-mark"></span>
-                                    <span class="tasks-list-desc">PAYING</span>
-                                </label>
+                                        <label class="tasks-list-item">
+                                            <input style="display:none!important" type="radio" name="paym_1" value="2"
+                                                   class="tasks-list-cb">
+                                            <span class="tasks-list-mark"></span>
+                                            <span class="tasks-list-desc">NON-PAYING</span>
+                                        </label>
 
-                                <label class="tasks-list-item">
-                                    <input style="display:none!important" type="radio" name="paym_1" value="2"
-                                           class="tasks-list-cb">
-                                    <span class="tasks-list-mark"></span>
-                                    <span class="tasks-list-desc">NON-PAYING</span>
-                                </label>
-
-                                <label class="tasks-list-item">
-                                    <input style="display:none!important" type="radio" name="paym_1" value="3"
-                                           class="tasks-list-cb">
-                                    <span class="tasks-list-mark"></span>
-                                    <span class="tasks-list-desc">SPECIAL SCHEMES</span>
-                                </label>
+                                        <label class="tasks-list-item">
+                                            <input style="display:none!important" type="radio" name="paym_1" value="3"
+                                                   class="tasks-list-cb">
+                                            <span class="tasks-list-mark"></span>
+                                            <span class="tasks-list-desc">SPECIAL SCHEMES</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                    </td>
+                    <td>
 
-                    <div class="col4">
-                        <div class="tasks">
-                            <header class="tasks-header">
-                                <span id="tasktitle" class="tasks-title">Paying Category</span>
-                                <a class="tasks-lists"></a>
-                            </header>
+                            <div class="col4">
+                                <div class="tasks">
+                                    <header class="tasks-header">
+                                        <span id="tasktitle" class="tasks-title">Paying Category</span>
+                                        <a class="tasks-lists"></a>
+                                    </header>
 
-                            <div class="tasks-list" id="paycatgs">
+                                    <div class="tasks-list" id="paycatgs">
 
+                                    </div>
+                                </div>
                             </div>
+                    </td>
+                    <td>
+                        <div class="col4 last">
+                            <div class="tasks">
+                                <header class="tasks-header">
+                                    <span id="summtitle1" class="tasks-title">Details</span>
+                                    <input type="hidden" id="nhifNumber" name="person.attribute.34"/>
+                                    <input type="hidden" id="studentId" name="person.attribute.42"/>
+                                    <input type="hidden" id="waiverNumber" name="person.attribute.32"/>
+                                    <a class="tasks-lists"></a>
+                                </header>
+                            </div>
+
+                            <span id="universitydiv" class="select-arrow" style="width: 100%">
+                                <field><select style="width: 101%;" name="person.attribute.47"
+                                               id="university">&nbsp;</select></field>
+                            </span>
+
+                            <field><input type="text" id="modesummary" name="modesummary" value="N/A"
+                                          placeholder="WAIVER NUMBER" readonly="" style="width: 101%!important"/>
+                            </field>
                         </div>
-                    </div>
-
-                    <div class="col4 last">
-                        <div class="tasks">
-                            <header class="tasks-header">
-                                <span id="summtitle1" class="tasks-title">Details</span>
-                                <input type="hidden" id="nhifNumber" name="person.attribute.34"/>
-                                <input type="hidden" id="studentId" name="person.attribute.42"/>
-                                <input type="hidden" id="waiverNumber" name="person.attribute.32"/>
-                                <a class="tasks-lists"></a>
-                            </header>
-                        </div>
-
-                        <span id="universitydiv" class="select-arrow" style="width: 100%">
-                            <field><select style="width: 101%;" name="person.attribute.47"
-                                           id="university">&nbsp;</select></field>
-                        </span>
-
-                        <field><input type="text" id="modesummary" name="modesummary" value="N/A"
-                                      placeholder="WAIVER NUMBER" readonly="" style="width: 101%!important"/>
-                        </field>
-                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h2>Visit type</h2></td>
+                <td><div>
+                    <select id="visitType" name="visitType">
+                        <option value="1">New patient</option>
+                        <option value="2">Revisit patient</option>
+                    </select>
                 </div>
+                </td>
+                </tr>
 
-                <h2>&nbsp;</h2>
 
-                <h2>Room to Visit</h2>
+
+                <tr><td colspan="2"><h2>Room to Visit</h2></td></tr>
+                <tr>
 
                 <div class="onerow" style="margin-top:10px;">
-                    <div class="col4">
-                        <label for="rooms1" id="froom1" style="margin:0px;">Room to Visit<span>*</span></label>
-                    </div>
-
-                    <div class="col4">
-                        <label for="rooms2" id="froom2" style="margin:0px;">Room Type<span>*</span></label>
-                    </div>
-
-                    <div class="col4 last">
-                        <label for="rooms3" id="froom3" style="margin:0px;">File Number</label>
-                    </div>
+                    <td valign="top">
+                        <div class="col4">
+                            <label for="rooms1" id="froom1" style="margin:0px;">Room to Visit<span>*</span></label>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <div class="col4">
+                            <span class="select-arrow" style="width: 100%">
+                                <field>
+                                    <select id="rooms1" name="rooms1" onchange="LoadRoomsTypes();"
+                                            class="required form-combo1">
+                                        <option value="">Select Room</option>
+                                        <option value="1">TRIAGE ROOM</option>
+                                        <option value="2">OPD ROOM</option>
+                                        <option value="3">SPECIAL CLINIC</option>
+                                    </select>
+                                </field>
+                            </span>
+                        </div>
+                    </td>
                 </div>
-
-                <div class="onerow">
-                    <div class="col4">
-                        <span class="select-arrow" style="width: 100%">
-                            <field>
-                                <select id="rooms1" name="rooms1" onchange="LoadRoomsTypes();"
-                                        class="required form-combo1">
-                                    <option value="">Select Room</option>
-                                    <option value="1">TRIAGE ROOM</option>
-                                    <option value="2">OPD ROOM</option>
-                                    <option value="3">SPECIAL CLINIC</option>
-                                </select>
-                            </field>
-                        </span>
+                </tr>
+                <tr>
+                    <div class="onerow" style="margin-top:10px;">
+                        <td valign="top">
+                            <div class="col4">
+                                <label for="rooms2" id="froom2" style="margin:0px;">Room Type<span>*</span></label>
+                            </div>
+                        </td>
+                        <td valign="top">
+                            <div class="col4">
+                                <span class="select-arrow" style="width: 100%">
+                                    <field>
+                                        <select id="rooms2" name="rooms2" class="required form-combo1">
+                                        </select>
+                                    </field>
+                                </span>
+                            </div>
+                        </td>
                     </div>
-
-                    <div class="col4">
-                        <span class="select-arrow" style="width: 100%">
-                            <field>
-                                <select id="rooms2" name="rooms2" class="required form-combo1">
-                                </select>
-                            </field>
-                        </span>
-                    </div>
-
-                    <div class="col4 last">
-                        <field><input type="text" id="rooms3" name="rooms3" value="N/A" placeholder="FILE NUMBER"
-                                      readonly=""/></field>
-                    </div>
-                </div>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <div class="col4 last">
+                            <label for="rooms3" id="froom3" style="margin:0px;">File Number</label>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <div class="col4 last">
+                            <field><input type="text" id="rooms3" name="rooms3" value="N/A" placeholder="FILE NUMBER"
+                                          readonly=""/></field>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
                 <div class="onerow" style="display:none!important;">
                     <div class="col4">
@@ -1826,12 +1851,5 @@ a.tooltip span {
                     <span>RESET</span>
                 </a>
                 </div>
-
-            </div>
-
-
-            <p></p>
-        </fieldset>
-        </fieldset>
     </form>
 </div>

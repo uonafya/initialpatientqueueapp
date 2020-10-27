@@ -34,6 +34,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -65,6 +66,7 @@ public class QueuePatientFragmentController {
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_SCHEME));
 		model.addAttribute("universities",
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
+		
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
 		Concept payingCategory = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_PAYING_CATEGORY);
@@ -88,9 +90,7 @@ public class QueuePatientFragmentController {
 		model.addAttribute("specialSchemeMap", specialSchemeMap);
 		model.addAttribute("initialRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
-		// model.addAttribute("mchRegFee",
-		// GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_MCH_REGISTRATION_FEE,
-		// ""));
+		
 		model.addAttribute("childLessThanFiveYearRegistrationFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
@@ -98,42 +98,15 @@ public class QueuePatientFragmentController {
 		
 	}
 	
-	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils) throws IOException {
-		// list all parameter submitted
-		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
-		Map<String, Object> redirectParams = new HashMap<String, Object>();
-		logger.info("Submitted Parameters: " + parameters);
+	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils,
+	        @RequestParam("paym_1") Integer paymentOption, @RequestParam("visitType") Integer visitType,
+	        @RequestParam("modesummary") String modesummary, @RequestParam("rooms1") Integer rooms1,
+	        @RequestParam("rooms2") Integer rooms2, @RequestParam("rooms3") String rooms3) throws IOException {
+		String inputs = "?request=" + request + "&paymentOption=" + paymentOption + "&visitType=" + visitType
+		        + "&modesummary=" + modesummary + "&rooms1=" + rooms1 + "&rooms2=" + rooms2 + "&rooms3=" + rooms3;
+		String s = "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "patientQueueHome" + inputs);
 		
-		Patient patient = null;
-		try {
-			// create patient
-			patient = generatePatient(parameters);
-			
-			patient = Context.getPatientService().savePatient(patient);
-			savePatientSearch(patient);
-			logger.info(String.format("Saved new patient [id=%s]", patient.getId()));
-			
-			// create encounter for the visit here
-			Encounter encounter = createEncounter(patient, parameters);
-			encounter = Context.getEncounterService().saveEncounter(encounter);
-			redirectParams.put("status", "success");
-			redirectParams.put("patientId", patient.getPatientId());
-			redirectParams.put("encounterId", encounter.getId());
-			
-			model.addAttribute("status", "success");
-			model.addAttribute("patientId", patient.getPatientId());
-			model.addAttribute("encounterId", encounter.getId());
-			
-			String s = "redirect:" + uiUtils.pageLink("registration", "showPatientInfo", redirectParams);
-			return s;
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("status", "error");
-			model.addAttribute("message", e.getMessage());
-			return null;
-		}
+		return s;
 		
 	}
 	

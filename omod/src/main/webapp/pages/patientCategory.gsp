@@ -81,6 +81,9 @@ form textarea:focus, .form textarea:focus{
                 ${ ui.includeFragment("initialpatientqueueapp", "queuePatient", [patient: currentPatient])}
             </div>
             </td>
+            <td width="15%" valign="top" style="padding-left: 5px">
+                ${ ui.includeFragment("kenyaemr", "providerAction/providerActions") }
+            </td>
         </tr>
     </table>
 </div>
