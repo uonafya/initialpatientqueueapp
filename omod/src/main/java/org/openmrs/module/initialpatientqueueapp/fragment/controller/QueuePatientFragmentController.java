@@ -38,11 +38,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils.savePatientSearch;
 
 /**
  * 4 Fragment to process the queueing information for a patient return processed patients
