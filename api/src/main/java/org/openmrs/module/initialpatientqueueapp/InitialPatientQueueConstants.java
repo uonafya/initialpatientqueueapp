@@ -77,4 +77,18 @@ public class InitialPatientQueueConstants {
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
+	public static final String PROPERTY_NUMBER_OF_DATE_VALIDATION = MODULE_ID + ".numberOfDateValidation";
+	
+	public static final String CONCEPT_NAME_MEDICO_LEGAL_CASE = "MEDICO LEGAL CASE";
+	
+	public static final String PROPERTY_REVISIT_REGISTRATION_FEE = MODULE_ID + ".reVisitRegistrationFee";
+	
+	public static final String FORM_FIELD_PATIENT_MLC = "patient.mlc";
+	
+	public static final String CONCEPT_REVISIT = "Revisit";
+	
+	public static final String FORM_FIELD_SELECTED_PAYMENT_CATEGORY = "patient.selectedPaymentCategory";
+	
+	public static final String FORM_FIELD_SELECTED_PAYMENT_SUBCATEGORY = "patient.selectedPaymentSubCategory";
+	
 }

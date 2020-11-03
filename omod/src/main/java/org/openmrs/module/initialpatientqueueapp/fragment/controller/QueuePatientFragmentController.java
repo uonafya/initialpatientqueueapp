@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -96,14 +97,33 @@ public class QueuePatientFragmentController {
 	}
 	
 	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils,
-	        @RequestParam("paym_1") Integer paymentOption, @RequestParam("visitType") Integer visitType,
-	        @RequestParam("modesummary") String modesummary, @RequestParam("rooms1") Integer rooms1,
-	        @RequestParam("rooms2") Integer rooms2, @RequestParam("rooms3") String rooms3) throws IOException {
-		String inputs = "?request=" + request + "&paymentOption=" + paymentOption + "&visitType=" + visitType
-		        + "&modesummary=" + modesummary + "&rooms1=" + rooms1 + "&rooms2=" + rooms2 + "&rooms3=" + rooms3;
-		String s = "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "patientQueueHome" + inputs);
+	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") Integer paymentOption) throws IOException {
 		
-		return s;
+		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
+		Map<String, Object> redirectParams = new HashMap<String, Object>();
+		
+		try {
+			// create encounter for the visit here
+			Encounter encounter = createEncounter(patient, parameters);
+			encounter = Context.getEncounterService().saveEncounter(encounter);
+			redirectParams.put("status", "success");
+			redirectParams.put("patientId", patient.getPatientId());
+			redirectParams.put("encounterId", encounter.getId());
+			
+			model.addAttribute("status", "success");
+			model.addAttribute("patientId", patient.getPatientId());
+			model.addAttribute("encounterId", encounter.getId());
+			
+			String s = "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo", redirectParams);
+			return s;
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("status", "error");
+			model.addAttribute("message", e.getMessage());
+			return null;
+		}
 		
 	}
 	
