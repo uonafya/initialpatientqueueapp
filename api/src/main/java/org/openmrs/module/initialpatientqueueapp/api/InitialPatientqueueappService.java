@@ -78,15 +78,15 @@ public interface InitialPatientqueueappService extends OpenmrsService {
 	
 	// ghanshya,3-july-2013 #1962 Create validation for length of Health ID and
 	// National ID
-	public int getNationalId(String nationalId);
+	//public int getNationalId(String nationalId);
 	
 	public int getNationalId(Integer patientId, String nationalId);
 	
-	public int getHealthId(String healthId);
+	//public int getHealthId(String healthId);
 	
 	public int getHealthId(Integer patientId, String healthId);
 	
-	public int getPassportNumber(String passportNumber);
+	//public int getPassportNumber(String passportNumber);
 	
 	public int getPassportNumber(Integer patientId, String passportNumber);
 	

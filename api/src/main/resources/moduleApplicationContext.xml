@@ -55,33 +55,36 @@
         <property name="order" value="1000" />
     </bean>
 
-    <!-- Wraps PatientqueueappService methods in DB transactions and OpenMRS interceptors,
+    <!-- Wraps InitialPatientqueueappService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="initialpatientqueueapp.InitialPatientqueueappService"
-            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager" />
-        </property>
-        <property name="target">
-            <bean class="org.openmrs.module.initialpatientqueueapp.api.impl.InitialPatientqueueappServiceImpl">
-                <property name="dao" ref="initialpatientqueueapp.InitialPatientqueueappDao" />
-            </bean>
-        </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors" />
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource" />
-        </property>
-    </bean>
-
-    <!-- Adds PatientqueueappService to OpenMRS context so it can be accessed
-    calling Context.getService(PatientqueueappService.class) -->
+    <!-- Services accessible via Context.getService() -->
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
                 <value>org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueueappService</value>
-                <ref bean="initialpatientqueueapp.InitialPatientqueueappService" />
+                <bean
+                        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager">
+                        <ref bean="transactionManager" />
+                    </property>
+                    <property name="target">
+                        <bean class="org.openmrs.module.initialpatientqueueapp.api.impl.InitialPatientqueueappServiceImpl">
+                            <property name="dao">
+                                <bean class="org.openmrs.module.initialpatientqueueapp.api.dao.hibernate.HibernateInitialPatientqueueappDao">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors">
+                        <ref bean="serviceInterceptors" />
+                    </property>
+                    <property name="transactionAttributeSource">
+                        <ref bean="transactionAttributeSource" />
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

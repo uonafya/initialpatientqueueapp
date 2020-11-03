@@ -9,18 +9,15 @@
  */
 package org.openmrs.module.initialpatientqueueapp.api.dao;
 
-import org.hibernate.SessionFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.module.initialpatientqueueapp.model.RegistrationFee;
-import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.util.List;
 
-@Repository("initialpatientqueueapp.InitialPatientqueueappDao")
 public interface InitialPatientqueueappDao {
 	
 	// REGISTRATION FEE
@@ -77,15 +74,15 @@ public interface InitialPatientqueueappDao {
 	 */
 	public Encounter getLastEncounter(Patient patient);
 	
-	public int getNationalId(String nationalId);
+	//public int getNationalId(String nationalId);
 	
 	public int getNationalId(Integer patientId, String nationalId);
 	
-	public int getHealthId(String healthId);
+	//public int getHealthId(String healthId);
 	
 	public int getHealthId(Integer patientId, String healthId);
 	
-	public int getPassportNumber(String passportNumber);
+	//public int getPassportNumber(String passportNumber);
 	
 	public int getPassportNumber(Integer patientId, String passportNumber);
 	
