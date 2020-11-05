@@ -101,6 +101,46 @@ public class QueuePatientFragmentController {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		Map<String, Object> redirectParams = new HashMap<String, Object>();
+		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
+		Concept payingCategory = Context.getConceptService().getConcept(
+		    InitialPatientQueueConstants.CONCEPT_NAME_PAYING_CATEGORY);
+		for (ConceptAnswer ca : payingCategory.getAnswers()) {
+			payingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<Integer, String> nonPayingCategoryMap = new LinkedHashMap<Integer, String>();
+		Concept nonPayingCategory = Context.getConceptService().getConcept(
+		    InitialPatientQueueConstants.CONCEPT_NAME_NONPAYING_CATEGORY);
+		for (ConceptAnswer ca : nonPayingCategory.getAnswers()) {
+			nonPayingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<Integer, String> specialSchemeMap = new LinkedHashMap<Integer, String>();
+		Concept specialScheme = Context.getConceptService().getConcept(
+		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_SCHEME);
+		for (ConceptAnswer ca : specialScheme.getAnswers()) {
+			specialSchemeMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		model.addAttribute("payingCategoryMap", payingCategoryMap);
+		model.addAttribute("nonPayingCategoryMap", nonPayingCategoryMap);
+		model.addAttribute("specialSchemeMap", specialSchemeMap);
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("SPECIALCLINIC",
+		    RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC));
+		model.addAttribute("payingCategory",
+		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_PAYING_CATEGORY));
+		model.addAttribute("nonPayingCategory",
+		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
+		model.addAttribute("specialScheme",
+		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_SCHEME));
+		model.addAttribute("universities",
+		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
+		model.addAttribute("initialRegFee",
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
+		
+		model.addAttribute("childLessThanFiveYearRegistrationFee",
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
+		model.addAttribute("specialClinicRegFee",
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
 		
 		try {
 			// create encounter for the visit here
@@ -172,16 +212,7 @@ public class QueuePatientFragmentController {
 		int rooms1 = Integer.parseInt(parameters.get("rooms1"));
 		int paymt1 = Integer.parseInt(parameters.get("paym_1"));
 		int paymt2 = Integer.parseInt(parameters.get("paym_2"));
-		
-		int legal1 = Integer.parseInt(parameters.get("legal1"));
-		String legal2 = parameters.get("patient.mlc");
-		
-		int refer1 = Integer.parseInt(parameters.get("refer1"));
-		String refer2 = parameters.get("patient.referred.from");
-		String refer3 = parameters.get("patient.referred.description");
-		String refer4 = parameters.get("patient.referred.reason");
-		String refer5 = parameters.get("patient.referred.county");
-		String refer6 = parameters.get("patient.referred.facility");
+		int status = Integer.parseInt(parameters.get("visitType"));
 		
 		String paymt3 = null;
 		String paymt4 = null;
@@ -253,9 +284,12 @@ public class QueuePatientFragmentController {
 			}
 		}
 		
-		Encounter encounter = RegistrationWebUtils.createEncounter(patient, false);
+		Encounter encounter = RegistrationWebUtils.createEncounter(patient, getRevisit(status));
+		System.out.println("Encounter created is >>" + encounter);
 		
 		if (!StringUtils.isBlank(tNTriage)) {
+			System.out.println("Encounter created is to be tied to triage >>" + tNTriage);
+			
 			Concept triageConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE);
 			
 			Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(tNTriage);
@@ -265,11 +299,13 @@ public class QueuePatientFragmentController {
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(triageObs);
-			
-			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, false, selectedCategory);
+			System.out.println("The encounter reached here >>" + encounter + " and >>" + paymt3);
+			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
+			    selectedCategory);
 		} else if (!StringUtils.isBlank(oNOpd)) {
+			System.out.println("Encounter created is to be tied to opd >>" + oNOpd);
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
-			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
+			//PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 			Concept selectedOPDConcept = Context.getConceptService().getConcept(oNOpd);
 			String selectedCategory = paymt3;
 			Obs opdObs = new Obs();
@@ -280,9 +316,10 @@ public class QueuePatientFragmentController {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false, selectedCategory);
 			
 		} else {
+			System.out.println("Encounter created is to be tied to special clinic >>");
 			Concept specialClinicConcept = Context.getConceptService().getConcept(
 			    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC);
-			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
+			//PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 			Concept selectedSpecialClinicConcept = Context.getConceptService().getConcept(sNSpecial);
 			String selectedCategory = paymt3;
 			Obs opdObs = new Obs();
@@ -303,15 +340,24 @@ public class QueuePatientFragmentController {
 		Double doubleVal = Double.parseDouble(parameters.get(InitialPatientQueueConstants.FORM_FIELD_REGISTRATION_FEE));
 		obsn.setValueNumeric(doubleVal);
 		obsn.setValueText(paymt3);
+		assert paymt3 != null;
 		if (paymt3.equals("Paying")) {
 			obsn.setComment(nPayn);
 		} else if (paymt3.equals("Non-Paying")) {
 			obsn.setComment(nNotpayn);
-		} else if (paymt3.equals("Special Schemes")) {
+		} else {
 			obsn.setComment(nScheme);
 		}
 		encounter.addObs(obsn);
 		
 		return encounter;
+	}
+	
+	private boolean getRevisit(int state) {
+		boolean status = false;
+		if (state == 2) {
+			status = true;
+		}
+		return status;
 	}
 }
