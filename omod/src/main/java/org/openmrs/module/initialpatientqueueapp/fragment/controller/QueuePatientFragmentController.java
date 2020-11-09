@@ -20,6 +20,7 @@ import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.PatientQueueService;
+import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -49,8 +51,7 @@ public class QueuePatientFragmentController {
 	
 	private static Log logger = LogFactory.getLog(QueuePatientFragmentController.class);
 	
-	public void controller(@FragmentParam("patient") Patient patient, FragmentModel model, PageRequest request,
-	        @SpringBean FormManager formManager, @SpringBean KenyaUiUtils kenyaUi) {
+	public void controller(@FragmentParam("patient") Patient patient, FragmentModel model) {
 		
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD));
@@ -302,10 +303,10 @@ public class QueuePatientFragmentController {
 			System.out.println("The encounter reached here >>" + encounter + " and >>" + paymt3);
 			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
 			    selectedCategory);
+			System.out.println("The patient is sent to the right queue");
 		} else if (!StringUtils.isBlank(oNOpd)) {
 			System.out.println("Encounter created is to be tied to opd >>" + oNOpd);
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
-			//PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 			Concept selectedOPDConcept = Context.getConceptService().getConcept(oNOpd);
 			String selectedCategory = paymt3;
 			Obs opdObs = new Obs();
