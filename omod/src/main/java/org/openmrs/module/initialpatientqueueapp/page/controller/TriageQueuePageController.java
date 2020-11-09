@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Bush Odhiambo.
+ *
  */
 
 public class TriageQueuePageController {

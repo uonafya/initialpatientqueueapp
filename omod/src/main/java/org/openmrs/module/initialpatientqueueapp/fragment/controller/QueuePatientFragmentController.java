@@ -147,9 +147,7 @@ public class QueuePatientFragmentController {
 			model.addAttribute("status", "success");
 			model.addAttribute("patientId", patient.getPatientId());
 			model.addAttribute("encounterId", encounter.getId());
-			
-			String s = "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo", redirectParams);
-			return s;
+			return "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo");
 			
 		}
 		catch (Exception e) {
@@ -294,7 +292,6 @@ public class QueuePatientFragmentController {
 			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
 			    selectedCategory);
 		} else if (!StringUtils.isBlank(oNOpd)) {
-			System.out.println("Encounter created is to be tied to opd >>" + oNOpd);
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
 			Concept selectedOPDConcept = Context.getConceptService().getConcept(oNOpd);
 			String selectedCategory = paymt3;
@@ -303,10 +300,9 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false, selectedCategory);
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, getRevisit(status), selectedCategory);
 			
 		} else {
-			System.out.println("Encounter created is to be tied to special clinic >>");
 			Concept specialClinicConcept = Context.getConceptService().getConcept(
 			    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC);
 			//PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
@@ -317,7 +313,8 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedSpecialClinicConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, false, selectedCategory);
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, getRevisit(status),
+			    selectedCategory);
 			
 		}
 		
