@@ -19,27 +19,20 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.PatientQueueService;
-import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.initialpatientqueueapp.web.controller.utils.RegistrationWebUtils;
-import org.openmrs.module.kenyacore.form.FormManager;
-import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
-import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.page.PageModel;
-import org.openmrs.ui.framework.page.PageRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -286,10 +279,8 @@ public class QueuePatientFragmentController {
 		}
 		
 		Encounter encounter = RegistrationWebUtils.createEncounter(patient, getRevisit(status));
-		System.out.println("Encounter created is >>" + encounter);
 		
 		if (!StringUtils.isBlank(tNTriage)) {
-			System.out.println("Encounter created is to be tied to triage >>" + tNTriage);
 			
 			Concept triageConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE);
 			
@@ -300,10 +291,8 @@ public class QueuePatientFragmentController {
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(triageObs);
-			System.out.println("The encounter reached here >>" + encounter + " and >>" + paymt3);
 			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
 			    selectedCategory);
-			System.out.println("The patient is sent to the right queue");
 		} else if (!StringUtils.isBlank(oNOpd)) {
 			System.out.println("Encounter created is to be tied to opd >>" + oNOpd);
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
