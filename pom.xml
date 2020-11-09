@@ -210,7 +210,7 @@
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>hospitalcore-api</artifactId>
 				<version>${hospitalcoreVersion}</version>
-				<scope>compile</scope>
+				<scope>provided</scope>
 
 			</dependency>
 
