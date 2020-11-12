@@ -18,6 +18,8 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
+import org.openmrs.Visit;
+import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
@@ -33,8 +35,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -135,11 +139,14 @@ public class QueuePatientFragmentController {
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
+		List<Visit> patientVisit = Context.getVisitService().getActiveVisitsByPatient(patient);
 		
 		try {
 			// create encounter for the visit here
 			Encounter encounter = createEncounter(patient, parameters);
 			encounter = Context.getEncounterService().saveEncounter(encounter);
+			//create a visit if not created yet
+			hasActiveVisit(patientVisit, patient, encounter);
 			redirectParams.put("status", "success");
 			redirectParams.put("patientId", patient.getPatientId());
 			redirectParams.put("encounterId", encounter.getId());
@@ -147,16 +154,16 @@ public class QueuePatientFragmentController {
 			model.addAttribute("status", "success");
 			model.addAttribute("patientId", patient.getPatientId());
 			model.addAttribute("encounterId", encounter.getId());
-			return "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo");
 			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
-			return null;
+			//return null;
 		}
-		
+		return "redirect:"
+		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId());
 	}
 	
 	/**
@@ -346,5 +353,31 @@ public class QueuePatientFragmentController {
 			status = true;
 		}
 		return status;
+	}
+	
+	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {
+		VisitService visitService = Context.getVisitService();
+		if (visits.size() == 0) {
+			Visit visit = new Visit();
+			visit.addEncounter(encounter);
+			visit.setPatient(patient);
+			visit.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
+			visit.setStartDatetime(new Date());
+			visit.setLocation(Context.getLocationService().getLocation(1));
+			visit.setCreator(Context.getAuthenticatedUser());
+		} else {
+			//pick the last visit and check if it is still active
+			Visit lastVisit = visits.get(visits.size() - 1);
+			if (lastVisit.getStartDatetime() != null && lastVisit.getStopDatetime() != null) {
+				//this means there is no active visit, we will end up creating one for this patient
+				Visit visit1 = new Visit();
+				visit1.addEncounter(encounter);
+				visit1.setPatient(patient);
+				visit1.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
+				visit1.setStartDatetime(new Date());
+				visit1.setLocation(Context.getLocationService().getLocation(1));
+				visit1.setCreator(Context.getAuthenticatedUser());
+			}
+		}
 	}
 }
