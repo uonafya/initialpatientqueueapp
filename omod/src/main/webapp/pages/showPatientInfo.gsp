@@ -1,7 +1,7 @@
-<% ui.decorateWith("appui", "standardEmrPage", [title: "Patient Summary"]) %>
+<% ui.decorateWith("kenyaemr", "standardEmrPage", [title: "Patient Summary"]) %>
 <%
-    ui.includeCss("registration", "onepcssgrid.css")
-    ui.includeCss("registration", "main.css")
+    ui.includeCss("ehrconfigs", "onepcssgrid.css")
+    ui.includeCss("initialpatientqueueapp", "main.css")
 
 %>
 
@@ -13,16 +13,16 @@
 
 <div class="onepcssgrid-1000">
 
-    ${ui.includeFragment("registration", "js_css")}
+    ${ui.includeFragment("initialpatientqueueapp", "js_css")}
 
     <%
         if(revisit) {
     %>
-    ${ui.includeFragment("registration", "patientInfoPage")}
+    ${ui.includeFragment("initialpatientqueueapp", "patientInfoPage")}
     <%
         }else {
     %>
-    ${ui.includeFragment("registration", "patientInfoForm")}
+    ${ui.includeFragment("initialpatientqueueapp", "patientInfoForm")}
     <%
         }
     %>

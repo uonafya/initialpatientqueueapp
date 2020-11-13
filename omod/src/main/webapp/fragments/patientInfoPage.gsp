@@ -1,9 +1,7 @@
 
 <%
-    ui.includeJavascript("billingui", "moment.js")
-
-    def pageLinkEdit = ui.pageLink("registration", "editPatient");
-    def pageLinkPrnt = ui.pageLink("registration", "showPatientInfo");
+    ui.includeJavascript("ehrconfigs", "moment.js")
+    def pageLinkPrnt = ui.pageLink("initialpatientqueueapp", "showPatientInfo");
 %>
 
 <script type="text/javascript">
@@ -405,16 +403,7 @@
                             window.location.href = '${ ui.pageLink("registration", "patientRegistration")}';
                         }
                     });
-//                    jQuery("#patientInfoForm").ajaxSubmit({
-//                        success: function (responseText, statusText, xhr) {
 //
-//                            if (responseText == "success") {
-//                                alert("Hit the function ");
-//                                PAGE.print();
-//                                window.location.href = getContextPath() + "/findPatient.htm";
-//                            }
-//                        }
-//                    });
                 } else {
                     PAGE.print();
                     window.location.href = '${ ui.pageLink("registration", "patientRegistration")}';
@@ -443,12 +432,12 @@
         save: function () {
             if (PAGE.validate()) {
                 var save = document.getElementById("save");
-                if (save == save) {
+                if (save === save) {
                     document.getElementById("save").disabled = true;
                 }
                 jQuery("#patientInfoForm").ajaxSubmit({
                     success: function (responseText, statusText, xhr) {
-                        if (responseText == "success") {
+                        if (responseText === "success") {
 
                             window.location.href = getContextPath() + "/findPatient.htm";
                         }
@@ -1167,36 +1156,6 @@ form input:focus, form select:focus, form textarea:focus, form ul.select:focus, 
 
         </div>
 
-
-        <div class="dashboard col15 last">
-            <div class="action-section">
-                <ul>
-                    <h3>&nbsp; General Actions</h3>
-                    <li>
-                        <i class="icon-edit"></i>
-                        <a href="${pageLinkEdit}?patientId=${patient.patientId}"
-                           id="org.openmrs.module.coreapps.createVisit">
-                            Edit Patient
-                        </a>
-                    </li>
-
-                    <li>
-                        <i class="icon-print"></i>
-                        <a href="${pageLinkPrnt}?patientId=${patient.patientId}&reprint=true"
-                           id="org.openmrs.module.coreapps.createVisit">
-                            Reprint Receipt
-                        </a>
-                    </li>
-
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-
-                </ul>
-            </div>
-        </div>
 
         <input type="hidden" id="selectedPaymentCategory" name="patient.selectedPaymentCategory"/>
         <input type="hidden" id="selectedPaymentSubCategory" name="patient.selectedPaymentSubCategory"/>

@@ -365,6 +365,7 @@ public class QueuePatientFragmentController {
 			visit.setStartDatetime(new Date());
 			visit.setLocation(Context.getLocationService().getLocation(1));
 			visit.setCreator(Context.getAuthenticatedUser());
+			visitService.saveVisit(visit);
 		} else {
 			//pick the last visit and check if it is still active
 			Visit lastVisit = visits.get(visits.size() - 1);
@@ -377,6 +378,7 @@ public class QueuePatientFragmentController {
 				visit1.setStartDatetime(new Date());
 				visit1.setLocation(Context.getLocationService().getLocation(1));
 				visit1.setCreator(Context.getAuthenticatedUser());
+				visitService.saveVisit(visit1);
 			}
 		}
 	}

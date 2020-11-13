@@ -103,9 +103,6 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("patientAge", patient.getAge());
 		model.addAttribute("patientGender", patient.getGender());
 		
-		model.addAttribute("",
-		    RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
-		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		
 		String previousVisitTime = sdf.format(hcs.getLastVisitTime(patient));
@@ -132,7 +129,8 @@ public class ShowPatientInfoPageController {
 			for (PersonAttribute pa : pas) {
 				PersonAttributeType attributeType = pa.getAttributeType();
 				PersonAttributeType personAttributePaymentCategory = hcs.getPersonAttributeTypeByName("Payment Category");
-				if (attributeType.getPersonAttributeTypeId() == personAttributePaymentCategory.getPersonAttributeTypeId()) {
+				if (attributeType.getPersonAttributeTypeId().equals(
+				    personAttributePaymentCategory.getPersonAttributeTypeId())) {
 					model.addAttribute("selectedPaymentCategory", pa.getValue());
 				}
 			}
@@ -192,9 +190,7 @@ public class ShowPatientInfoPageController {
 			String stf = spf.format(new Date());
 			System.out.println("patient previous day visit" + spf.format(new Date()));
 			System.out.println("previous day visit" + stf);
-			//model.addAttribute("currentDateTime",stf );
 			int value = stf.compareTo(sef);
-			System.out.println("****" + value);
 			model.addAttribute("create", value);
 			model.addAttribute("firstTimeVisit", false);
 		}

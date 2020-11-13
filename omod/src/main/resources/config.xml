@@ -32,7 +32,29 @@
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
-	
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.childLessThanFiveYearRegistrationFee</property>
+		<defaultValue>0</defaultValue>
+		<description>
+			Registration Fee for children under 5 years
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.specialClinicRegistrationFee</property>
+		<defaultValue>0</defaultValue>
+		<description>
+			Registration Fee for special clinic
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>${project.parent.artifactId}.identifier_prefix</property>
+		<defaultValue>BDHOS</defaultValue>
+		<description>
+			Patient identifier prefix
+		</description>
+	</globalProperty>
 	
 	<!-- AOP
 	<advice>
