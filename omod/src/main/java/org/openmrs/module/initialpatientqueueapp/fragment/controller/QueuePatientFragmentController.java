@@ -34,7 +34,9 @@ import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -94,7 +96,7 @@ public class QueuePatientFragmentController {
 		
 	}
 	
-	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils,
+	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils, HttpServletResponse response,
 	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") Integer paymentOption) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
@@ -147,6 +149,9 @@ public class QueuePatientFragmentController {
 			encounter = Context.getEncounterService().saveEncounter(encounter);
 			//create a visit if not created yet
 			hasActiveVisit(patientVisit, patient, encounter);
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("success");
 			redirectParams.put("status", "success");
 			redirectParams.put("patientId", patient.getPatientId());
 			redirectParams.put("encounterId", encounter.getId());
@@ -162,8 +167,7 @@ public class QueuePatientFragmentController {
 			model.addAttribute("message", e.getMessage());
 			//return null;
 		}
-		return "redirect:"
-		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId());
+		return "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "patientQueueHome");
 	}
 	
 	/**

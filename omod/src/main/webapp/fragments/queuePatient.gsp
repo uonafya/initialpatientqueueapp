@@ -1853,3 +1853,38 @@ a.tooltip span {
                 </div>
     </form>
 </div>
+<div id="printDiv" style="display: none;">
+    <center>
+        <center>
+            <img width="60" height="60" align="center" title="OpenMRS" alt="OpenMRS"
+                 src="${ui.resourceLink('registration', 'images/kenya_logo.bmp')}">
+        </center>
+    </center>
+
+    <h3><center><u><b>${userLocation}</b></u></center></h3>
+    <h4 style="font-size: 1.4em;"><center><b>Registration Receipt</b></center></h4>
+    <div style="display: block;	margin-left: auto; margin-right: auto; width: 350px">
+        <div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px">
+                <b>Receipt Date:</b>
+            </div>
+
+            <div class="col2" align="left" style="display: inline-block; width: 150px;">
+                <span>${receiptDate}</span>
+            </div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Name:</b></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="patientName"></span></div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Patient ID:</b></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="identifier"></span></div>
+    </div>
+
+    <div class="onerow" align="left">
+        <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
+        <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span></div>
+</div>
