@@ -430,10 +430,26 @@
      ** FORM
      **/
     PAGE = {
+        // Print the slip
+        print: function () {
+            var myStyle = '<link rel="stylesheet" href="http://localhost:8080/openmrs/ms/uiframework/resource/registration/styles/onepcssgrid.css" />';
+            var printDiv = jQuery("#printDiv").html();
+            var printWindow = window.open('', '', 'height=500,width=400');
+
+            printWindow.document.write('<html><head><title>Patient Information</title>');
+            printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');
+            printWindow.document.write(printDiv);
+            printWindow.document.write('</body>');
+            printWindow.document.write('</html>');
+            printWindow.print();
+            printWindow.close();
+
+        },
         /** SUBMIT */
         submit: function () {
             // Validate and submit
             if (this.validateRegisterForm()) {
+                print();
                 jq("#patientRegistrationForm").submit();
             }
         },

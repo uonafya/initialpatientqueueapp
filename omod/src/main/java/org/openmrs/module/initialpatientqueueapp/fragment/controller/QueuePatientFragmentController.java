@@ -27,6 +27,7 @@ import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.initialpatientqueueapp.web.controller.utils.RegistrationWebUtils;
+import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -93,6 +94,9 @@ public class QueuePatientFragmentController {
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
+		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
+		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
+		model.addAttribute("receiptDate", new Date());
 		
 	}
 	
@@ -142,6 +146,9 @@ public class QueuePatientFragmentController {
 		model.addAttribute("specialClinicRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
 		List<Visit> patientVisit = Context.getVisitService().getActiveVisitsByPatient(patient);
+		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
+		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
+		model.addAttribute("receiptDate", new Date());
 		
 		try {
 			// create encounter for the visit here
