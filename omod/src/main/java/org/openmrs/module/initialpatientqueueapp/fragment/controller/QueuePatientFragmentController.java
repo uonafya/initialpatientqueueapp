@@ -17,6 +17,7 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.PersonAttribute;
 import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
@@ -156,6 +157,8 @@ public class QueuePatientFragmentController {
 			encounter = Context.getEncounterService().saveEncounter(encounter);
 			//create a visit if not created yet
 			hasActiveVisit(patientVisit, patient, encounter);
+			//save the person attributes associated
+			Context.getPersonService().savePerson(setAttributes(patient, parameters));
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print("success");
@@ -175,39 +178,6 @@ public class QueuePatientFragmentController {
 			//return null;
 		}
 		return "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "patientQueueHome");
-	}
-	
-	/**
-	 * Generate Patient From Parameters
-	 * 
-	 * @param parameters
-	 * @return
-	 * @throws Exception
-	 */
-	private Patient generatePatient(Map<String, String> parameters) throws Exception {
-		
-		Patient patient = new Patient();
-		
-		// get custom person attribute
-		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
-		Map<String, Object> validationParameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes",
-		    parameters);
-		String validateResult = validator.validate(validationParameters);
-		logger.info("Attribute validation: " + validateResult);
-		if (StringUtils.isBlank(validateResult)) {
-			for (String name : parameters.keySet()) {
-				if ((name.contains(".attribute.")) && (!StringUtils.isBlank(parameters.get(name)))) {
-					String[] parts = name.split("\\.");
-					String idText = parts[parts.length - 1];
-					Integer id = Integer.parseInt(idText);
-					PersonAttribute attribute = EhrRegistrationUtils.getPersonAttribute(id, parameters.get(name));
-					patient.addAttribute(attribute);
-				}
-			}
-		} else {
-			throw new Exception(validateResult);
-		}
-		return patient;
 	}
 	
 	/**
@@ -392,5 +362,27 @@ public class QueuePatientFragmentController {
 				visitService.saveVisit(visit1);
 			}
 		}
+	}
+	
+	private Person setAttributes(Patient patient, Map<String, String> attributes) throws Exception {
+		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
+		Map<String, Object> parameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", attributes);
+		String validateResult = validator.validate(parameters);
+		logger.info("Attirubte validation: " + validateResult);
+		if (StringUtils.isBlank(validateResult)) {
+			for (String name : attributes.keySet()) {
+				if ((name.contains(".attribute.")) && (!StringUtils.isBlank(attributes.get(name)))) {
+					String[] parts = name.split("\\.");
+					String idText = parts[parts.length - 1];
+					Integer id = Integer.parseInt(idText);
+					PersonAttribute attribute = EhrRegistrationUtils.getPersonAttribute(id, attributes.get(name));
+					patient.addAttribute(attribute);
+				}
+			}
+		} else {
+			throw new Exception(validateResult);
+		}
+		
+		return patient;
 	}
 }
