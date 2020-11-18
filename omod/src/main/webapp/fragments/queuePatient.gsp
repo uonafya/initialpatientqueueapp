@@ -79,7 +79,7 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var select3 = '';
-            if (select1 == 1) {
+            if (select1 === 1) {
                 jq('#payingCategory option').eq(select2).prop('selected', true);
                 jq('#nonPayingCategory option').eq(0).prop('selected', true);
                 jq('#specialScheme option').eq(0).prop('selected', true);
@@ -87,7 +87,7 @@
                 jq('#summ_pays').text('Paying / ' + jq('#payingCategory option:selected').text());
                 payingCategorySelection();
             }
-            else if (select1 == 2) {
+            else if (select1 === 2) {
                 jq('#nonPayingCategory option').eq(select2).prop('selected', true);
                 jq('#payingCategory option').eq(0).prop('selected', true);
                 jq('#specialScheme option').eq(0).prop('selected', true);
@@ -104,7 +104,7 @@
                 payingCategorySelection();
                 nonPayingCategorySelection();
             }
-            if (select3.toUpperCase().indexOf("NHIF") >= 0) {
+            if (select3.indexOf("National Health Insurance Fund Member") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.34');
                 jq("#modesummary").val("");
@@ -113,7 +113,7 @@
                 jq('#summtitle1').text('NHIF Details');
                 jq('#modesummary').attr("placeholder", "NHIF Number");
             }
-            else if (select3.toUpperCase().indexOf("STUDENT SCHEME") >= 0) {
+            else if (select3.indexOf("Student") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.42');
                 jq("#modesummary").val("");
@@ -122,7 +122,7 @@
                 jq('#summtitle1').text('Student Details');
                 jq('#modesummary').attr("placeholder", "Student Number");
             }
-            else if (select3.toUpperCase().indexOf("WAIVER") >= 0) {
+            else if (select3.toUpperCase().indexOf("HOSPITAL WAIVER") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.32');
                 jq("#modesummary").val("");
@@ -178,11 +178,11 @@
         jq("#modesummary").blur(function () {
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
-            if (select1 == 2 && select2 == 1) {
+            if (select1 === 2 && select2 === 1) {
                 jq('input[name="person.attribute.34"]').val(jq("#modesummary").val());
-            } else if (select1 == 3 && select2 == 1) {
+            } else if (select1 === 3 && select2 === 1) {
                 jq('input[name="person.attribute.42"]').val(jq("#modesummary").val());
-            } else if (select1 == 3 && select2 == 2) {
+            } else if (select1 === 3 && select2 === 2) {
                 jq('input[name="person.attribute.32"]').val(jq("#modesummary").val());
             }
         });
@@ -197,8 +197,8 @@
         jq('input:text[id]').focusout(function (event) {
             var arr = ["surName", "firstName", "birthdate", "patientRelativeName", "patientPostalAddress", "otherNationalityId", ""];
             var idd = jq(event.target).attr('id');
-            if (jq.inArray(idd, arr) != -1) {
-                if (jq('#' + idd).val().trim() == "") {
+            if (jq.inArray(idd, arr) !== -1) {
+                if (jq('#' + idd).val().trim() === "") {
                     jq('#' + idd).addClass("red-border");
                 }
                 else {
@@ -209,8 +209,8 @@
         jq('input:text[id]').focusout(function (event) {
             var arr = ["firstName", "", "", "", "", ""];
             var idd = jq(event.target).attr('id');
-            if (jq.inArray(idd, arr) != -1) {
-                if (idd == 'firstName') {
+            if (jq.inArray(idd, arr) !== -1) {
+                if (idd === 'firstName') {
                     jq('#summ_idnt').text(jq('#patientIdnts').val());
                     jq('#summ_name').text(jq('#surName').val() + ', ' + jq('#firstName').val());
                 }
