@@ -397,7 +397,7 @@
                         type: "POST",
                         url: '${ ui.actionLink("registration", "newPatientRegistrationForm", "savePatientInfo") }',
                         dataType: "json",
-                        data: jQuery("#patientInfoForm").serialize(),
+                        data: jQuery("#patientInfoPrintArea").serialize(),
                         success: function (data) {
                             PAGE.print();
                             window.location.href = '${ ui.pageLink("registration", "patientRegistration")}';
@@ -422,7 +422,7 @@
             printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');
             printWindow.document.write(printDiv);
             printWindow.document.write('</body>');
-            printWindow.document.write('</html>');
+            printWindow.document.write('</div>');
             printWindow.print();
             printWindow.close();
 
@@ -435,7 +435,7 @@
                 if (save === save) {
                     document.getElementById("save").disabled = true;
                 }
-                jQuery("#patientInfoForm").ajaxSubmit({
+                jQuery("#patientInfoPrintArea").ajaxSubmit({
                     success: function (responseText, statusText, xhr) {
                         if (responseText === "success") {
 
@@ -866,10 +866,9 @@
 }
 
 ul.left-menu {
-    border-color: #ccc #ccc #ccc -moz-use-text-color;
     border-image: none;
-    border-style: solid solid solid solid;
-    border-width: 1px 1px 1px medium;
+    border: 1px solid #ccc;
+    border-left: medium -moz-use-text-color;
 }
 
 .col15 {
@@ -975,219 +974,219 @@ form input:focus, form select:focus, form textarea:focus, form ul.select:focus, 
 <div class="clear"></div>
 
 <form id="patientInfoForm" method="POST">
-	<div class="container">
-		<div class="example">
-			<ul id="breadcrumbs">
-				<li>
-					<a href="${ui.pageLink('referenceapplication', 'home')}">
-<i class="icon-home small"></i></a>
-				</li>
-<li>
-    <i class="icon-chevron-right link"></i>
-    <a href="${ui.pageLink('registration', 'patientRegistration')}">Registration</a>
-</li>
-<li>
-    <i class="icon-chevron-right link"></i>
-    Revist Patient
-</li>
-</ul>
-</div>
-
-<div class="patient-header new-patient-header">
-    <div class="demographics">
-        <h1 class="name">
-            <span>${patient.surName},<em>surname</em></span>
-            <span>${patient.firstName} ${patient.otherName} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<em>other names</em>
-            </span>
-        </h1>
-
-        <br>
-
-        <div class="status-container">
-            <span class="status active"></span>
-            Active Visit
+    <div class="container">
+        <div class="example">
+            <ul id="breadcrumbs">
+                <li>
+                    <a href="${ui.pageLink('referenceapplication', 'home')}">
+                        <i class="icon-home small"></i></a>
+                </li>
+                <li>
+                    <i class="icon-chevron-right link"></i>
+                    <a href="${ui.pageLink('registration', 'patientRegistration')}">Registration</a>
+                </li>
+                <li>
+                    <i class="icon-chevron-right link"></i>
+                    Revist Patient
+                </li>
+            </ul>
         </div>
 
-        <div class="tag">Outpatient</div>
-    </div>
-
-    <div class="identifiers">
-        <em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Patient ID</em>
-        <span>${patient.identifier}</span>
-        <br>
-    </div>
-
-    <div class="close"></div>
-</div>
-
-<div class="onerow">
-    <div class="col15 clear" style="padding-top: 15px;">
-        <ul class="left-menu" id="left-menu">
-            <li visitid="54" class="menu-item selected">
-                <span class="menu-date">
-                    <i class="icon-time"></i>
-                    <span>
-                        ${ui.formatDatePretty(lastVisit)}<br/>
-                        (Active Since ${lastVisit.toString().substring(10,16)} Hrs)
+        <div class="patient-header new-patient-header">
+            <div class="demographics">
+                <h1 class="name">
+                    <span>${patient.surName},<em>surname</em></span>
+                    <span>${patient.firstName} ${patient.otherName} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<em>other names</em>
                     </span>
-                </span>
-                <span class="menu-title">
-                    <i class="icon-stethoscope"></i>
-                    ${outcomes?outcomes:'No diagnosis yet'}
-                </span>
-                <span class="arrow-border"></span>
-                <span class="arrow"></span>
-            </li>
+                </h1>
 
-            <li visitid="53" class="menu-item" style="height: 230px;">
-            </li>
-        </ul>
-    </div>
+                <br>
 
-    <div id="patientInfoPrintArea">
-
-
-        <div class="col16 dashboard">
-            <div class="info-section">
-                <div class="info-header">
-                    <i class="icon-diagnosis"></i>
-
-                    <h3>PATIENT DETAILS</h3>
+                <div class="status-container">
+                    <span class="status active"></span>
+                    Active Visit
                 </div>
 
-                <div class="info-body">
-                    <label>Previous Visit:</label>
-                    <span>${currentDateTime}</span>
-                    <br/>
+                <div class="tag">Outpatient</div>
+            </div>
 
-                    <label>Patient Age :</label>
-                    <span id="agerow">&nbsp;</span>
-                    <br/>
+            <div class="identifiers">
+                <em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Patient ID</em>
+                <span>${patient.identifier}</span>
+                <br>
+            </div>
 
-                    <label>Patient Gender :</label>
-                    <span>${patient.gender}</span>
+            <div class="close"></div>
+        </div>
 
-                    <br/>
+        <div class="onerow">
+            <div class="col15 clear" style="padding-top: 15px;">
+                <ul class="left-menu" id="left-menu">
+                    <li visitid="54" class="menu-item selected">
+                        <span class="menu-date">
+                            <i class="icon-time"></i>
+                            <span>
+                                ${ui.formatDatePretty(lastVisit)}<br/>
+                                (Active Since ${lastVisit.toString().substring(10,16)} Hrs)
+                            </span>
+                        </span>
+                        <span class="menu-title">
+                            <i class="icon-stethoscope"></i>
+                            ${outcomes?outcomes:'No diagnosis yet'}
+                        </span>
+                        <span class="arrow-border"></span>
+                        <span class="arrow"></span>
+                    </li>
 
-                    <div id="printablePaymentCategoryRow">
-                        <label>Payment Category :</label>
-                        <span id="printablePaymentCategory"></span>
+                    <li visitid="53" class="menu-item" style="height: 230px;">
+                    </li>
+                </ul>
+            </div>
+
+            <div id="patientInfoPrintArea">
+
+
+                <div class="col16 dashboard">
+                    <div class="info-section">
+                        <div class="info-header">
+                            <i class="icon-diagnosis"></i>
+
+                            <h3>PATIENT DETAILS</h3>
+                        </div>
+
+                        <div class="info-body">
+                            <label>Previous Visit:</label>
+                            <span>${currentDateTime}</span>
+                            <br/>
+
+                            <label>Patient Age :</label>
+                            <span id="agerow">&nbsp;</span>
+                            <br/>
+
+                            <label>Patient Gender :</label>
+                            <span>${patient.gender}</span>
+
+                            <br/>
+
+                            <div id="printablePaymentCategoryRow">
+                                <label>Payment Category :</label>
+                                <span id="printablePaymentCategory"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-header">
+                            <i class="icon-calendar"></i>
+
+                            <h3>VISIT INFORMATION</h3>
+                        </div>
+
+                        <div class="info-body">
+                            <input type="hidden" id="patientId" name="patientId" value="${patient.patientId}"/>
+                            <label>Medical Legal Case:<span>*</span></label>
+                            <label for="mlcCaseYes" class="checks">
+                                <input type="radio" name="mlcCaseYes" id="mlcCaseYes"/> YES
+                            </label>
+                            <select id="mlc" name="patient.mlc" style='width: 152px; display:inline-block;'></select>
+
+                            <br/>
+
+                            <label>&nbsp;</label>
+                            <label for="mlcCaseNo" class="checks">
+                                <input type="radio" name="mlcCaseYes" id="mlcCaseNo" checked=""/> NO
+                            </label>
+                            <br/>
+                            <br/>
+
+                            <label>Room to Visit :<span>*</span></label>
+                            <label for="triageRoom" class="checks">
+                                <input type="radio" name="visitRoom" id="triageRoom"/> TRIAGE
+                            </label>
+                            <select id="triage" name="patient.triage" onchange="triageRoomSelection();"
+                                    style='width: 152px; display:inline-block;'></select>
+                            <br/>
+
+                            <label>&nbsp;</label>
+                            <label for="opdRoom" class="checks">
+                                <input type="radio" name="visitRoom" id="opdRoom"/> OPD ROOM
+                            </label>
+                            <select id="opdWard" name="patient.opdWard" onchange="opdRoomSelection();"
+                                    style='width: 152px; display:inline-block;'></select>
+                            <br/>
+
+                            <label>&nbsp;</label>
+                            <label for="specialClinicRoom" class="checks">
+                                <input type="radio" name="visitRoom" id="specialClinicRoom"/> SPECIAL CLINIC
+                            </label>
+                            <select id="specialClinic" name="patient.specialClinic" onchange="specialClinicSelection();"
+                                    style='width: 152px; display:inline-block;'></select>
+                            <br/>
+
+                            <div id="fileNumberRow" class="onerow">
+                                <label>&nbsp;</label>
+                                <label class="checks">&nbsp;</label>
+                                <input type="text" id="fileNumber" name="person.attribute.43" placeholder="File Number"
+                                       style='display:inline-block;'/>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-header">
+                            <i class="icon-diagnosis"></i>
+
+                            <h3>REVISIT SUMMARY DETAILS</h3>
+                        </div>
+
+                        <div class="info-body">
+                            <label>Registration Fee:</label>
+                            <span id="printableRegistrationFee">0.00</span>
+                            <span id="patientrevisit"> (Revisit Within 24hrs)</span>
+                            <br/>
+
+                            <label>Served By :</label>
+                            <span>${user}</span>
+                            <br/>
+                        </div>
                     </div>
 
                 </div>
+
+
+                <input type="hidden" id="selectedPaymentCategory" name="patient.selectedPaymentCategory"/>
+                <input type="hidden" id="selectedPaymentSubCategory" name="patient.selectedPaymentSubCategory"/>
+                <input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee"/>
+
             </div>
-
-            <div class="info-section">
-                <div class="info-header">
-                    <i class="icon-calendar"></i>
-
-                    <h3>VISIT INFORMATION</h3>
-                </div>
-
-                <div class="info-body">
-                    <input type="hidden" id="patientId" name="patientId" value="${patient.patientId}"/>
-                    <label>Medical Legal Case:<span>*</span></label>
-                    <label for="mlcCaseYes" class="checks">
-                        <input type="radio" name="mlcCaseYes" id="mlcCaseYes"/> YES
-                    </label>
-                    <select id="mlc" name="patient.mlc" style='width: 152px; display:inline-block;'></select>
-
-                    <br/>
-
-                    <label>&nbsp;</label>
-                    <label for="mlcCaseNo" class="checks">
-                        <input type="radio" name="mlcCaseYes" id="mlcCaseNo" checked=""/> NO
-                    </label>
-                    <br/>
-                    <br/>
-
-                    <label>Room to Visit :<span>*</span></label>
-                    <label for="triageRoom" class="checks">
-                        <input type="radio" name="visitRoom" id="triageRoom"/> TRIAGE
-                    </label>
-                    <select id="triage" name="patient.triage" onchange="triageRoomSelection();"
-                            style='width: 152px; display:inline-block;'></select>
-                    <br/>
-
-                    <label>&nbsp;</label>
-                    <label for="opdRoom" class="checks">
-                        <input type="radio" name="visitRoom" id="opdRoom"/> OPD ROOM
-                    </label>
-                    <select id="opdWard" name="patient.opdWard" onchange="opdRoomSelection();"
-                            style='width: 152px; display:inline-block;'></select>
-                    <br/>
-
-                    <label>&nbsp;</label>
-                    <label for="specialClinicRoom" class="checks">
-                        <input type="radio" name="visitRoom" id="specialClinicRoom"/> SPECIAL CLINIC
-                    </label>
-                    <select id="specialClinic" name="patient.specialClinic" onchange="specialClinicSelection();"
-                            style='width: 152px; display:inline-block;'></select>
-                    <br/>
-
-                    <div id="fileNumberRow" class="onerow">
-                        <label>&nbsp;</label>
-                        <label class="checks">&nbsp;</label>
-                        <input type="text" id="fileNumber" name="person.attribute.43" placeholder="File Number"
-                               style='display:inline-block;'/>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="info-section">
-                <div class="info-header">
-                    <i class="icon-diagnosis"></i>
-
-                    <h3>REVISIT SUMMARY DETAILS</h3>
-                </div>
-
-                <div class="info-body">
-                    <label>Registration Fee:</label>
-                    <span id="printableRegistrationFee">0.00</span>
-                    <span id="patientrevisit"> (Revisit Within 24hrs)</span>
-                    <br/>
-
-                    <label>Served By :</label>
-                    <span>${user}</span>
-                    <br/>
-                </div>
-            </div>
-
         </div>
 
 
-        <input type="hidden" id="selectedPaymentCategory" name="patient.selectedPaymentCategory"/>
-        <input type="hidden" id="selectedPaymentSubCategory" name="patient.selectedPaymentSubCategory"/>
-        <input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee"/>
+        <div class="onerow">
+            <div class="col15">
+                &nbsp;
+            </div>
 
+            <div class="col16 dashboard">
+                <a class="button confirm" style="float: right;" onClick="PAGE.submit(false);">
+                    <i class="icon-user-md" style="font-size: 20px; width: 40px; display: inline;"></i>
+                    REVISIT PATIENT
+                </a>
+
+            </div>
+
+            <div class="row15 last">
+                &nbsp;
+            </div>
+        </div>
+
+
+        <div class="onerow" align="left">
+            <span id="validationDate"></span>
+        </div>
     </div>
-</div>
-
-
-<div class="onerow">
-    <div class="col15">
-        &nbsp;
-    </div>
-
-    <div class="col16 dashboard">
-        <a class="button confirm" style="float: right;" onClick="PAGE.submit(false);">
-            <i class="icon-user-md" style="font-size: 20px; width: 40px; display: inline;"></i>
-            REVISIT PATIENT
-        </a>
-
-    </div>
-
-    <div class="row15 last">
-        &nbsp;
-    </div>
-</div>
-
-
-<div class="onerow" align="left">
-    <span id="validationDate"></span>
-</div>
-</div>
 </form>
 
 <div id="printDiv" style="display: none;">
@@ -1218,56 +1217,57 @@ form input:focus, form select:focus, form textarea:focus, form ul.select:focus, 
 
         <div class="onerow" align="left">
             <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Patient ID:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="identifier"></span></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="identifier"></span></div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="age"></span></div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Gender:</b></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="gender"></span></div>
+        </div>
+
+        <div class="onerow" align="left" id="printPaymentCategoryRow">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Payment Category:</b></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><div id="printPaymentCategory"></div></div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Previous Visit Date:</b></div>
+            <div class="col2" align="left" style="display:inline-block;">
+                ${currentDateTime}
+            </div>
+        </div>
+
+        <div class="onerow" align="left">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Registration Fee:</b></div>
+            <div class="col2" align="left" style="display:inline-block;" id="printRegistrationFee">
+                ${registrationFee?:"0"}.00
+            </div>
+        </div>
+
+        <div class="onerow" align="left" id="patRevisit" style="display:none">
+            <div class="col2" align="left" style="display:inline-block; width: 150px">&nbsp;</div>
+            <div class="col2" align="left" style="display:inline-block; width: 175px"><font color="#ff0000 ">(Patient Revisit with in 24 hr)</font></div>
+        </div>
+
+        <div class="onerow" align="left" id="printableSpacing">
+            <div class="col2" align="left" style="display:inline-block; width: 150px">&nbsp;</div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"></div>
+        </div>
+
+        <div class="onerow" align="left" id="printableUserRow">
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>You were served by:</b></div>
+            <div class="col2" align="left" style="display:inline-block;">
+                ${user}
+            </div>
+
+            <div class="col4 last">&nbsp;</div>
+        </div>
     </div>
-
-    <div class="onerow" align="left">
-        <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
-        <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span></div>
-</div>
-
-<div class="onerow" align="left">
-    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Gender:</b></div>
-    <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="gender"></span></div>
-</div>
-
-<div class="onerow" align="left" id="printablePaymentCategoryRow">
-    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Payment Category:</b></div>
-    <div class="col2" align="left" style="display:inline-block; width: 150px""><div id="printPaymentCategory"></div></div>
-</div>
-
-<div class="onerow" align="left">
-    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Previous Visit Date:</b></div>
-    <div class="col2" align="left" style="display:inline-block;">
-        ${currentDateTime}
-    </div>
-</div>
-
-<div class="onerow" align="left">
-    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Registration Fee:</b></div>
-    <div class="col2" align="left" style="display:inline-block;" id="printRegistrationFee">
-        ${registrationFee?:"0"}.00
-    </div>
-</div>
-
-<div class="onerow" align="left" id="patRevisit" style="display:none">
-    <div class="col2" align="left" style="display:inline-block; width: 150px">&nbsp;</div>
-    <div class="col2" align="left" style="display:inline-block; width: 175px"><font color="#ff0000 ">(Patient Revisit with in 24 hr)</font></div>
-</div>
-
-<div class="onerow" align="left" id="printableSpacing">
-    <div class="col2" align="left" style="display:inline-block; width: 150px">&nbsp;</div>
-    <div class="col2" align="left" style="display:inline-block; width: 150px"></div>
-</div>
-
-<div class="onerow" align="left" id="printableUserRow">
-    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>You were served by:</b></div>
-    <div class="col2" align="left" style="display:inline-block;">
-        ${user}
-    </div>
-
-    <div class="col4 last">&nbsp;</div>
-</div>
 </div>
 
 </body>

@@ -1458,7 +1458,7 @@
     padding: 10px 4px;
     width: 19px;
     height: 3px;
-    font: 0/0 serif;
+    font-family: serif;
     text-shadow: none;
     color: transparent;
 }
@@ -1897,10 +1897,12 @@ a.tooltip span {
 
         <div class="onerow" align="left">
             <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Patient ID:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="identifier"></span></div>
+            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="identifier"></span></div>
     </div>
 
     <div class="onerow" align="left">
         <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
-        <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span></div>
+        <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="age"></span></div>
+</div>
+    </div>
 </div>
