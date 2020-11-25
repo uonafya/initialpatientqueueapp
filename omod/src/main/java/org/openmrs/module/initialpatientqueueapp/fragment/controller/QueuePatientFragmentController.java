@@ -155,7 +155,7 @@ public class QueuePatientFragmentController {
 			// create encounter for the visit here
 			Encounter encounter = createEncounter(patient, parameters);
 			encounter = Context.getEncounterService().saveEncounter(encounter);
-			//create a visit if not created yet
+			//create a visit if not created yet CHECKING IN OF PATIENT
 			hasActiveVisit(patientVisit, patient, encounter);
 			//save the person attributes associated
 			Context.getPersonService().savePerson(setAttributes(patient, parameters));
@@ -165,7 +165,7 @@ public class QueuePatientFragmentController {
 			redirectParams.put("status", "success");
 			redirectParams.put("patientId", patient.getPatientId());
 			redirectParams.put("encounterId", encounter.getId());
-			
+			//ADD PERSON ATTRIBUTE SET
 			model.addAttribute("status", "success");
 			model.addAttribute("patientId", patient.getPatientId());
 			model.addAttribute("encounterId", encounter.getId());
@@ -177,7 +177,8 @@ public class QueuePatientFragmentController {
 			model.addAttribute("message", e.getMessage());
 			//return null;
 		}
-		return "redirect:" + uiUtils.pageLink("initialpatientqueueapp", "patientQueueHome");
+		return "redirect:"
+		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId());
 	}
 	
 	/**

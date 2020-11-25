@@ -25,6 +25,7 @@ import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.
 import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
 import org.openmrs.module.initialpatientqueueapp.model.RegistrationFee;
 import org.openmrs.module.initialpatientqueueapp.web.controller.utils.RegistrationWebUtils;
+import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -275,7 +276,13 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("SPECIALCLINIC",
 		    RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC));
-		model.addAttribute("user", user);
+		
+		model.addAttribute("user", user.getPersonName().getFullName());
+		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());
+		model.addAttribute("patientId", Context.getPatientService().getPatient(patientId).getActiveIdentifiers().get(0)
+		        .getIdentifier());
+		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
+		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
 	}
 	
 	public void post(@RequestParam("patientId") Integer patientId,
