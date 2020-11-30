@@ -283,6 +283,8 @@ public class ShowPatientInfoPageController {
 		        .getIdentifier());
 		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
 		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
+		model.addAttribute("gender", Context.getPatientService().getPatient(patientId).getGender());
+		
 	}
 	
 	public void post(@RequestParam("patientId") Integer patientId,

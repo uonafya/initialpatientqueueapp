@@ -1189,10 +1189,10 @@ form input:focus, form select:focus, form textarea:focus, form ul.select:focus, 
     </div>
 </form>
 
-<div id="printDiv" style="display: none;">
+<div id="printDiv" style="display: none;" size="50">
     <center>
         <center>
-            <img width="60" height="60" align="center" title="OpenMRS" alt="OpenMRS"
+            <img width="60" height="60" align="center" title="..." alt="..."
                  src="${ui.resourceLink('registration', 'images/kenya_logo.bmp')}">
         </center>
     </center>
