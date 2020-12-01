@@ -284,6 +284,7 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
 		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
 		model.addAttribute("gender", Context.getPatientService().getPatient(patientId).getGender());
+		//model.addAttribute("payingCategory", Context.getPersonService().getPerson(patientId).getPayingCategory());
 		
 	}
 	

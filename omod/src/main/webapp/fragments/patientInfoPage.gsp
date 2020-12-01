@@ -1193,7 +1193,7 @@ form input:focus, form select:focus, form textarea:focus, form ul.select:focus, 
     <center>
         <center>
             <img width="60" height="60" align="center" title="..." alt="..."
-                 src="${ui.resourceLink('registration', 'images/kenya_logo.bmp')}">
+                 src="${ui.resourceLink('ehrconfigs', 'images/kenya_logo.bmp')}">
         </center>
     </center>
 

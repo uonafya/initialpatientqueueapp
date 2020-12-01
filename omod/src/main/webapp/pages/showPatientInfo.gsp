@@ -250,6 +250,7 @@ a.tooltip span {
 </style>
 <html>
 <body>
+
       <div class="onepcssgrid-1000">
 
     ${ui.includeFragment("initialpatientqueueapp", "js_css")}
@@ -258,7 +259,7 @@ a.tooltip span {
     <div id="printDiv">
         <center>
             <center>
-                <img width="60" height="60" align="center" title="OpenMRS" alt="OpenMRS"
+                <img width="60" height="60" align="center"
                      src="${ui.resourceLink('ehrinventoryapp', 'images/kenya_logo.bmp')}">
             </center>
         </center>
@@ -293,12 +294,14 @@ a.tooltip span {
             <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Gender:</b></div>
             <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span>${gender}
         </div>
-    <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>You were Served by:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="user"></span>${user}
-        </div>
+        <div class="onerow" align="left">
+                    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>You were Served by:</b></div>
+                    <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="user"></span>${user}
+                </div>
+
     </div>
+
 </div>
-<button onclick="window.print()">Print Receipt</button>
+<button onclick="window.print();window.location.href='patientQueueHome.page';">Print Receipt</button>
 </body>
 </html>
