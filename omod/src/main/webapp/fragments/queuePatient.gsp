@@ -1,11 +1,9 @@
-
 <script type="text/javascript">
     var MODEL,
         arrey,
         alley,
         age,
         emrMessages = {};
-
     var oRegX = /^[a-zA-Z-` ]*\$/;
     emrMessages["requiredField"] = "Required";
     jq(document).ready(function () {
@@ -144,19 +142,19 @@
         }
         // Paying Category Map
         var _payingCategoryMap = new Array();
-         var payingCategoryMap = "${payingCategoryMap}";
+        var payingCategoryMap = "${payingCategoryMap}";
         <% payingCategoryMap.each { k, v -> %>
         _payingCategoryMap[${k}] = '${v}';
         <%}%>
         // NonPaying Category Map
         var _nonPayingCategoryMap = new Array();
-         var nonPayingCategoryMap = "${nonPayingCategoryMap}";
+        var nonPayingCategoryMap = "${nonPayingCategoryMap}";
         <% nonPayingCategoryMap.each { k, v -> %>
         _nonPayingCategoryMap[${k}] = '${v}';
         <%}%>
         // Special Scheme Map
         var _specialSchemeMap = new Array();
-         var specialSchemeMap = "${specialSchemeMap}";
+        var specialSchemeMap = "${specialSchemeMap}";
         <% specialSchemeMap.each { k, v -> %>
         _specialSchemeMap[${k}] = '${v}';
         <%}%>
@@ -272,7 +270,6 @@
         jq("#districts").change();
         selectedDistrict = jq("#districts option:checked").val();
         selectedUpazila = jq("#upazilas option:checked").val();
-
         PAGE.fillOptions("#payingCategory", {
             data: ", |" + MODEL.payingCategory,
             delimiter: ",",
@@ -432,10 +429,8 @@
     PAGE = {
         // Print the slip
         print: function () {
-            var myStyle = '<link rel="stylesheet" href="http://localhost:8080/openmrs/ms/uiframework/resource/registration/styles/onepcssgrid.css" />';
             var printDiv = jQuery("#printDiv").html();
             var printWindow = window.open('', '', 'height=500,width=400');
-
             printWindow.document.write('<html><head><title>Patient Information</title>');
             printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');
             printWindow.document.write(printDiv);
@@ -443,13 +438,12 @@
             printWindow.document.write('</html>');
             printWindow.print();
             printWindow.close();
-
         },
         /** SUBMIT */
         submit: function () {
             // Validate and submit
             if (this.validateRegisterForm()) {
-                print();
+               // print();
                 jq("#patientRegistrationForm").submit();
             }
         },
@@ -577,7 +571,6 @@
                 }
             });
         },
-
         /** SHOW OR HIDE REFERRAL INFO */
         toogleReferralInfo: function (obj) {
             checkbox = jq(obj);
@@ -616,14 +609,12 @@
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var str1 = '';
-
             //TAB3
             if (!jq("input[name='paym_1']:checked").val() || !jq("input[name='paym_2']:checked").val()) {
                 str1 = str1 + "Kindly ensure the Payment Categories are properly filled. ";
                 i++;
                 tab3++;
             }
-
             if (jq("#rooms1").val() === "") {
                 jq('#rooms1').addClass("red-border");
                 i++;
@@ -648,7 +639,6 @@
             else {
                 jq('#rooms3').removeClass("red-border");
             }
-
             if (i === 0) {
                 return true;
             }
@@ -783,7 +773,6 @@
             }
         }
     };
-
     function payingCategorySelection() {
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
@@ -1370,13 +1359,11 @@
 .ui-tabs-vertical {
     width: 55em;
 }
-
 .ui-tabs-vertical .ui-tabs-nav {
     padding: .2em .1em .2em .2em;
     float: left;
     width: 12em;
 }
-
 .ui-tabs-vertical .ui-tabs-nav li {
     clear: left;
     width: 100%;
@@ -1384,27 +1371,22 @@
     border-right-width: 0 !important;
     margin: 0 -1px .2em 0;
 }
-
 .ui-tabs-vertical .ui-tabs-nav li a {
     display: block;
 }
-
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
     padding-bottom: 0;
     padding-right: .1em;
     border-right-width: 1px;
 }
-
 .ui-tabs-vertical .ui-tabs-panel {
     padding: 1em;
     float: right;
     width: 45em;
 }
-
 .red-border {
     border: 1px solid #f00 !important;
 }
-
 .myh2,
 .tasks-list {
     margin: 0;
@@ -1414,7 +1396,6 @@
     font: inherit;
     vertical-align: baseline;
 }
-
 .tasks {
     font: 13px/20px 'Lucida Grande', Verdana, sans-serif;
     color: #404040;
@@ -1425,7 +1406,6 @@
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-
 .tasks-header {
     position: relative;
     line-height: 24px;
@@ -1442,14 +1422,12 @@
     -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0, 0, 0.03);
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0, 0, 0.03);
 }
-
 .tasks-title {
     line-height: inherit;
     font-size: 14px;
     font-weight: bold;
     color: inherit;
 }
-
 .tasks-lists {
     position: absolute;
     top: 50%;
@@ -1462,7 +1440,6 @@
     text-shadow: none;
     color: transparent;
 }
-
 .tasks-lists:before {
     display: block;
     height: 3px;
@@ -1471,7 +1448,6 @@
     -webkit-box-shadow: 0 6px #8c959d, 0 -6px #8c959d;
     box-shadow: 0 6px #8c959d, 0 -6px #8c959d;
 }
-
 .tasks-list-item {
     display: block;
     line-height: 24px;
@@ -1482,15 +1458,12 @@
     -ms-user-select: none;
     user-select: none;
 }
-
 .tasks-list-item + .tasks-list-item {
     border-top: 1px solid #f0f2f3;
 }
-
 .tasks-list-cb {
     display: none;
 }
-
 .tasks-list-mark {
     position: relative;
     display: inline-block;
@@ -1501,7 +1474,6 @@
     border: 2px solid #c4cbd2;
     border-radius: 12px;
 }
-
 .tasks-list-mark:before {
     content: '';
     display: none;
@@ -1519,31 +1491,25 @@
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
-
 .tasks-list-cb:checked ~ .tasks-list-mark {
     border-color: #39ca74;
 }
-
 .tasks-list-cb:checked ~ .tasks-list-mark:before {
     display: block;
 }
-
 .tasks-list-desc {
     font-weight: bold;
     color: #555;
 }
-
 .tasks-list-cb:checked ~ .tasks-list-desc {
     color: #34bf6e;
 }
-
 #form-verification-x {
     color: #f00;
     cursor: pointer;
     float: right;
     margin: -10px -22px 0;
 }
-
 .form-verifier-js {
     padding: 10px 30px;
     -webkit-box-sizing: border-box;
@@ -1555,14 +1521,11 @@
     margin-bottom: 15px;
     display: none;
 }
-
 .form-verifier-js p {
     padding-top: 5px;
     padding-bottom: 0px;
     margin-bottom: 5px;
-
 }
-
 .form-duplicate-js {
     padding: 1px 30px 1px 30px;
     -webkit-box-sizing: border-box;
@@ -1573,35 +1536,26 @@
     border: 1px solid #F00;
     margin-bottom: 15px;
 }
-
 .form-duplicate-js p {
     padding-top: 5px;
     padding-bottom: 0px;
     margin-bottom: 5px;
-
 }
-
 .dashboard .info-section {
     margin: 0 5px 5px;
 }
-
 .dashboard .info-body li {
     padding-bottom: 2px;
 }
-
 .dashboard .info-body li span {
     margin-right: 10px;
 }
-
 .dashboard .info-body li small {
-
 }
-
 .dashboard .info-body li div {
     width: 150px;
     display: inline-block;
 }
-
 .addon {
     color: #f26522;
     display: inline-block;
@@ -1646,81 +1600,81 @@ a.tooltip span {
 </style>
 <div id="content" class="container">
     <form class="simple-form-ui" id="patientRegistrationForm" method="post">
-            <table cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                    <td>
-                            <div class="col4">
-                                <div class="tasks">
-                                    <header class="tasks-header">
-                                        <span class="tasks-title">Patients Category</span>
-                                        <a class="tasks-lists"></a>
-                                    </header>
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td>
+                    <div class="col4">
+                        <div class="tasks">
+                            <header class="tasks-header">
+                                <span class="tasks-title">Patients Category</span>
+                                <a class="tasks-lists"></a>
+                            </header>
 
-                                    <div class="tasks-list parent-items">
-                                        <label class="tasks-list-item">
-                                            <input style="display:none!important" type="radio" name="paym_1" value="1"
-                                                   class="tasks-list-cb">
-                                            <span class="tasks-list-mark"></span>
-                                            <span class="tasks-list-desc">PAYING</span>
-                                        </label>
+                            <div class="tasks-list parent-items">
+                                <label class="tasks-list-item">
+                                    <input style="display:none!important" type="radio" name="paym_1" value="1"
+                                           class="tasks-list-cb">
+                                    <span class="tasks-list-mark"></span>
+                                    <span class="tasks-list-desc">PAYING</span>
+                                </label>
 
-                                        <label class="tasks-list-item">
-                                            <input style="display:none!important" type="radio" name="paym_1" value="2"
-                                                   class="tasks-list-cb">
-                                            <span class="tasks-list-mark"></span>
-                                            <span class="tasks-list-desc">NON-PAYING</span>
-                                        </label>
+                                <label class="tasks-list-item">
+                                    <input style="display:none!important" type="radio" name="paym_1" value="2"
+                                           class="tasks-list-cb">
+                                    <span class="tasks-list-mark"></span>
+                                    <span class="tasks-list-desc">NON-PAYING</span>
+                                </label>
 
-                                        <label class="tasks-list-item">
-                                            <input style="display:none!important" type="radio" name="paym_1" value="3"
-                                                   class="tasks-list-cb">
-                                            <span class="tasks-list-mark"></span>
-                                            <span class="tasks-list-desc">SPECIAL SCHEMES</span>
-                                        </label>
-                                    </div>
-                                </div>
+                                <label class="tasks-list-item">
+                                    <input style="display:none!important" type="radio" name="paym_1" value="3"
+                                           class="tasks-list-cb">
+                                    <span class="tasks-list-mark"></span>
+                                    <span class="tasks-list-desc">SPECIAL SCHEMES</span>
+                                </label>
                             </div>
-                    </td>
-                    <td>
-
-                            <div class="col4">
-                                <div class="tasks">
-                                    <header class="tasks-header">
-                                        <span id="tasktitle" class="tasks-title">Paying Category</span>
-                                        <a class="tasks-lists"></a>
-                                    </header>
-
-                                    <div class="tasks-list" id="paycatgs">
-
-                                    </div>
-                                </div>
-                            </div>
-                    </td>
-                    <td>
-                        <div class="col4 last">
-                            <div class="tasks">
-                                <header class="tasks-header">
-                                    <span id="summtitle1" class="tasks-title">Details</span>
-                                    <input type="hidden" id="nhifNumber" name="person.attribute.34"/>
-                                    <input type="hidden" id="studentId" name="person.attribute.42"/>
-                                    <input type="hidden" id="waiverNumber" name="person.attribute.32"/>
-                                    <a class="tasks-lists"></a>
-                                </header>
-                            </div>
-
-                            <span id="universitydiv" class="select-arrow" style="width: 100%">
-                                <field><select style="width: 101%;" name="person.attribute.47"
-                                               id="university">&nbsp;</select></field>
-                            </span>
-
-                            <field><input type="text" id="modesummary" name="modesummary" value="N/A"
-                                          placeholder="WAIVER NUMBER" readonly="" style="width: 101%!important"/>
-                            </field>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><h2>Visit type</h2></td>
+                    </div>
+                </td>
+                <td>
+
+                    <div class="col4">
+                        <div class="tasks">
+                            <header class="tasks-header">
+                                <span id="tasktitle" class="tasks-title">Paying Category</span>
+                                <a class="tasks-lists"></a>
+                            </header>
+
+                            <div class="tasks-list" id="paycatgs">
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="col4 last">
+                        <div class="tasks">
+                            <header class="tasks-header">
+                                <span id="summtitle1" class="tasks-title">Details</span>
+                                <input type="hidden" id="nhifNumber" name="person.attribute.34"/>
+                                <input type="hidden" id="studentId" name="person.attribute.42"/>
+                                <input type="hidden" id="waiverNumber" name="person.attribute.32"/>
+                                <a class="tasks-lists"></a>
+                            </header>
+                        </div>
+
+                        <span id="universitydiv" class="select-arrow" style="width: 100%">
+                            <field><select style="width: 101%;" name="person.attribute.47"
+                                           id="university">&nbsp;</select></field>
+                        </span>
+
+                        <field><input type="text" id="modesummary" name="modesummary" value="N/A"
+                                      placeholder="WAIVER NUMBER" readonly="" style="width: 101%!important"/>
+                        </field>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><h2>Visit type</h2></td>
                 <td><div>
                     <select id="visitType" name="visitType">
                         <option value="1">New patient</option>
@@ -1728,12 +1682,12 @@ a.tooltip span {
                     </select>
                 </div>
                 </td>
-                </tr>
+            </tr>
 
 
 
-                <tr><td colspan="2"><h2>Room to Visit</h2></td></tr>
-                <tr>
+            <tr><td colspan="2"><h2>Room to Visit</h2></td></tr>
+            <tr>
 
                 <div class="onerow" style="margin-top:10px;">
                     <td valign="top">
@@ -1757,150 +1711,117 @@ a.tooltip span {
                         </div>
                     </td>
                 </div>
-                </tr>
-                <tr>
-                    <div class="onerow" style="margin-top:10px;">
-                        <td valign="top">
-                            <div class="col4">
-                                <label for="rooms2" id="froom2" style="margin:0px;">Room Type<span>*</span></label>
-                            </div>
-                        </td>
-                        <td valign="top">
-                            <div class="col4">
-                                <span class="select-arrow" style="width: 100%">
-                                    <field>
-                                        <select id="rooms2" name="rooms2" class="required form-combo1">
-                                        </select>
-                                    </field>
-                                </span>
-                            </div>
-                        </td>
-                    </div>
-                </tr>
-                <tr>
+            </tr>
+            <tr>
+                <div class="onerow" style="margin-top:10px;">
                     <td valign="top">
-                        <div class="col4 last">
-                            <label for="rooms3" id="froom3" style="margin:0px;">File Number</label>
+                        <div class="col4">
+                            <label for="rooms2" id="froom2" style="margin:0px;">Room Type<span>*</span></label>
                         </div>
                     </td>
                     <td valign="top">
-                        <div class="col4 last">
-                            <field><input type="text" id="rooms3" name="rooms3" value="N/A" placeholder="FILE NUMBER"
-                                          readonly=""/></field>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
-                <div class="onerow" style="display:none!important;">
-                    <div class="col4">
-                        <input id="paying" type="checkbox" name="person.attribute.14" value="Paying"
-                               checked/> Paying
-                    </div>
-
-                    <div class="col4">
-                        <input id="nonPaying" type="checkbox" name="person.attribute.14"
-                               value="Non-Paying"/> Non-Paying
-                    </div>
-
-                    <div class="col4 last">
-                        <input id="specialSchemes" type="checkbox" name="person.attribute.14"
-                               value="Special Schemes"/> Special Schemes
-                    </div>
-
-                    <label><input type="checkbox" name="mlcCaseYes" id="mlcCaseYes">MLC Yes</label>
-                    <label><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/>MLC No</label>
-
-                    <label><input id="referredYes" type="checkbox" name="referredYes"/>Refer Yes</label>
-                    <label><input id="referredNo" type="checkbox" name="referredNo"/>Refer No</label>
-
-                    <input id="triageRoom" type="checkbox" name="triageRoom"/>
-                    <input id="opdRoom" type="checkbox" name="opdRoom"/>
-                    <input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/>
-                    <input id="birthdateEstimated" type="text" name="patient.birthdateEstimate"/>
-                    <input id="chiefdom" class="form-textbox1 focused" type="text" name="person.attribute.41">
-                </div>
-
-                <div class="onerow" style="display:none!important;">
-                    <div class="col4">&nbsp;
-                        <span id="payingCategoryField">
+                        <div class="col4">
                             <span class="select-arrow" style="width: 100%">
-                                <select id="payingCategory" name="person.attribute.44"
-                                        onchange="payingCategorySelection();"
-                                        class="form-combo1" style="display:block!important"></select></span>
-                        </span>
-
-                    </div>
-
-                    <div class="col4">&nbsp;
-                        <span id="nonPayingCategoryField">
-                            <span class="select-arrow" style="width: 100%">
-                                <select id="nonPayingCategory" name="person.attribute.45"
-                                        onchange="nonPayingCategorySelection();"
-                                        class="form-combo1" style="display:block!important"></select></span>
-                        </span>
-
-                    </div>
-
-                    <div class="col4 last">&nbsp;
-                        <span id="specialSchemeCategoryField">
-                            <span class="select-arrow" style="width: 100%">
-                                <select id="specialScheme" name="person.attribute.46"
-                                        onchange="specialSchemeSelection();"
-                                        class="form-combo1" style="display:block!important"></select>
+                                <field>
+                                    <select id="rooms2" name="rooms2" class="required form-combo1">
+                                    </select>
+                                </field>
                             </span>
-
-                        </span>
+                        </div>
+                    </td>
+                </div>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <div class="col4 last">
+                        <label for="rooms3" id="froom3" style="margin:0px;">File Number</label>
                     </div>
-                </div>
+                </td>
+                <td valign="top">
+                    <div class="col4 last">
+                        <field><input type="text" id="rooms3" name="rooms3" value="N/A" placeholder="FILE NUMBER"
+                                      readonly=""/></field>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="onerow" style="display:none!important;">
+            <div class="col4">
+                <input id="paying" type="checkbox" name="person.attribute.14" value="Paying"
+                       checked/> Paying
+            </div>
+
+            <div class="col4">
+                <input id="nonPaying" type="checkbox" name="person.attribute.14"
+                       value="Non-Paying"/> Non-Paying
+            </div>
+
+            <div class="col4 last">
+                <input id="specialSchemes" type="checkbox" name="person.attribute.14"
+                       value="Special Schemes"/> Special Schemes
+            </div>
+
+            <label><input type="checkbox" name="mlcCaseYes" id="mlcCaseYes">MLC Yes</label>
+            <label><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/>MLC No</label>
+
+            <label><input id="referredYes" type="checkbox" name="referredYes"/>Refer Yes</label>
+            <label><input id="referredNo" type="checkbox" name="referredNo"/>Refer No</label>
+
+            <input id="triageRoom" type="checkbox" name="triageRoom"/>
+            <input id="opdRoom" type="checkbox" name="opdRoom"/>
+            <input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/>
+            <input id="birthdateEstimated" type="text" name="patient.birthdateEstimate"/>
+            <input id="chiefdom" class="form-textbox1 focused" type="text" name="person.attribute.41">
+        </div>
+
+        <div class="onerow" style="display:none!important;">
+            <div class="col4">&nbsp;
+                <span id="payingCategoryField">
+                    <span class="select-arrow" style="width: 100%">
+                        <select id="payingCategory" name="person.attribute.44"
+                                onchange="payingCategorySelection();"
+                                class="form-combo1" style="display:block!important"></select></span>
+                </span>
+
+            </div>
+
+            <div class="col4">&nbsp;
+                <span id="nonPayingCategoryField">
+                    <span class="select-arrow" style="width: 100%">
+                        <select id="nonPayingCategory" name="person.attribute.45"
+                                onchange="nonPayingCategorySelection();"
+                                class="form-combo1" style="display:block!important"></select></span>
+                </span>
+
+            </div>
+
+            <div class="col4 last">&nbsp;
+                <span id="specialSchemeCategoryField">
+                    <span class="select-arrow" style="width: 100%">
+                        <select id="specialScheme" name="person.attribute.46"
+                                onchange="specialSchemeSelection();"
+                                class="form-combo1" style="display:block!important"></select>
+                    </span>
+
+                </span>
+            </div>
+        </div>
 
 
-                <div class="onerow" style="margin-top: 100px">
+        <div class="onerow" style="margin-top: 100px">
 
-                    <a class="button confirm" onclick="PAGE.submit();"
-                       style="float:right; display:inline-block; margin-left: 5px;">
-                        <span>FINISH</span>
-                    </a>
+            <a class="button confirm" onclick="PAGE.submit();"
+               style="float:right; display:inline-block; margin-left: 5px;">
+                <span>FINISH</span>
+            </a>
 
-                    <a class="button cancel" onclick="window.location.href = window.location.href"
-                       style="float:right; display:inline-block;"/>
-                    <span>RESET</span>
-                </a>
-                </div>
+            <a class="button cancel" onclick="window.location.href = window.location.href"
+               style="float:right; display:inline-block;"/>
+            <span>RESET</span>
+        </a>
+        </div>
     </form>
 </div>
-<div id="printDiv" style="display: none;">
-    <center>
-        <center>
-            <img width="60" height="60" align="center" title="OpenMRS" alt="OpenMRS"
-                 src="${ui.resourceLink('registration', 'images/kenya_logo.bmp')}">
-        </center>
-    </center>
 
-    <h3><center><u><b>${userLocation}</b></u></center></h3>
-    <h4 style="font-size: 1.4em;"><center><b>Registration Receipt</b></center></h4>
-    <div style="display: block;	margin-left: auto; margin-right: auto; width: 350px">
-        <div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px">
-                <b>Receipt Date:</b>
-            </div>
-
-            <div class="col2" align="left" style="display: inline-block; width: 150px;">
-                <span>${receiptDate}</span>
-            </div>
-        </div>
-
-        <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Name:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="patientName"></span></div>
-        </div>
-
-        <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Patient ID:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="identifier"></span></div>
-    </div>
-
-    <div class="onerow" align="left">
-        <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
-        <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span></div>
 </div>
