@@ -1,10 +1,24 @@
-<% ui.decorateWith("kenyaemr", "standardEmrPage", [title: "Patient Summary"]) %>
 <%
-    ui.includeCss("ehrconfigs", "onepcssgrid.css")
-    ui.includeCss("initialpatientqueueapp", "main.css")
-
+    ui.decorateWith("kenyaemr", "standardPage")
+    ui.includeCss("ehrconfigs", "referenceapplication.css")
 %>
+<script type="text/javascript">
+    jq(function () {
+        printReceipt();
+    });
+    function printReceipt() {
+        var printDiv = jQuery("#printDiv").html();
+        var printWindow = window.open('', '', 'height=500,width=400');
+        printWindow.document.write('<html><head><title>Patient Information</title>');
+        printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');
+        printWindow.document.write(printDiv);
+        printWindow.document.write('</body>');
+        printWindow.document.write('</html>');
+        printWindow.print();
+        printWindow.close();
 
+    }
+</script>
 <style>
 .ui-tabs-vertical {
     width: 55em;
@@ -251,11 +265,6 @@ a.tooltip span {
 <html>
 <body>
 
-      <div class="onepcssgrid-1000">
-
-    ${ui.includeFragment("initialpatientqueueapp", "js_css")}
-
-
     <div id="printDiv">
         <center>
             <center>
@@ -295,13 +304,18 @@ a.tooltip span {
             <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span>${gender}
         </div>
         <div class="onerow" align="left">
-                    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>You were Served by:</b></div>
+                    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Served by:</b></div>
                     <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="user"></span>${user}
                 </div>
 
     </div>
 
 </div>
-<button onclick="window.print();window.location.href='patientQueueHome.page';">Print Receipt</button>
+<div class="onerow" style="margin-top: 100px">
+    <a class="button confirm" onclick="printReceipt();window.location.href='patientQueueHome.page';"
+       style="float:right; display:inline-block; margin-left: 5px;">
+        <span>Print Receipt</span>
+    </a>
+</div>
 </body>
 </html>
