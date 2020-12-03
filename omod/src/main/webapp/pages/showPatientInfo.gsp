@@ -3,9 +3,6 @@
     ui.includeCss("ehrconfigs", "referenceapplication.css")
 %>
 <script type="text/javascript">
-    jq(function () {
-        printReceipt();
-    });
     function printReceipt() {
         var printDiv = jQuery("#printDiv").html();
         var printWindow = window.open('', '', 'height=500,width=400');
@@ -276,36 +273,61 @@ a.tooltip span {
         <h3><center><u><b>${location}</b></u></center></h3>
         <h4 style="font-size: 1.4em;"><center><b>Registration Receipt</b></center></h4>
         <div style="display: block;	margin-left: auto; margin-right: auto; width: 350px">
+            <% if(previousVisit) { %>
             <div>
                 <div class="col2" align="left" style="display:inline-block; width: 150px">
+                    <b>Previous visit:</b>
+                </div>
+
+                <div class="col2" align="left" style="display: inline-block;">
+                    <span>${previousVisit}</span>
+                </div>
+            </div>
+            <%}%>
+            <div>
+                <div class="col2" align="left" style="display:inline-block;">
+                    <b>Payment category</b>
+                </div>
+
+                <div class="col2" align="left" style="display: inline-block;">
+                    <span>${selectedPaymentCategory}</span>
+                </div>
+            </div>
+            <div>
+                <div class="col2" align="left" style="display:inline-block;">
                     <b>Receipt Date:</b>
                 </div>
 
-                <div class="col2" align="left" style="display: inline-block; width: 150px;">
+                <div class="col2" align="left" style="display: inline-block;">
                     <span>${receiptDate}</span>
                 </div>
             </div>
 
             <div class="onerow" align="left">
-                <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Name:</b></div>
-                <div class="col2" align="left" style="display:inline-block; width: 150px"><span id="patientName">${names}</span></div>
+                <div class="col2" align="left" style="display:inline-block;"><b>Name:</b></div>
+                <div class="col2" align="left" style="display:inline-block;"><span id="patientName">${names}</span></div>
             </div>
 
             <div class="onerow" align="left">
-                <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Patient ID:</b></div>
-                <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="identifier">${patientId}</span></div>
+                <div class="col2" align="left" style="display:inline-block;"><b>Patient ID:</b></div>
+                <div class="col2" align="left" style="display:inline-block;"><span id="identifier">${patientId}</span></div>
         </div>
         <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Age:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span>${age}
+            <div class="col2" align="left" style="display:inline-block;"><b>Age:</b></div>
+            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${age}
         </div>
         <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Gender:</b></div>
-            <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="age"></span>${gender}
+            <div class="col2" align="left" style="display:inline-block;"><b>Gender:</b></div>
+            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${gender}
+        </div>
+        <div>
+            <div class="col2" align="left">
+                <b>${WhatToBePaid}</b>
+            </div>
         </div>
         <div class="onerow" align="left">
-                    <div class="col2" align="left" style="display:inline-block; width: 150px"><b>Served by:</b></div>
-                    <div class="col2" align="left" style="display:inline-block; width: 150px""><span id="user"></span>${user}
+                    <div class="col2" align="left" style="display:inline-block;"><b>Served by:</b></div>
+                    <div class="col2" align="left" style="display:inline-block;"><span id="user"></span>${user}
                 </div>
 
     </div>

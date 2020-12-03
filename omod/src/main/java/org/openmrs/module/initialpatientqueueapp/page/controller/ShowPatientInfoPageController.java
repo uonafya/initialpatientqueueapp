@@ -42,7 +42,8 @@ public class ShowPatientInfoPageController {
 	
 	public void get(@RequestParam("patientId") Integer patientId,
 	        @RequestParam(value = "encounterId", required = false) Integer encounterId,
-	        @RequestParam(value = "revisit", required = false) Boolean revisit, PageModel model) throws IOException,
+	        @RequestParam(value = "payCategory", required = false) String payCategory,
+	        @RequestParam(value = "visit", required = false) Integer visit, PageModel model) throws IOException,
 	        ParseException {
 		
 		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy kk:mm");
@@ -56,51 +57,15 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("patientAge", patient.getAge());
 		model.addAttribute("patientGender", patient.getGender());
 		
-		// Get patient registration fee
-		if (GlobalPropertyUtil.getInteger(InitialPatientQueueConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION, 0) > 0) {
-			List<RegistrationFee> fees = Context.getService(InitialPatientqueueappService.class).getRegistrationFees(
-			    patient, GlobalPropertyUtil.getInteger(InitialPatientQueueConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION, 0));
-			if (!CollectionUtils.isEmpty(fees)) {
-				RegistrationFee fee = fees.get(0);
-				Calendar dueDate = Calendar.getInstance();
-				dueDate.setTime(fee.getCreatedOn());
-				dueDate.add(Calendar.DATE, 30);
-				model.addAttribute("dueDate", EhrRegistrationUtils.formatDate(dueDate.getTime()));
-				model.addAttribute("daysLeft", dateDiff(dueDate.getTime(), new Date()));
-			}
+		Date lastVisitTime = hcs.getLastVisitTime(patient);
+		Date currentVisitTime = new Date();
+		long visitTimeDifference = 0;
+		if (lastVisitTime != null) {
+			visitTimeDifference = this.dateDiffInHours(lastVisitTime, currentVisitTime);
 		}
+		model.addAttribute("visitTimeDifference", visitTimeDifference);
 		
-		// Get selected OPD room if this is the first time of visit
-		if (encounterId != null) {
-			List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
-			for (PersonAttribute pa : pas) {
-				PersonAttributeType attributeType = pa.getAttributeType();
-				PersonAttributeType personAttributePaymentCategory = hcs.getPersonAttributeTypeByName("Payment Category");
-				if (attributeType.getPersonAttributeTypeId().equals(
-				    personAttributePaymentCategory.getPersonAttributeTypeId())) {
-					model.addAttribute("selectedPaymentCategory", pa.getValue());
-				}
-			}
-			
-			Boolean firstTimeVisit = true;
-			model.addAttribute("firstTimeVisit", firstTimeVisit);
-			model.addAttribute("typeOfSlip", "Registration Receipt");
-			model.addAttribute("reprint", false);
-		}
-		
-		if ((revisit != null) && revisit) {
-			model.addAttribute("typeOfSlip", "Registration Receipt");
-			model.addAttribute("revisit", revisit);
-			
-			Date lastVisitTime = hcs.getLastVisitTime(patient);
-			Date currentVisitTime = new Date();
-			long visitTimeDifference = this.dateDiffInHours(lastVisitTime, currentVisitTime);
-			model.addAttribute("visitTimeDifference", visitTimeDifference);
-			
-			model.addAttribute("firstTimeVisit", false);
-		} else {
-			//This patient is a new case and we need to pull registration fee based on the parameters chosen
-		}
+		model.addAttribute("firstTimeVisit", false);
 		
 		User user = Context.getAuthenticatedUser();
 		model.addAttribute("reVisitFee",
@@ -109,6 +74,8 @@ public class ShowPatientInfoPageController {
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
+		model.addAttribute("registrationFees",
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		
 		model.addAttribute("user", user.getPersonName().getFullName());
 		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());
@@ -117,19 +84,32 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
 		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
 		model.addAttribute("gender", Context.getPatientService().getPatient(patientId).getGender());
+		model.addAttribute("previousVisit", lastVisitTime);
+		String payCat = "";
+		if (payCategory.equals("1")) {
+			payCat = "PAYING";
+		} else if (payCategory.equals("2")) {
+			payCat = "NON-PAYING";
+		} else if (payCategory.equals("3")) {
+			payCat = "SPECIAL SCHEMES";
+		}
+		model.addAttribute("selectedPaymentCategory", payCat);
+		String WhatToBePaid = "";
+		if (visit != null) {
+			// check if the patient is appearing for the first time so that they can pay registration fee, revisit fee or special clinic fees
+			if (visit == 1) {
+				//This a new patient and might be required to pay registration fees
+				WhatToBePaid = "Registration fees:		"
+				        + GlobalPropertyUtil
+				                .getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0");
+			} else {
+				WhatToBePaid = "Revisit fees:		"
+				        + GlobalPropertyUtil
+				                .getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0");
+			}
+		}
+		model.addAttribute("WhatToBePaid", WhatToBePaid);
 		
-	}
-	
-	/**
-	 * Get date diff betwwen 2 dates
-	 * 
-	 * @param d1
-	 * @param d2
-	 * @return
-	 */
-	private long dateDiff(Date d1, Date d2) {
-		long diff = Math.abs(d1.getTime() - d2.getTime());
-		return (diff / (1000 * 60 * 60 * 24));
 	}
 	
 	private long dateDiffInHours(Date d1, Date d2) {
