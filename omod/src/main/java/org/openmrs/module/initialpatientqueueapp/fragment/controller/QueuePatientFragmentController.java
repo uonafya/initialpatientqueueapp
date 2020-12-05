@@ -102,7 +102,8 @@ public class QueuePatientFragmentController {
 	}
 	
 	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils, HttpServletResponse response,
-	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") Integer paymentOption) throws IOException {
+	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory,
+	        @RequestParam("visitType") Integer status) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		Map<String, Object> redirectParams = new HashMap<String, Object>();
@@ -178,7 +179,8 @@ public class QueuePatientFragmentController {
 			//return null;
 		}
 		return "redirect:"
-		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId());
+		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
+		                + "&visit=" + status + "&payCategory=" + paymentCategory);
 	}
 	
 	/**
