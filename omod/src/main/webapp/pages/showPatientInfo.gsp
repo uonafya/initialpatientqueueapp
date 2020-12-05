@@ -339,5 +339,6 @@ a.tooltip span {
         <span>Print Receipt</span>
     </a>
 </div>
+</div>
 </body>
 </html>
