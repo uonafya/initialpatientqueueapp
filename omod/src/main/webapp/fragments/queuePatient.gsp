@@ -44,7 +44,7 @@
                 jq('.parent-items label').eq(2).hide();
             }
             if (MODEL.specialScheme.split('|').length == 1){
-                jq('.parent-items label').eq(2).hide();
+                jq('.parent-items label').eq(2).show();
             }
             for (var i = 0; i < arrey.length - 1; i++) {
                 alley += "<label class='tasks-list-item'><input style='display:none!important' type='radio' name='paym_2' id='paym_20" + (i + 1) + "' value='" + (i + 1) + "' data-name='" + arrey[i].substr(0, arrey[i].indexOf(',')) + "' class='tasks-list-cb' /> <span class='tasks-list-mark'></span> <span class='tasks-list-desc' id='ipaym_1" + (i + 1) + "'>" + arrey[i].substr(0, arrey[i].indexOf(',')) + "</span> </label>";
@@ -111,7 +111,7 @@
                 jq('#summtitle1').text('NHIF Details');
                 jq('#modesummary').attr("placeholder", "NHIF Number");
             }
-            else if (select3.indexOf("Student") >= 0) {
+            else if (select3.indexOf("STUDENT") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.42');
                 jq("#modesummary").val("");
@@ -347,8 +347,8 @@
         jq('#payingCategory option').eq(0).prop('selected', true);
         jq('#university option').eq(0).prop('selected', true);
         jq("#nhifNumberRow").hide();
-        jq("#universityRow").hide();
-        jq("#studentIdRow").hide();
+        jq("#universityRow").show();
+        jq("#studentIdRow").show();
         jq("#waiverNumberRow").hide();
         //LoadLegalCases();
         //LoadReferralCases();
