@@ -16,10 +16,20 @@
 
     }
 
+    PAGE = {
+        submit: function (){
+            if (PAGE.validate()){
+                jQuery("#printSlip").hide();
+            }
+        }
+    }
+
+
 </script>
 <style>
+
 @media printReceipt {
-    .button confirm {
+    .printSlip {
         visibility: hidden;
     }
 }
@@ -339,11 +349,10 @@ a.tooltip span {
     </div>
 
 </div>
-<div class="onerow" style="margin-top: 100px">
-    <a class="button confirm" onclick="printReceipt();window.location.href='patientQueueHome.page';"
-       style="float:right; display:inline-block; margin-left: 5px;">
-        <span>Print Receipt</span>
-    </a>
+<div class="col2">
+    <span class="button task" id="printSlip" onclick="printReceipt();window.location.href='patientQueueHome.page';" style="float:right; display:inline-block; margin-left: 5px;">
+        <i class="icon-print small"></i>
+     </span>
 </div>
 </div>
 </body>
