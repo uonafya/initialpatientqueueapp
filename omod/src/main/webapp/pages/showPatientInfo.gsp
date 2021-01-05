@@ -47,7 +47,7 @@
         <div style="display: block;	margin-left: auto; margin-right: auto; width: 350px">
             <% if(previousVisit) { %>
             <div>
-                <div class="col2" align="left" style="display:inline-block; width: 150px">
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
                     <b>Previous visit:</b>
                 </div>
 
@@ -57,8 +57,8 @@
             </div>
             <%}%>
             <div>
-                <div class="col2" align="left" style="display:inline-block;">
-                    <b>Payment category</b>
+            <div class="col2" align="float" style="display:inline-block; width: 150px">
+                    <b>Payment category:</b>
                 </div>
 
                 <div class="col2" align="left" style="display: inline-block;">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div>
-                <div class="col2" align="left" style="display:inline-block;">
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
                     <b>Receipt Date:</b>
                 </div>
 
@@ -74,41 +74,42 @@
                     <span>${receiptDate}</span>
                 </div>
             </div>
-
-            <div class="onerow" align="left">
-                <div class="col2" align="left" style="display:inline-block;"><b>Name:</b></div>
-                <div class="col2" align="left" style="display:inline-block;"><span id="patientName">${names}</span></div>
+            <div>
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
+                    <b>Name:</b></div>
+                    <div class="col2" align="left" style="display:inline-block;"><span id="patientName">${names}</span></div>
             </div>
-
-            <div class="onerow" align="left">
-                <div class="col2" align="left" style="display:inline-block;"><b>Patient ID:</b></div>
-                <div class="col2" align="left" style="display:inline-block;"><span id="identifier">${patientId}</span></div>
-        </div>
-        <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block;"><b>Age:</b></div>
-            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${age}
-        </div>
-        <div class="onerow" align="left">
-            <div class="col2" align="left" style="display:inline-block;"><b>Gender:</b></div>
-            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${gender}
+            <div>
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
+                    <b>Patient ID:</b></div>
+                    <div class="col2" align="left" style="display:inline-block;"><span id="identifier">${patientId}</span></div>
+             </div>
+            <div>
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
+                    <b>Age:</b></div>
+                    <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${age}</div>
+            </div>
+        <div>
+            <div class="col2" align="float" style="display:inline-block; width: 150px">
+            <b>Gender:</b></div>
+            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${gender}</div>
         </div>
         <div>
-            <div class="col2" align="left">
-                <b>${WhatToBePaid}</b>
-            </div>
+            <div class="col2" align="float" style="display:inline-block; width: 150px">
+                <b>${WhatToBePaid}</b></div>
         </div>
-        <div class="onerow" align="left">
-                    <div class="col2" align="left" style="display:inline-block;"><b>Served by:</b></div>
+        <div>
+            <div class="col2" align="float" style="display:inline-block; width: 150px"><b>Served by:</b></div>
                     <div class="col2" align="left" style="display:inline-block;"><span id="user"></span>${user}
                 </div>
+        </div>
 
-    </div>
 
-</div>
-<div class="col2">
-    <span class="button task" id="printSlip" onclick="printReceipt();window.location.href='patientQueueHome.page';" style="float:right; display:inline-block; margin-left: 5px;">
+        <div class="col2">
+        <span class="button task" id="printSlip" onclick="printReceipt();window.location.href='patientQueueHome.page';" style="float:right; display:inline-block; margin-left: 5px;">
         <i class="icon-print small"></i>&nbsp; Print</a>
-     </span>
+        </span>
+</div>
 </div>
 </div>
 </body>
