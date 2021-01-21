@@ -92,11 +92,12 @@
         <div>
             <div class="col2" align="float" style="display:inline-block; width: 150px">
             <b>Gender:</b></div>
-            <div class="col2" align="left" style="display:inline-block;"><span id="age"></span>${gender}</div>
+            <div class="col2" align="left" style="display:inline-block;"><span id="gender"></span>${gender}</div>
         </div>
         <div>
             <div class="col2" align="float" style="display:inline-block; width: 150px">
-                <b>${WhatToBePaid}</b></div>
+                <b>What to be paid:</b></div>
+            <div class="col2" align="left" style="display:inline-block;"><span id="payment"></span>${WhatToBePaid}</div>
         </div>
         <div>
             <div class="col2" align="float" style="display:inline-block; width: 150px"><b>Served by:</b></div>
