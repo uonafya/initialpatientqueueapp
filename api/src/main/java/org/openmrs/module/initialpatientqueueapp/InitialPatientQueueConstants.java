@@ -65,7 +65,7 @@ public class InitialPatientQueueConstants {
 	
 	public static final String PROPERTY_PATIENT_IDENTIFIER_TYPE = MODULE_ID_EHR_CONFIGS + ".patientIdentifierType";
 	
-	public static final String FORM_FIELD_REGISTRATION_FEE = "patient.registration.fee";
+	public static final String FORM_FIELD_REGISTRATION_FEE = "ehrconfigs.initialVisitRegistrationFee";
 	
 	public static final String FORM_FIELD_PAYING_CATEGORY = "person.attribute.44";
 	

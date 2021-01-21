@@ -1,24 +1,14 @@
 package org.openmrs.module.initialpatientqueueapp.page.controller;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Encounter;
-import org.openmrs.Obs;
 import org.openmrs.Patient;
-import org.openmrs.PersonAttribute;
-import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
-import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
-import org.openmrs.module.hospitalcore.util.ObsUtils;
-import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
-import org.openmrs.module.initialpatientqueueapp.api.InitialPatientqueueappService;
 import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
-import org.openmrs.module.initialpatientqueueapp.model.RegistrationFee;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ShowPatientInfoPageController {
 	
@@ -69,13 +55,13 @@ public class ShowPatientInfoPageController {
 		
 		User user = Context.getAuthenticatedUser();
 		model.addAttribute("reVisitFee",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
-		model.addAttribute("childLessThanFiveYearRegistrationFee",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0"));
+		model.addAttribute("childLessThanFiveYearRegistrationFee", GlobalPropertyUtil.getString(
+		    InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, "0.0"));
 		model.addAttribute("specialClinicRegFee",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, "0.0"));
 		model.addAttribute("registrationFees",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0"));
 		
 		model.addAttribute("user", user.getPersonName().getFullName());
 		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());

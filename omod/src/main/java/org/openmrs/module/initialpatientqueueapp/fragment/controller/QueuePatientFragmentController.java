@@ -19,9 +19,11 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ehrconfigs.metadata.EhrCommonMetadata;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
@@ -39,11 +41,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 4 Fragment to process the queueing information for a patient return processed patients
@@ -106,6 +112,7 @@ public class QueuePatientFragmentController {
 	        @RequestParam("visitType") Integer status) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
+		
 		Map<String, Object> redirectParams = new HashMap<String, Object>();
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
 		Concept payingCategory = Context.getConceptService().getConcept(
@@ -151,15 +158,14 @@ public class QueuePatientFragmentController {
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
 		model.addAttribute("receiptDate", new Date());
-		
+		getAllPersonAttributesPerTheSession(parameters, patient);
 		try {
 			// create encounter for the visit here
 			Encounter encounter = createEncounter(patient, parameters);
 			encounter = Context.getEncounterService().saveEncounter(encounter);
 			//create a visit if not created yet CHECKING IN OF PATIENT
 			hasActiveVisit(patientVisit, patient, encounter);
-			//save the person attributes associated
-			Context.getPersonService().savePerson(setAttributes(patient, parameters));
+			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print("success");
@@ -315,13 +321,14 @@ public class QueuePatientFragmentController {
 		Obs obsn = new Obs();
 		obsn.setConcept(cnrf);
 		obsn.setValueCoded(cnp);
-		Double doubleVal = Double.parseDouble(parameters.get(InitialPatientQueueConstants.FORM_FIELD_REGISTRATION_FEE));
+		double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
+		    InitialPatientQueueConstants.FORM_FIELD_REGISTRATION_FEE, "0.0"));
 		obsn.setValueNumeric(doubleVal);
 		obsn.setValueText(paymt3);
-		assert paymt3 != null;
-		if (paymt3.equals("Paying")) {
+		
+		if (paymt3 != null && paymt3.equals("Paying")) {
 			obsn.setComment(nPayn);
-		} else if (paymt3.equals("Non-Paying")) {
+		} else if (paymt3 != null && paymt3.equals("Non-Paying")) {
 			obsn.setComment(nNotpayn);
 		} else {
 			obsn.setComment(nScheme);
@@ -387,5 +394,33 @@ public class QueuePatientFragmentController {
 		}
 		
 		return patient;
+	}
+	
+	private Set<PersonAttribute> getAllPersonAttributesPerTheSession(Map<String, String> attributes, Patient patient) {
+		Set<PersonAttribute> allAttributes = new TreeSet<PersonAttribute>();
+		
+		int paymt1 = Integer.parseInt(attributes.get("paym_1"));
+		int paymt2 = Integer.parseInt(attributes.get("paym_2"));
+		
+		PersonAttributeType paymentCategoryPaymentAttribute = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.PAYMENT_CATEGORY);
+		//set up the person attribute for the payment category
+		PersonAttribute patientCategoryAttribute = new PersonAttribute();
+		patientCategoryAttribute.setAttributeType(paymentCategoryPaymentAttribute);
+		patientCategoryAttribute.setCreator(Context.getAuthenticatedUser());
+		patientCategoryAttribute.setDateCreated(new Date());
+		
+		if (paymt1 == 1) {
+			patientCategoryAttribute.setValue("Paying");
+		} else if (paymt1 == 2) {
+			patientCategoryAttribute.setValue("Non paying");
+		} else if (paymt1 == 3) {
+			patientCategoryAttribute.setValue("Special scheme");
+		}
+		
+		allAttributes.add(patientCategoryAttribute);
+		patient.setAttributes(allAttributes);
+		System.out.println("The returned attributes set is >>" + allAttributes.size());
+		return allAttributes;
 	}
 }
