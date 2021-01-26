@@ -396,8 +396,7 @@ public class QueuePatientFragmentController {
 		return patient;
 	}
 	
-	private Set<PersonAttribute> getAllPersonAttributesPerTheSession(Map<String, String> attributes, Patient patient) {
-		Set<PersonAttribute> allAttributes = new TreeSet<PersonAttribute>();
+	private void getAllPersonAttributesPerTheSession(Map<String, String> attributes, Patient patient) {
 		
 		int paymt1 = Integer.parseInt(attributes.get("paym_1"));
 		int paymt2 = Integer.parseInt(attributes.get("paym_2"));
@@ -409,6 +408,7 @@ public class QueuePatientFragmentController {
 		patientCategoryAttribute.setAttributeType(paymentCategoryPaymentAttribute);
 		patientCategoryAttribute.setCreator(Context.getAuthenticatedUser());
 		patientCategoryAttribute.setDateCreated(new Date());
+		patientCategoryAttribute.setPerson(patient);
 		
 		if (paymt1 == 1) {
 			patientCategoryAttribute.setValue("Paying");
@@ -417,10 +417,7 @@ public class QueuePatientFragmentController {
 		} else if (paymt1 == 3) {
 			patientCategoryAttribute.setValue("Special scheme");
 		}
+		patient.addAttribute(patientCategoryAttribute);
 		
-		allAttributes.add(patientCategoryAttribute);
-		patient.setAttributes(allAttributes);
-		System.out.println("The returned attributes set is >>" + allAttributes.size());
-		return allAttributes;
 	}
 }
