@@ -403,21 +403,33 @@ public class QueuePatientFragmentController {
 		
 		PersonAttributeType paymentCategoryPaymentAttribute = Context.getPersonService().getPersonAttributeTypeByUuid(
 		    EhrCommonMetadata._EhrPersonAttributeType.PAYMENT_CATEGORY);
-		//set up the person attribute for the payment category
-		PersonAttribute patientCategoryAttribute = new PersonAttribute();
-		patientCategoryAttribute.setAttributeType(paymentCategoryPaymentAttribute);
-		patientCategoryAttribute.setCreator(Context.getAuthenticatedUser());
-		patientCategoryAttribute.setDateCreated(new Date());
-		patientCategoryAttribute.setPerson(patient);
 		
-		if (paymt1 == 1) {
-			patientCategoryAttribute.setValue("Paying");
-		} else if (paymt1 == 2) {
-			patientCategoryAttribute.setValue("Non paying");
-		} else if (paymt1 == 3) {
-			patientCategoryAttribute.setValue("Special scheme");
+		PersonAttribute checkIfExists = patient.getAttribute(paymentCategoryPaymentAttribute);
+		//set up the person attribute for the payment category
+		if (checkIfExists == null) {
+			checkIfExists = new PersonAttribute();
+			checkIfExists.setAttributeType(paymentCategoryPaymentAttribute);
+			checkIfExists.setCreator(Context.getAuthenticatedUser());
+			checkIfExists.setDateCreated(new Date());
+			checkIfExists.setPerson(patient);
+			
+			if (paymt1 == 1) {
+				checkIfExists.setValue("Paying");
+			} else if (paymt1 == 2) {
+				checkIfExists.setValue("Non paying");
+			} else if (paymt1 == 3) {
+				checkIfExists.setValue("Special scheme");
+			}
+		} else {
+			if (paymt1 == 1) {
+				checkIfExists.setValue("Paying");
+			} else if (paymt1 == 2) {
+				checkIfExists.setValue("Non paying");
+			} else if (paymt1 == 3) {
+				checkIfExists.setValue("Special scheme");
+			}
 		}
-		patient.addAttribute(patientCategoryAttribute);
+		patient.addAttribute(checkIfExists);
 		
 	}
 }
