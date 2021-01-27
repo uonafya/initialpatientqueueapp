@@ -11,14 +11,14 @@
             var index = jq(this, '#simple-form-ui').val();
             alley = "";
             arrey = MODEL.payingCategory.split("|");
-            if (index === 1) {
+            if (index == 1) {
                 jq('#tasktitle').text('Paying Category');
                 jq('#paying').attr('checked', 'checked').change();
                 jq('#nonPaying').attr('checked', false).change();
                 jq('#specialSchemes').attr('checked', false).change();
                 arrey = MODEL.payingCategory.split("|");
             }
-            else if (index === 2) {
+            else if (index == 2) {
                 jq('#tasktitle').text('Nonpaying Category');
                 jq('#paying').attr('checked', false).change();
                 jq('#nonPaying').attr('checked', 'checked').change();
@@ -443,7 +443,7 @@
         submit: function () {
             // Validate and submit
             if (this.validateRegisterForm()) {
-               // print();
+                // print();
                 jq("#patientRegistrationForm").submit();
             }
         },
