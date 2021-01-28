@@ -1602,7 +1602,7 @@ a.tooltip span {
     <form class="simple-form-ui" id="patientRegistrationForm" method="post">
         <table cellpadding="0" cellspacing="0" border="0">
             <tr>
-                <td>
+                <td valign="top">
                     <div class="col4">
                         <div class="tasks">
                             <header class="tasks-header">
@@ -1635,7 +1635,7 @@ a.tooltip span {
                         </div>
                     </div>
                 </td>
-                <td>
+                <td valign="top">
 
                     <div class="col4">
                         <div class="tasks">
@@ -1650,7 +1650,7 @@ a.tooltip span {
                         </div>
                     </div>
                 </td>
-                <td>
+                <td valign="top">
                     <div class="col4 last">
                         <div class="tasks">
                             <header class="tasks-header">
