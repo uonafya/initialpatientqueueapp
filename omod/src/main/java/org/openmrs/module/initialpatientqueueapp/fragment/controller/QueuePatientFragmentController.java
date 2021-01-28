@@ -154,7 +154,7 @@ public class QueuePatientFragmentController {
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
 		model.addAttribute("receiptDate", new Date());
-		getAllPersonAttributesPerTheSession(parameters, patient);
+		consolidateAllPersonalAttributes(parameters, patient);
 		try {
 			// create encounter for the visit here
 			Encounter encounter = createEncounter(patient, parameters);
@@ -392,15 +392,23 @@ public class QueuePatientFragmentController {
 		return patient;
 	}
 	
-	private void getAllPersonAttributesPerTheSession(Map<String, String> attributes, Patient patient) {
+	private void getPatientCategoryPersonAttributesPerTheSession(Map<String, String> attributes, Patient patient) {
 		
 		int paymt1 = Integer.parseInt(attributes.get("paym_1"));
-		int paymt2 = Integer.parseInt(attributes.get("paym_2"));
 		
 		PersonAttributeType paymentCategoryPaymentAttribute = Context.getPersonService().getPersonAttributeTypeByUuid(
 		    EhrCommonMetadata._EhrPersonAttributeType.PAYMENT_CATEGORY);
 		
 		PersonAttribute checkIfExists = patient.getAttribute(paymentCategoryPaymentAttribute);
+		//set value to be used
+		String valueParam1 = "";
+		if (paymt1 == 1) {
+			valueParam1 = "Paying";
+		} else if (paymt1 == 2) {
+			valueParam1 = "Non paying";
+		} else if (paymt1 == 3) {
+			valueParam1 = "Special scheme";
+		}
 		//set up the person attribute for the payment category
 		if (checkIfExists == null) {
 			checkIfExists = new PersonAttribute();
@@ -408,24 +416,90 @@ public class QueuePatientFragmentController {
 			checkIfExists.setCreator(Context.getAuthenticatedUser());
 			checkIfExists.setDateCreated(new Date());
 			checkIfExists.setPerson(patient);
-			
-			if (paymt1 == 1) {
-				checkIfExists.setValue("Paying");
-			} else if (paymt1 == 2) {
-				checkIfExists.setValue("Non paying");
-			} else if (paymt1 == 3) {
-				checkIfExists.setValue("Special scheme");
-			}
-		} else {
-			if (paymt1 == 1) {
-				checkIfExists.setValue("Paying");
-			} else if (paymt1 == 2) {
-				checkIfExists.setValue("Non paying");
-			} else if (paymt1 == 3) {
-				checkIfExists.setValue("Special scheme");
-			}
 		}
+		checkIfExists.setValue(valueParam1);
 		patient.addAttribute(checkIfExists);
 		
+	}
+	
+	private void getPayingCategoryPersonAttribute(Map<String, String> attributes, Patient patient) {
+		int paymt1 = Integer.parseInt(attributes.get("paym_1"));
+		int paymt2 = Integer.parseInt(attributes.get("paym_2"));
+		String param2Value = "";
+		
+		if (paymt1 == 1) {
+			if (paymt2 == 1) {
+				param2Value = "Special clinic";
+			} else if (paymt2 == 2) {
+				param2Value = "General patient";
+			}
+		} else if (paymt1 == 2) {
+			if (paymt2 == 1) {
+				param2Value = "Child under 5";
+			} else if (paymt2 == 2 || paymt2 == 3) {
+				param2Value = "Currently pregnant";
+			} else if (paymt2 == 4 || paymt2 == 5) {
+				param2Value = "CCC patient";
+			} else if (paymt2 == 6 || paymt2 == 7) {
+				param2Value = "TB patient";
+			} else if (paymt2 == 8) {
+				param2Value = "Patient in prison";
+			} else if (paymt2 == 9) {
+				param2Value = "NHIF patient";
+			} else if (paymt2 == 10) {
+				param2Value = "Civil servant";
+			}
+		} else if (paymt1 == 3) {
+			if (paymt2 == 1) {
+				param2Value = "Waiver";
+			} else if (paymt2 == 2) {
+				param2Value = "Delivery case";
+			} else if (paymt2 == 3) {
+				param2Value = "Student";
+			}
+		}
+		PersonAttributeType paymentCategorySubTypePaymentAttribute = Context.getPersonService()
+		        .getPersonAttributeTypeByUuid(EhrCommonMetadata._EhrPersonAttributeType.PAYMENT_CATEGORY_SUB_TYPE);
+		PersonAttribute checkIfParam2Exists = patient.getAttribute(paymentCategorySubTypePaymentAttribute);
+		if (checkIfParam2Exists == null) {
+			checkIfParam2Exists = new PersonAttribute();
+			checkIfParam2Exists.setAttributeType(paymentCategorySubTypePaymentAttribute);
+			checkIfParam2Exists.setCreator(Context.getAuthenticatedUser());
+			checkIfParam2Exists.setDateCreated(new Date());
+			checkIfParam2Exists.setPerson(patient);
+		}
+		checkIfParam2Exists.setValue(param2Value);
+		patient.addAttribute(checkIfParam2Exists);
+	}
+	
+	private void getFileNumberPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String fileNumber = attributes.get("rooms3");
+		PersonAttributeType fileNumberAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.FILE_NUMBER);
+		PersonAttribute fileNumberAttribute = patient.getAttribute(fileNumberAttributeType);
+		if (!fileNumber.isEmpty()) {
+			if (fileNumberAttribute == null) {
+				fileNumberAttribute = new PersonAttribute();
+				fileNumberAttribute.setAttributeType(fileNumberAttributeType);
+				fileNumberAttribute.setCreator(Context.getAuthenticatedUser());
+				fileNumberAttribute.setDateCreated(new Date());
+				fileNumberAttribute.setPerson(patient);
+				
+			}
+			fileNumberAttribute.setValue(fileNumber);
+			patient.addAttribute(fileNumberAttribute);
+		}
+		
+	}
+	
+	/* need to include these person attributes for complete patient record
+	person.attribute.47=Private school, == university
+	modesummary=COM/03/2014,*/
+	
+	private void consolidateAllPersonalAttributes(Map<String, String> attributes, Patient patient) {
+		// call all the methods that saves the person attribute
+		getPatientCategoryPersonAttributesPerTheSession(attributes, patient);
+		getPayingCategoryPersonAttribute(attributes, patient);
+		getFileNumberPersonAttribute(attributes, patient);
 	}
 }
