@@ -1651,7 +1651,7 @@ a.tooltip span {
                         </div>
 
                         <span id="universitydiv" class="select-arrow" style="width: 100%">
-                            <field><select style="width: 101%;" name="person.attribute.47"
+                            <field><select style="width: 101%;" name="university"
                                            id="university">&nbsp;</select></field>
                         </span>
 

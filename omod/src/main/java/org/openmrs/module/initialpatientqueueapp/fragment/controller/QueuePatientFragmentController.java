@@ -477,6 +477,7 @@ public class QueuePatientFragmentController {
 		PersonAttributeType fileNumberAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
 		    EhrCommonMetadata._EhrPersonAttributeType.FILE_NUMBER);
 		PersonAttribute fileNumberAttribute = patient.getAttribute(fileNumberAttributeType);
+		
 		if (!fileNumber.isEmpty()) {
 			if (fileNumberAttribute == null) {
 				fileNumberAttribute = new PersonAttribute();
@@ -492,14 +493,52 @@ public class QueuePatientFragmentController {
 		
 	}
 	
-	/* need to include these person attributes for complete patient record
-	person.attribute.47=Private school, == university
-	modesummary=COM/03/2014,*/
+	private void getUniversityPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String university = attributes.get("university");
+		PersonAttributeType universityAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.UNIVERSITY);
+		PersonAttribute universityAttribute = patient.getAttribute(universityAttributeType);
+		if (!university.isEmpty()) {
+			if (universityAttribute == null) {
+				universityAttribute = new PersonAttribute();
+				universityAttribute.setAttributeType(universityAttributeType);
+				universityAttribute.setCreator(Context.getAuthenticatedUser());
+				universityAttribute.setDateCreated(new Date());
+				universityAttribute.setPerson(patient);
+				
+			}
+			universityAttribute.setValue(university);
+			patient.addAttribute(universityAttribute);
+		}
+		
+	}
+	
+	private void getModesummaryPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String modesummary = attributes.get("modesummary");
+		PersonAttributeType modesummaryAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.MODE_SUMMARY_DETAILS);
+		PersonAttribute modesummaryAttribute = patient.getAttribute(modesummaryAttributeType);
+		if (!modesummary.isEmpty()) {
+			if (modesummaryAttribute == null) {
+				modesummaryAttribute = new PersonAttribute();
+				modesummaryAttribute.setAttributeType(modesummaryAttributeType);
+				modesummaryAttribute.setCreator(Context.getAuthenticatedUser());
+				modesummaryAttribute.setDateCreated(new Date());
+				modesummaryAttribute.setPerson(patient);
+				
+			}
+			modesummaryAttribute.setValue(modesummary);
+			patient.addAttribute(modesummaryAttribute);
+		}
+		
+	}
 	
 	private void consolidateAllPersonalAttributes(Map<String, String> attributes, Patient patient) {
 		// call all the methods that saves the person attribute
 		getPatientCategoryPersonAttributesPerTheSession(attributes, patient);
 		getPayingCategoryPersonAttribute(attributes, patient);
 		getFileNumberPersonAttribute(attributes, patient);
+		getUniversityPersonAttribute(attributes, patient);
+		getModesummaryPersonAttribute(attributes, patient);
 	}
 }
