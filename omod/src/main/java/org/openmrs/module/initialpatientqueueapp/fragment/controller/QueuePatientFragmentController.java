@@ -154,6 +154,7 @@ public class QueuePatientFragmentController {
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
 		model.addAttribute("receiptDate", new Date());
+		System.out.println("All the attribute passed>>" + parameters);
 		consolidateAllPersonalAttributes(parameters, patient);
 		try {
 			// create encounter for the visit here
@@ -513,22 +514,62 @@ public class QueuePatientFragmentController {
 		
 	}
 	
-	private void getModesummaryPersonAttribute(Map<String, String> attributes, Patient patient) {
-		String modesummary = attributes.get("modesummary");
-		PersonAttributeType modesummaryAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
-		    EhrCommonMetadata._EhrPersonAttributeType.MODE_SUMMARY_DETAILS);
-		PersonAttribute modesummaryAttribute = patient.getAttribute(modesummaryAttributeType);
-		if (!modesummary.isEmpty()) {
-			if (modesummaryAttribute == null) {
-				modesummaryAttribute = new PersonAttribute();
-				modesummaryAttribute.setAttributeType(modesummaryAttributeType);
-				modesummaryAttribute.setCreator(Context.getAuthenticatedUser());
-				modesummaryAttribute.setDateCreated(new Date());
-				modesummaryAttribute.setPerson(patient);
+	private void getNhifNumberPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String nhifNumber = attributes.get("nhifNumber");
+		PersonAttributeType nhifNumberAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.NHIF_CARD_NUMBER);
+		PersonAttribute nhifNumberAttribute = patient.getAttribute(nhifNumberAttributeType);
+		if (!nhifNumber.isEmpty()) {
+			if (nhifNumberAttribute == null) {
+				nhifNumberAttribute = new PersonAttribute();
+				nhifNumberAttribute.setAttributeType(nhifNumberAttributeType);
+				nhifNumberAttribute.setCreator(Context.getAuthenticatedUser());
+				nhifNumberAttribute.setDateCreated(new Date());
+				nhifNumberAttribute.setPerson(patient);
 				
 			}
-			modesummaryAttribute.setValue(modesummary);
-			patient.addAttribute(modesummaryAttribute);
+			nhifNumberAttribute.setValue(nhifNumber);
+			patient.addAttribute(nhifNumberAttribute);
+		}
+		
+	}
+	
+	private void getStudentIdPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String studentId = attributes.get("studentId");
+		PersonAttributeType studentIdAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.STUDENT_ID);
+		PersonAttribute studentIdAttribute = patient.getAttribute(studentIdAttributeType);
+		if (!studentId.isEmpty()) {
+			if (studentIdAttribute == null) {
+				studentIdAttribute = new PersonAttribute();
+				studentIdAttribute.setAttributeType(studentIdAttributeType);
+				studentIdAttribute.setCreator(Context.getAuthenticatedUser());
+				studentIdAttribute.setDateCreated(new Date());
+				studentIdAttribute.setPerson(patient);
+				
+			}
+			studentIdAttribute.setValue(studentId);
+			patient.addAttribute(studentIdAttribute);
+		}
+		
+	}
+	
+	private void getWaiverNumberPersonAttribute(Map<String, String> attributes, Patient patient) {
+		String waiverNumber = attributes.get("waiverNumber");
+		PersonAttributeType waiverNumberAttributeType = Context.getPersonService().getPersonAttributeTypeByUuid(
+		    EhrCommonMetadata._EhrPersonAttributeType.WAIVER_NUMBER);
+		PersonAttribute waiverNumberAttribute = patient.getAttribute(waiverNumberAttributeType);
+		if (!waiverNumber.isEmpty()) {
+			if (waiverNumberAttribute == null) {
+				waiverNumberAttribute = new PersonAttribute();
+				waiverNumberAttribute.setAttributeType(waiverNumberAttributeType);
+				waiverNumberAttribute.setCreator(Context.getAuthenticatedUser());
+				waiverNumberAttribute.setDateCreated(new Date());
+				waiverNumberAttribute.setPerson(patient);
+				
+			}
+			waiverNumberAttribute.setValue(waiverNumber);
+			patient.addAttribute(waiverNumberAttribute);
 		}
 		
 	}
@@ -539,6 +580,8 @@ public class QueuePatientFragmentController {
 		getPayingCategoryPersonAttribute(attributes, patient);
 		getFileNumberPersonAttribute(attributes, patient);
 		getUniversityPersonAttribute(attributes, patient);
-		getModesummaryPersonAttribute(attributes, patient);
+		getNhifNumberPersonAttribute(attributes, patient);
+		getStudentIdPersonAttribute(attributes, patient);
+		getWaiverNumberPersonAttribute(attributes, patient);
 	}
 }

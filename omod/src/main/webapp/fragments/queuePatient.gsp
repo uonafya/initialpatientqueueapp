@@ -1643,9 +1643,9 @@ a.tooltip span {
                         <div class="tasks">
                             <header class="tasks-header">
                                 <span id="summtitle1" class="tasks-title">Details</span>
-                                <input type="hidden" id="nhifNumber" name="person.attribute.34"/>
-                                <input type="hidden" id="studentId" name="person.attribute.42"/>
-                                <input type="hidden" id="waiverNumber" name="person.attribute.32"/>
+                                <input type="hidden" id="nhifNumber" name="nhifNumber"/>
+                                <input type="hidden" id="studentId" name="studentId"/>
+                                <input type="hidden" id="waiverNumber" name="waiverNumber"/>
                                 <a class="tasks-lists"></a>
                             </header>
                         </div>
