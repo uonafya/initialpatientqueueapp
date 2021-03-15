@@ -41,7 +41,9 @@ public class PatientModel {
 	
 	public PatientModel(Patient patient) throws ParseException {
 		setPatientId(patient.getPatientId().toString());
-		setIdentifier(patient.getPatientIdentifier().getIdentifier());
+		if (patient.getPatientIdentifier() != null) {
+			setIdentifier(patient.getPatientIdentifier().getIdentifier());
+		}
 		setFullname(PatientUtils.getFullName(patient));
 		setSurName(patient.getFamilyName());
 		setFirstName(patient.getGivenName());
