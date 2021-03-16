@@ -17,33 +17,31 @@
                 jq('#nonPaying').attr('checked', false).change();
                 jq('#specialSchemes').attr('checked', false).change();
                 arrey = MODEL.payingCategory.split("|");
-            }
-            else if (index == 2) {
+            } else if (index == 2) {
                 jq('#tasktitle').text('Nonpaying Category');
                 jq('#paying').attr('checked', false).change();
                 jq('#nonPaying').attr('checked', 'checked').change();
                 jq('#specialSchemes').attr('checked', false).change();
                 arrey = MODEL.nonPayingCategory.split("|");
-            }
-            else {
+            } else {
                 jq('#tasktitle').text('Special Schemes');
                 jq('#paying').attr('checked', false).change();
                 jq('#nonPaying').attr('checked', false).change();
                 jq('#specialSchemes').attr('checked', 'checked').change();
                 arrey = MODEL.specialScheme.split("|");
             }
-            if (MODEL.payingCategory.split('|').length == 1 && index == 1){
+            if (MODEL.payingCategory.split('|').length == 1 && index == 1) {
                 jq('.parent-items label').eq(0).hide();
                 jq('.parent-items label').eq(1).css("border-top", "1px none #f0f2f3");
                 arrey = MODEL.nonPayingCategory.split("|");
             }
-            if (MODEL.nonPayingCategory.split('|').length == 1){
+            if (MODEL.nonPayingCategory.split('|').length == 1) {
                 jq('.parent-items label').eq(1).hide();
             }
-            if (MODEL.specialScheme.split('|').length == 1){
+            if (MODEL.specialScheme.split('|').length == 1) {
                 jq('.parent-items label').eq(2).hide();
             }
-            if (MODEL.specialScheme.split('|').length == 1){
+            if (MODEL.specialScheme.split('|').length == 1) {
                 jq('.parent-items label').eq(2).show();
             }
             for (var i = 0; i < arrey.length - 1; i++) {
@@ -72,8 +70,8 @@
             selectedFeeCategory();
             LoadPayCatgMode();
         });
-        function selectedFeeCategory()
-        {
+
+        function selectedFeeCategory() {
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
             var select3 = '';
@@ -84,16 +82,14 @@
                 select3 = jq('#payingCategory :selected').val().toUpperCase();
                 jq('#summ_pays').text('Paying / ' + jq('#payingCategory option:selected').text());
                 payingCategorySelection();
-            }
-            else if (select1 === 2) {
+            } else if (select1 === 2) {
                 jq('#nonPayingCategory option').eq(select2).prop('selected', true);
                 jq('#payingCategory option').eq(0).prop('selected', true);
                 jq('#specialScheme option').eq(0).prop('selected', true);
                 select3 = jq('#nonPayingCategory :selected').val().toUpperCase();
                 jq('#summ_pays').text('Non-Paying / ' + jq('#nonPayingCategory option:selected').text());
                 nonPayingCategorySelection();
-            }
-            else {
+            } else {
                 jq('#specialScheme option').eq(select2).prop('selected', true);
                 jq('#payingCategory option').eq(0).prop('selected', true);
                 jq('#nonPayingCategory option').eq(0).prop('selected', true);
@@ -110,8 +106,7 @@
                 jq('#university option').eq(0).prop('selected', true);
                 jq('#summtitle1').text('NHIF Details');
                 jq('#modesummary').attr("placeholder", "NHIF Number");
-            }
-            else if (select3.indexOf("Student") >= 0) {
+            } else if (select3.indexOf("Student") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.42');
                 jq("#modesummary").val("");
@@ -119,8 +114,7 @@
                 jq('#university option').eq(1).prop('selected', true);
                 jq('#summtitle1').text('Student Details');
                 jq('#modesummary').attr("placeholder", "Student Number");
-            }
-            else if (select3.toUpperCase().indexOf("HOSPITAL WAIVER") >= 0) {
+            } else if (select3.toUpperCase().indexOf("HOSPITAL WAIVER") >= 0) {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'person.attribute.32');
                 jq("#modesummary").val("");
@@ -128,8 +122,7 @@
                 jq('#university option').eq(0).prop('selected', true);
                 jq('#summtitle1').text('Waiver Details');
                 jq('#modesummary').attr("placeholder", "Waiver Number");
-            }
-            else {
+            } else {
                 jq("#modesummary").attr("readonly", false);
                 jq("#modesummary").attr("name", 'modesummary');
                 jq("#modesummary").val("N/A");
@@ -140,6 +133,7 @@
             }
             jq('#summ_fees').text(jq('#selectedRegFeeValue').val() + '.00');
         }
+
         // Paying Category Map
         var _payingCategoryMap = new Array();
         var payingCategoryMap = "${payingCategoryMap}";
@@ -198,8 +192,7 @@
             if (jq.inArray(idd, arr) !== -1) {
                 if (jq('#' + idd).val().trim() === "") {
                     jq('#' + idd).addClass("red-border");
-                }
-                else {
+                } else {
                     jq('#' + idd).removeClass("red-border");
                 }
             }
@@ -220,8 +213,7 @@
             if (jq.inArray(idd, arr) != -1) {
                 if (jq('#' + idd).val() == 0 || jq('#' + idd).val().trim() == "") {
                     jq('#' + idd).addClass("red-border");
-                }
-                else {
+                } else {
                     jq('#' + idd).removeClass("red-border");
                 }
                 if (idd == 'patientGender') {
@@ -607,30 +599,26 @@
                 jq('#rooms1').addClass("red-border");
                 i++;
                 tab3++;
-            }
-            else {
+            } else {
                 jq('#rooms1').removeClass("red-border");
             }
             if (jq("#rooms2").val() === 0 || jq("#rooms2").val() === "" || jq("#rooms2").val() == null) {
                 jq('#rooms2').addClass("red-border");
                 i++;
                 tab3++;
-            }
-            else {
+            } else {
                 jq('#rooms2').removeClass("red-border");
             }
             if (jq("#rooms1").val() === 3 && jq("#rooms3").val().trim() === "") {
                 jq('#rooms3').addClass("red-border");
                 i++;
                 tab3++;
-            }
-            else {
+            } else {
                 jq('#rooms3').removeClass("red-border");
             }
             if (i === 0) {
                 return true;
-            }
-            else {
+            } else {
                 var str0 = "<div id='form-verification-x' onclick='verification_close();'>&#215;</div><p>Please fill in correctly the fields marked with * and highlighted in red. Also ensure that date fields have been entered in specified format</p>"
                 if (str1 != "") {
                     str0 = str0 + '<p><span style="color:#f00;"><i class="icon-quote-left" style="font-size: 18px">&nbsp;</i>Also Note: </span>' + str1 + '</p>'
@@ -657,8 +645,7 @@
                 jq("#universityRow").hide();
                 jq("#studentIdRow").hide();
                 jq("#waiverNumberRow").hide();
-            }
-            else {
+            } else {
             }
         },
         /** CHECK WHEN NONPAYING CATEGORY IS SELECTED */
@@ -672,15 +659,13 @@
                 var selectedNonPayingCategory = jq("#nonPayingCategory option:checked").val();
                 if (selectedNonPayingCategory === "NHIF CIVIL SERVANT" || selectedNonPayingCategory === "National Health Insurance Fund Member") {
                     jq("#nhifNumberRow").show();
-                }
-                else {
+                } else {
                     jq("#nhifNumberRow").hide();
                 }
                 jq("#universityRow").hide();
                 jq("#studentIdRow").hide();
                 jq("#waiverNumberRow").hide();
-            }
-            else {
+            } else {
                 jq("#nhifNumberRow").hide();
             }
         },
@@ -696,19 +681,16 @@
                 if (selectedSpecialScheme === "Student") {
                     jq("#universityRow").show();
                     jq("#studentIdRow").show();
-                }
-                else {
+                } else {
                     jq("#universityRow").hide();
                     jq("#studentIdRow").hide();
                 }
                 if (selectedSpecialScheme === "HOSPITAL WAIVER") {
                     jq("#waiverNumberRow").show();
-                }
-                else {
+                } else {
                     jq("#waiverNumberRow").hide();
                 }
-            }
-            else {
+            } else {
                 jq("#universityRow").hide();
                 jq("#studentIdRow").hide();
                 jq("#waiverNumberRow").hide();
@@ -724,8 +706,7 @@
                 jq("#specialClinic").val("");
                 jq("#specialClinicField").hide();
                 jq("#fileNumberField").hide();
-            }
-            else {
+            } else {
                 jq("#triageField").hide();
             }
         },
@@ -739,8 +720,7 @@
                 jq("#specialClinic").val("");
                 jq("#specialClinicField").hide();
                 jq("#fileNumberField").hide();
-            }
-            else {
+            } else {
                 jq("#opdWardField").hide();
             }
         },
@@ -754,13 +734,13 @@
                 jq("#opdWardField").hide();
                 jq("#specialClinicField").show();
                 jq("#fileNumberField").show();
-            }
-            else {
+            } else {
                 jq("#specialClinicField").hide();
                 jq("#fileNumberField").hide();
             }
         }
     };
+
     function payingCategorySelection() {
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
@@ -775,8 +755,7 @@
                 jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
                 return false;
             }
-        }
-        else {
+        } else {
             if (select1 === 1 && select3 === 'CURRENTLY PREGNANT') {
                 if (jq("#patientGender").val() === "M") {
                     jq().toastmessage('showErrorToast', 'This category is only valid for female');
@@ -789,8 +768,7 @@
                 var specialClinicRegFee = parseInt('${specialClinicRegFee}');
                 var totalRegFee = initialRegFee + specialClinicRegFee;
                 jq("#selectedRegFeeValue").val(totalRegFee);
-            }
-            else {
+            } else {
                 jq("#selectedRegFeeValue").val(${initialRegFee});
             }
         }
@@ -799,20 +777,19 @@
             jq('#nonPayingCategory option').eq(0).prop('selected', true);
             jq('#specialScheme option').eq(0).prop('selected', true);
             jq('#summ_pays').text('Paying / ' + jq('#payingCategory option:selected').text());
-        }
-        else if (select1 === 2) {
+        } else if (select1 === 2) {
             jq('#nonPayingCategory option').eq(select2).prop('selected', true);
             jq('#payingCategory option').eq(0).prop('selected', true);
             jq('#specialScheme option').eq(0).prop('selected', true);
             jq('#summ_pays').text('Non-Paying / ' + jq('#nonPayingCategory option:selected').text());
-        }
-        else {
+        } else {
             jq('#specialScheme option').eq(select2).prop('selected', true);
             jq('#payingCategory option').eq(0).prop('selected', true);
             jq('#nonPayingCategory option').eq(0).prop('selected', true);
             jq('#summ_pays').text('Special Scheme / ' + jq('#specialScheme option:selected').text());
         }
     }
+
     function nonPayingCategorySelection() {
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
@@ -826,8 +803,7 @@
                 jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
                 return false;
             }
-        }
-        else {
+        } else {
             if (select3 === 'CURRENTLY PREGNANT') {
                 if (jq("#patientGender").val() === "M") {
                     jq().toastmessage('showErrorToast', 'This category is only valid for Females');
@@ -842,8 +818,7 @@
         //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
         if (selectedNonPayingCategory === "NHIF CIVIL SERVANT" || selectedNonPayingCategory === "National Health Insurance Fund Member") {
             jq("#nhifNumberRow").show();
-        }
-        else {
+        } else {
             jq("#nhifNumberRow").hide();
         }
         if (selectedRoomToVisit === "3") {
@@ -856,6 +831,7 @@
             jq("#selectedRegFeeValue").val(0);
         }
     }
+
     function specialSchemeSelection() {
         var selectedSpecialScheme = jq("#specialScheme option:checked").val();
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
@@ -870,8 +846,7 @@
                 jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
                 return false;
             }
-        }
-        else {
+        } else {
             if (select3 === 'CURRENTLY PREGNANT') {
                 if (jq("#patientGender").val() === "M") {
                     jq().toastmessage('showErrorToast', 'This category is only valid for Females');
@@ -889,114 +864,104 @@
         if (selectedSpecialScheme === "Student") {
             jq("#universityRow").show();
             jq("#studentIdRow").show();
-        }
-        else {
+        } else {
             jq("#universityRow").hide();
             jq("#studentIdRow").hide();
         }
         //if(MODEL.specialSchemeMap[selectedSpecialScheme]=="WAIVER CASE"){
         if (selectedSpecialScheme === "HOSPITAL WAIVER") {
             jq("#waiverNumberRow").show();
-        }
-        else {
+        } else {
             jq("#waiverNumberRow").hide();
         }
         jq("#selectedRegFeeValue").val(0);
     }
+
     function triageRoomSelectionFor() {
         if (jq("#payingCategory").val() !== " ") {
             var selectedPayingCategory = jq("#payingCategory option:checked").val();
             if (selectedPayingCategory === "CHILD LESS THAN 5 YEARS") {
                 jq("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
-            }
-            else {
+            } else {
                 jq("#selectedRegFeeValue").val(${initialRegFee});
             }
-        }
-        else if (jq("#nonPayingCategory").val() != " ") {
+        } else if (jq("#nonPayingCategory").val() != " ") {
             jq("#selectedRegFeeValue").val(0);
-        }
-        else if (jq("#specialScheme").val() != " ") {
+        } else if (jq("#specialScheme").val() != " ") {
             jq("#selectedRegFeeValue").val(0);
         }
     }
+
     function opdRoomSelectionForReg() {
         if (jq("#payingCategory").val() != " ") {
             var selectedPayingCategory = jq("#payingCategory option:checked").val();
             if (selectedPayingCategory == "CHILD LESS THAN 5 YEARS") {
                 jq("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
-            }
-            else {
+            } else {
                 jq("#selectedRegFeeValue").val(${initialRegFee});
             }
-        }
-        else if (jq("#nonPayingCategory").val() != " ") {
+        } else if (jq("#nonPayingCategory").val() != " ") {
             jq("#selectedRegFeeValue").val(0);
-        }
-        else if (jq("#specialScheme").val() != " ") {
+        } else if (jq("#specialScheme").val() != " ") {
             jq("#selectedRegFeeValue").val(0);
         }
     }
+
     function specialClinicSelectionForReg() {
         if (jq("#payingCategory").val() != " ") {
             var selectedPayingCategory = jq("#payingCategory option:checked").val();
             if (selectedPayingCategory == "CHILD LESS THAN 5 YEARS") {
                 jq("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
-            }
-            else {
+            } else {
                 var initialRegFee = parseInt('${initialRegFee}');
                 var specialClinicRegFee = parseInt('${specialClinicRegFee}');
                 var totalRegFee = initialRegFee + specialClinicRegFee;
                 jq("#selectedRegFeeValue").val(totalRegFee);
             }
-        }
-        else if (jq("#nonPayingCategory").val() != " ") {
+        } else if (jq("#nonPayingCategory").val() != " ") {
             var selectedNonPayingCategory = jq("#nonPayingCategory option:checked").val();
             if (selectedNonPayingCategory === "Patient lives with confirmed TB case" || selectedNonPayingCategory === "CCC PATIENT") {
                 jq("#selectedRegFeeValue").val(${specialClinicRegFee});
-            }
-            else {
+            } else {
                 jq("#selectedRegFeeValue").val(0);
             }
-        }
-        else if (jq("#specialScheme").val() !== " ") {
+        } else if (jq("#specialScheme").val() !== " ") {
             jq("#selectedRegFeeValue").val(0);
         }
     }
+
     function LoadPayCatg() {
     }
+
     function LoadPayCatgMode() {
         var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
         var select3 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').data('name');
-        if (typeof select2 == 'undefined' || typeof select3 == 'undefined'){
+        if (typeof select2 == 'undefined' || typeof select3 == 'undefined') {
             return false;
         }
-        if (select3.includes("NHIF") ||  select3.includes("CIVIL SERVANT") || select3.includes("National Health Insurance Fund")) {
+        if (select3.includes("NHIF") || select3.includes("CIVIL SERVANT") || select3.includes("National Health Insurance Fund")) {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("");
             jq('#universitydiv').hide();
             jq('#university option').eq(0).prop('selected', true);
             jq('#summtitle1').text('NHIF Summary');
             jq('#modesummary').attr("placeholder", "NHIF Number");
-        }
-        else if (select3.includes("Student")) {
+        } else if (select3.includes("Student")) {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("");
             jq('#universitydiv').show();
             jq('#university option').eq(1).prop('selected', true);
             jq('#summtitle1').text('Student Summary');
             jq('#modesummary').attr("placeholder", "Student Number");
-        }
-        else if (select3.includes("WAIVER")) {
+        } else if (select3.includes("WAIVER")) {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("");
             jq('#universitydiv').hide();
             jq('#university option').eq(0).prop('selected', true);
             jq('#summtitle1').text('Waiver Summary');
             jq('#modesummary').attr("placeholder", "Waiver Number");
-        }
-        else {
+        } else {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("N/A");
             jq('#universitydiv').hide();
@@ -1009,14 +974,12 @@
             jq('#nonPayingCategory option').eq(0).prop('selected', true);
             jq('#specialScheme option').eq(0).prop('selected', true);
             jq('#summ_pays').text('Paying / ' + jq('#payingCategory option:selected').text());
-        }
-        else if (select1 == 2) {
+        } else if (select1 == 2) {
             jq('#nonPayingCategory option').eq(select2).prop('selected', true);
             jq('#payingCategory option').eq(0).prop('selected', true);
             jq('#specialScheme option').eq(0).prop('selected', true);
             jq('#summ_pays').text('Non-Paying / ' + jq('#nonPayingCategory option:selected').text());
-        }
-        else {
+        } else {
             jq('#specialScheme option').eq(select2).prop('selected', true);
             jq('#payingCategory option').eq(0).prop('selected', true);
             jq('#nonPayingCategory option').eq(0).prop('selected', true);
@@ -1025,6 +988,7 @@
         payingCategorySelection();
         jq('#summ_fees').text(jq('#selectedRegFeeValue').val() + '.00');
     }
+
     function LoadPaymodes() {
         jq('#modetype1').empty();
         if (jq("#paymode1").val() == 1) {
@@ -1035,8 +999,7 @@
                     jq('<option></option>').val(val).html(text)
                 );
             });
-        }
-        else if (jq("#paymode1").val() == 2) {
+        } else if (jq("#paymode1").val() == 2) {
             var myOptions = {4: 'PULSE', 5: 'CCC PATIENT', 6: 'Patient lives with confirmed TB case'};
             var mySelect = jq('#modetype1');
             jq.each(myOptions, function (val, text) {
@@ -1044,8 +1007,7 @@
                     jq('<option></option>').val(val).html(text)
                 );
             });
-        }
-        else if (jq("#paymode1").val() == 3) {
+        } else if (jq("#paymode1").val() == 3) {
             var myOptions = {7: 'BLOOD OXYGEN SATURATION', 8: 'HOSPITAL WAIVER', 9: 'DELIVERY CASE'};
             var mySelect = jq('#modetype1');
             jq.each(myOptions, function (val, text) {
@@ -1053,8 +1015,7 @@
                     jq('<option></option>').val(val).html(text)
                 );
             });
-        }
-        else {
+        } else {
             var myOptions = {0: ''};
             var mySelect = jq('#modetype1');
             jq.each(myOptions, function (val, text) {
@@ -1065,18 +1026,19 @@
         }
         LoadModeChange();
     }
+
     function LoadModeChange() {
         if (jq("#modetype1").val() == 8) {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("");
             jq('#forpaymode1').text('Waiver Number');
-        }
-        else {
+        } else {
             jq("#modesummary").attr("readonly", false);
             jq("#modesummary").val("N/A");
             jq('#forpaymode1').text('Summary');
         }
     }
+
     function LoadLegalCases() {
         jq('#mlc').empty();
         if (jq("#legal1").val() == 1) {
@@ -1088,8 +1050,7 @@
             jq("#mlcCaseYes").attr('checked', 'checked');
             jq("#mlcCaseNo").attr('checked', false);
             jq('#formlc span').text('*');
-        }
-        else if (jq("#legal1").val() == 2) {
+        } else if (jq("#legal1").val() == 2) {
             var myOptions = {" ": 'N/A'};
             var mySelect = jq('#mlc');
             jq.each(myOptions, function (val, text) {
@@ -1100,8 +1061,7 @@
             jq("#mlcCaseYes").attr('checked', false);
             jq("#mlcCaseNo").attr('checked', 'checked');
             jq('#formlc span').text('');
-        }
-        else {
+        } else {
             var myOptions = {" ": 'N/A'};
             var mySelect = jq('#mlc');
             jq.each(myOptions, function (val, text) {
@@ -1114,6 +1074,7 @@
             jq('#formlc span').text('');
         }
     }
+
     function LoadReferralCases() {
         jq('#referredFrom').empty();
         jq('#referralType').empty();
@@ -1136,8 +1097,7 @@
             jq('#forReferralType span').text('*');
             jq('#forReferredFrom span').text('*');
             jq('#referralDescription').removeClass("disabled");
-        }
-        else if (jq("#refer1").val() == 2) {
+        } else if (jq("#refer1").val() == 2) {
             var myOptions = {" ": 'N/A'};
             var mySelect = jq('#referredFrom');
             jq.each(myOptions, function (val, text) {
@@ -1159,8 +1119,7 @@
             jq("#referredNo").attr('checked', 'checked');
             jq("#referredYes").attr('checked', false);
             jq('#referralDescription').addClass("disabled");
-        }
-        else {
+        } else {
             var myOptions = {" ": 'N/A'};
             var mySelect = jq('#referredFrom');
             jq.each(myOptions, function (val, text) {
@@ -1182,6 +1141,7 @@
             jq('#referralDescription').addClass("disabled");
         }
     }
+
     function LoadRoomsTypes() {
         nonPayingCategorySelection();
         jq('#rooms2').empty();
@@ -1200,8 +1160,7 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
-        }
-        else if (jq("#rooms1").val() == 2) {
+        } else if (jq("#rooms1").val() == 2) {
             PAGE.fillOptions("#rooms2", {
                 data: MODEL.OPDs,
                 delimiter: ",",
@@ -1216,8 +1175,7 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
-        }
-        else if (jq("#rooms1").val() == 3) {
+        } else if (jq("#rooms1").val() == 3) {
             PAGE.fillOptions("#rooms2", {
                 data: MODEL.SPECIALCLINIC,
                 delimiter: ",",
@@ -1232,8 +1190,7 @@
             jq('#referralDescription').addClass("required");
             jq('#rooms3').show();
             jq('#froom3').show();
-        }
-        else {
+        } else {
             var myOptions = {0: 'N/A'};
             var mySelect = jq('#rooms2');
             jq.each(myOptions, function (val, text) {
@@ -1251,10 +1208,12 @@
             jq('#froom3').hide();
         }
     }
+
     function verification_close() {
         jq('#form-verification-failed').hide();
     }
     ;
+
     function goto_next_tab(current_tab) {
         if (current_tab == 1) {
             var currents = '';
@@ -1263,75 +1222,65 @@
                     NavigatorController.stepForward();
                     jq("#ui-datepicker-div").hide();
                     break;
-                }
-                else {
+                } else {
                     currents = jq(':focus').attr('id');
                 }
                 if (jq(':focus').attr('id') == 'patientPhoneNumber') {
                     jq("#ui-datepicker-div").hide();
                     break;
-                }
-                else {
+                } else {
                     NavigatorController.stepForward();
                 }
             }
             // jq(':focus')
             //NavigatorController.getFieldById('passportNumber').select();
-        }
-        else if (current_tab == 2) {
+        } else if (current_tab == 2) {
             var currents = '';
             while (jq(':focus') != jq('#modesummary')) {
                 if (currents == jq(':focus').attr('id')) {
                     NavigatorController.stepForward();
                     break;
-                }
-                else {
+                } else {
                     currents = jq(':focus').attr('id');
                 }
                 if (jq(':focus').attr('id') == 'modesummary') {
                     break;
-                }
-                else {
+                } else {
                     NavigatorController.stepForward();
                 }
             }
         }
     }
+
     function goto_previous_tab(current_tab) {
         if (current_tab == 2) {
             while (jq(':focus') != jq('#passportNumber')) {
                 if (jq(':focus').attr('id') == 'passportNumber' || jq(':focus').attr('id') == 'otherNationalityId') {
                     jq("#ui-datepicker-div").hide();
                     break;
-                }
-                else {
+                } else {
                     NavigatorController.stepBackward();
                 }
             }
-        }
-        else if (current_tab == 3) {
+        } else if (current_tab == 3) {
             while (jq(':focus') != jq('#relativePostalAddress')) {
                 if (jq(':focus').attr('id') == 'relativePostalAddress') {
                     jq("#ui-datepicker-div").hide();
                     break;
-                }
-                else {
+                } else {
                     NavigatorController.stepBackward();
                 }
             }
-        }
-        else if (current_tab == 4) {
+        } else if (current_tab == 4) {
             jq('#rooms3').focus();
-        }
-        else if (current_tab == 5) {
+        } else if (current_tab == 5) {
             var loops = 0;
             while (jq(':focus') != jq('#maritalStatus')) {
                 if (jq(':focus').attr('id') == 'birthdate') {
                     jq("#ui-datepicker-div").hide();
                     break;
-                }
-                else {
-                    if (loops == 10){
+                } else {
+                    if (loops == 10) {
                         //Detect the Loop and Prevent it from Happening
                         jq('#birthdate').focus();
                         break;
@@ -1347,11 +1296,13 @@
 .ui-tabs-vertical {
     width: 55em;
 }
+
 .ui-tabs-vertical .ui-tabs-nav {
     padding: .2em .1em .2em .2em;
     float: left;
     width: 12em;
 }
+
 .ui-tabs-vertical .ui-tabs-nav li {
     clear: left;
     width: 100%;
@@ -1359,22 +1310,27 @@
     border-right-width: 0 !important;
     margin: 0 -1px .2em 0;
 }
+
 .ui-tabs-vertical .ui-tabs-nav li a {
     display: block;
 }
+
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
     padding-bottom: 0;
     padding-right: .1em;
     border-right-width: 1px;
 }
+
 .ui-tabs-vertical .ui-tabs-panel {
     padding: 1em;
     float: right;
     width: 45em;
 }
+
 .red-border {
     border: 1px solid #f00 !important;
 }
+
 .myh2,
 .tasks-list {
     margin: 0;
@@ -1384,6 +1340,7 @@
     font: inherit;
     vertical-align: baseline;
 }
+
 .tasks {
     font: 13px/20px 'Lucida Grande', Verdana, sans-serif;
     color: #404040;
@@ -1394,6 +1351,7 @@
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .tasks-header {
     position: relative;
     line-height: 24px;
@@ -1410,12 +1368,14 @@
     -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0, 0, 0.03);
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0, 0, 0.03);
 }
+
 .tasks-title {
     line-height: inherit;
     font-size: 14px;
     font-weight: bold;
     color: inherit;
 }
+
 .tasks-lists {
     position: absolute;
     top: 50%;
@@ -1428,6 +1388,7 @@
     text-shadow: none;
     color: transparent;
 }
+
 .tasks-lists:before {
     display: block;
     height: 3px;
@@ -1436,6 +1397,7 @@
     -webkit-box-shadow: 0 6px #8c959d, 0 -6px #8c959d;
     box-shadow: 0 6px #8c959d, 0 -6px #8c959d;
 }
+
 .tasks-list-item {
     display: block;
     line-height: 24px;
@@ -1446,12 +1408,15 @@
     -ms-user-select: none;
     user-select: none;
 }
+
 .tasks-list-item + .tasks-list-item {
     border-top: 1px solid #f0f2f3;
 }
+
 .tasks-list-cb {
     display: none;
 }
+
 .tasks-list-mark {
     position: relative;
     display: inline-block;
@@ -1462,6 +1427,7 @@
     border: 2px solid #c4cbd2;
     border-radius: 12px;
 }
+
 .tasks-list-mark:before {
     content: '';
     display: none;
@@ -1479,25 +1445,31 @@
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
+
 .tasks-list-cb:checked ~ .tasks-list-mark {
     border-color: #39ca74;
 }
+
 .tasks-list-cb:checked ~ .tasks-list-mark:before {
     display: block;
 }
+
 .tasks-list-desc {
     font-weight: bold;
     color: #555;
 }
+
 .tasks-list-cb:checked ~ .tasks-list-desc {
     color: #34bf6e;
 }
+
 #form-verification-x {
     color: #f00;
     cursor: pointer;
     float: right;
     margin: -10px -22px 0;
 }
+
 .form-verifier-js {
     padding: 10px 30px;
     -webkit-box-sizing: border-box;
@@ -1509,11 +1481,13 @@
     margin-bottom: 15px;
     display: none;
 }
+
 .form-verifier-js p {
     padding-top: 5px;
     padding-bottom: 0px;
     margin-bottom: 5px;
 }
+
 .form-duplicate-js {
     padding: 1px 30px 1px 30px;
     -webkit-box-sizing: border-box;
@@ -1524,26 +1498,33 @@
     border: 1px solid #F00;
     margin-bottom: 15px;
 }
+
 .form-duplicate-js p {
     padding-top: 5px;
     padding-bottom: 0px;
     margin-bottom: 5px;
 }
+
 .dashboard .info-section {
     margin: 0 5px 5px;
 }
+
 .dashboard .info-body li {
     padding-bottom: 2px;
 }
+
 .dashboard .info-body li span {
     margin-right: 10px;
 }
+
 .dashboard .info-body li small {
 }
+
 .dashboard .info-body li div {
     width: 150px;
     display: inline-block;
 }
+
 .addon {
     color: #f26522;
     display: inline-block;
@@ -1551,41 +1532,57 @@
     margin: 10px 0 0 190px;
     position: absolute;
 }
-a.tooltip {outline:none; }
-a.tooltip strong {line-height:20px;}
-a.tooltip:hover {text-decoration:none;}
-a.tooltip span {
-    z-index:10;
-    display:none;
-    padding:14px 20px!important;
-    margin-left:-205px;
-    width:205px;
-    line-height:16px;
-    position:absolute;
-    color:#111;
-    border:1px solid #DCA; background:#fffAF0;
+
+a.tooltip {
+    outline: none;
 }
-a.tooltip span em{
+
+a.tooltip strong {
+    line-height: 20px;
+}
+
+a.tooltip:hover {
+    text-decoration: none;
+}
+
+a.tooltip span {
+    z-index: 10;
+    display: none;
+    padding: 14px 20px !important;
+    margin-left: -205px;
+    width: 205px;
+    line-height: 16px;
+    position: absolute;
+    color: #111;
+    border: 1px solid #DCA;
+    background: #fffAF0;
+}
+
+a.tooltip span em {
     width: 20px;
     float: left;
     font-family: Times New Roman;
     font-style: italic;
 }
-a.tooltip:hover span{
-    display:inline;
+
+a.tooltip:hover span {
+    display: inline;
 }
+
 .callout {
-    z-index:20;
-    position:absolute;
-    top:-12px;
-    border:0;
-    left:203px;
+    z-index: 20;
+    position: absolute;
+    top: -12px;
+    border: 0;
+    left: 203px;
 }
+
 a.tooltip span {
-    border-radius:4px;
+    border-radius: 4px;
     box-shadow: 5px 5px 8px #CCC;
 }
 </style>
+
 <div id="content" class="container">
     <form class="simple-form-ui" id="patientRegistrationForm" method="post">
         <table cellpadding="0" cellspacing="0" border="0">
@@ -1662,12 +1659,9 @@ a.tooltip span {
                 </td>
             </tr>
             <tr>
-                <td><h2>Visit type</h2></td>
+                <td><h2>Is Revisit ?</h2></td>
                 <td><div>
-                    <select id="visitType" name="visitType">
-                        <option value="1">New patient</option>
-                        <option value="2">Revisit patient</option>
-                    </select>
+                   ${visitType}
                 </div>
                 </td>
             </tr>

@@ -3,7 +3,7 @@
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
  * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
- *
+ * <p>
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
@@ -93,6 +93,8 @@ public class QueuePatientFragmentController {
 		model.addAttribute("initialRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		
+		model.addAttribute("visitType", hasRevisits(patient));
+		
 		model.addAttribute("childLessThanFiveYearRegistrationFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
@@ -104,8 +106,7 @@ public class QueuePatientFragmentController {
 	}
 	
 	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils, HttpServletResponse response,
-	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory,
-	        @RequestParam("visitType") Integer status) throws IOException {
+	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		
@@ -183,7 +184,7 @@ public class QueuePatientFragmentController {
 		}
 		return "redirect:"
 		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
-		                + "&visit=" + status + "&payCategory=" + paymentCategory);
+		                + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory);
 	}
 	
 	/**
@@ -270,7 +271,7 @@ public class QueuePatientFragmentController {
 			}
 		}
 		
-		Encounter encounter = RegistrationWebUtils.createEncounter(patient, getRevisit(status));
+		Encounter encounter = RegistrationWebUtils.createEncounter(patient, hasRevisits(patient));
 		
 		if (!StringUtils.isBlank(tNTriage)) {
 			
@@ -283,7 +284,7 @@ public class QueuePatientFragmentController {
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(triageObs);
-			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
+			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, hasRevisits(patient),
 			    selectedCategory);
 		} else if (!StringUtils.isBlank(oNOpd)) {
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
@@ -294,7 +295,7 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, getRevisit(status), selectedCategory);
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, hasRevisits(patient), selectedCategory);
 			
 		} else {
 			Concept specialClinicConcept = Context.getConceptService().getConcept(
@@ -307,7 +308,7 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedSpecialClinicConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, getRevisit(status),
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, hasRevisits(patient),
 			    selectedCategory);
 			
 		}
@@ -335,12 +336,18 @@ public class QueuePatientFragmentController {
 		return encounter;
 	}
 	
-	private boolean getRevisit(int state) {
-		boolean status = false;
-		if (state == 2) {
-			status = true;
+	private boolean hasRevisits(Patient patient) {
+		boolean found = false;
+		List<Visit> visits = Context.getVisitService().getActiveVisitsByPatient(patient);
+		System.out.println("### Total visits" + visits.size());
+		//check the last visit date if the total visits is greator than 1
+		if (visits.size() > 0) {
+			Visit visit = visits.get((visits.size()) - 1);
+			if (visit.getDateCreated().compareTo(new Date()) < 0) {
+				found = true;
+			}
 		}
-		return status;
+		return found;
 	}
 	
 	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {
