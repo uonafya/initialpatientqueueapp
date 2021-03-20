@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    var MODEL,
+     var MODEL,
         arrey,
         alley,
         age,
@@ -71,6 +71,24 @@
         jq("#paycatgs").on("change", "input[name='paym_2']:radio", function () {
             selectedFeeCategory();
             LoadPayCatgMode();
+            if (jq(".ke-patient-gender").text()[2] === "M"){
+                if (jq("#ipaym_12").text() === "DELIVERY CASE" && jq("#paym_202").is(':checked')){
+                    jq().toastmessage('showErrorToast', 'This category is only valid for female');
+                    jq('#paym_202').attr('checked', false);
+                    jq('#paym_202').attr('disabled', 'disabled');
+                }
+                if (jq("#ipaym_12").text() === "CURRENTLY PREGNANT" && jq("#paym_202").is(':checked')){
+                    jq().toastmessage('showErrorToast', 'This category is only valid for female');
+                    jq('#paym_202').attr('checked', false);
+                    jq('#paym_202').attr('disabled', 'disabled');
+                }
+                if (jq("#ipaym_13").text() === "CURRENTLY PREGNANT" && jq("#paym_203").is(':checked')){
+                    jq().toastmessage('showErrorToast', 'This category is only valid for female');
+                    jq('#paym_203').attr('checked', false);
+                    jq('#paym_203').attr('disabled', 'disabled');
+                }
+            }
+
         });
         function selectedFeeCategory()
         {
@@ -778,10 +796,8 @@
         }
         else {
             if (select1 === 1 && select3 === 'CURRENTLY PREGNANT') {
-                if (jq("#patientGender").val() === "M") {
+                if (jq(".ke-patient-gender").text()[2] === "M") {
                     jq().toastmessage('showErrorToast', 'This category is only valid for female');
-                    jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                    return false;
                 }
             }
             if (select1 === 3) {
@@ -827,15 +843,17 @@
                 return false;
             }
         }
-        else {
-            if (select3 === 'CURRENTLY PREGNANT') {
-                if (jq("#patientGender").val() === "M") {
-                    jq().toastmessage('showErrorToast', 'This category is only valid for Females');
-                    jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                    return false;
-                }
-            }
-        }
+        // else {
+        //     if (select3 === 'CURRENTLY PREGNANT') {
+        //         if (jq(".ke-patient-gender").text()[2] === "M") {
+        //             jq('#paym_202').prop('checked', false);
+        //             jq('#paym_202').attr('disabled', 'disabled');
+        //             jq('#paym_203').prop('checked', false);
+        //             jq('#paym_203').attr('disabled', 'disabled');
+        //             jq().toastmessage('showErrorToast', 'This category is only valid for Females');
+        //         }
+        //     }
+        // }
         var selectedRoomToVisit = jq("#rooms1").val();
         var nonPayingCategorySelected = jq("#nonPayingCategory").val();
         var selectedNonPayingCategory = jq("#nonPayingCategory option:checked").val();
@@ -862,6 +880,7 @@
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
         var select3 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').data('name');
         var estAge = jq("#estimatedAgeInYear").val();
+
         if (select3 === 'CHILD UNDER 5YRS') {
             if (estAge < 6) {
                 jq("#selectedRegFeeValue").val(0);
@@ -871,21 +890,6 @@
                 return false;
             }
         }
-        else {
-            if (select3 === 'CURRENTLY PREGNANT') {
-                if (jq("#patientGender").val() === "M") {
-                    jq().toastmessage('showErrorToast', 'This category is only valid for Females');
-                    jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                    return false;
-                }
-            }
-        }
-        if (selectedSpecialScheme === "DELIVERY CASE") {
-            if (jq("#patientGender").val() === "M") {
-                alert("This category is only valid for female");
-            }
-        }
-        //if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
         if (selectedSpecialScheme === "Student") {
             jq("#universityRow").show();
             jq("#studentIdRow").show();
@@ -1232,6 +1236,11 @@
             jq('#referralDescription').addClass("required");
             jq('#rooms3').show();
             jq('#froom3').show();
+
+            // Remove maternity special clinic when gender is male
+            if (jq(".ke-patient-gender").text()[2] === "M") {
+                jq("#rooms2 option[value='159937']").remove();
+            }
         }
         else {
             var myOptions = {0: 'N/A'};
@@ -1342,6 +1351,7 @@
             }
         }
     }
+
 </script>
 <style>
 .ui-tabs-vertical {
@@ -1662,13 +1672,11 @@ a.tooltip span {
                 </td>
             </tr>
             <tr>
-                <td><h2>Visit type</h2></td>
-                <td><div>
-                    <select id="visitType" name="visitType">
-                        <option value="1">New patient</option>
-                        <option value="2">Revisit patient</option>
-                    </select>
-                </div>
+                <td><h2>is Revisit? </h2></td>
+                <td>
+                    <div>
+                        ${visitType}
+                    </div>
                 </td>
             </tr>
 

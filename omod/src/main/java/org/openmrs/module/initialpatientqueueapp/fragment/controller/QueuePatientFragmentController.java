@@ -63,7 +63,7 @@ public class QueuePatientFragmentController {
 		model.addAttribute("payingCategory",
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_PAYING_CATEGORY));
 		model.addAttribute("nonPayingCategory",
-		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
+		    RegistrationWebUtils.getUniqueSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
 		model.addAttribute("specialScheme",
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_SCHEME));
 		model.addAttribute("universities",
@@ -79,7 +79,10 @@ public class QueuePatientFragmentController {
 		Concept nonPayingCategory = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_NONPAYING_CATEGORY);
 		for (ConceptAnswer ca : nonPayingCategory.getAnswers()) {
-			nonPayingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+			if (nonPayingCategoryMap.containsKey(ca.getAnswerConcept().getConceptId()) == false) {
+				nonPayingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+			}
+			
 		}
 		Map<Integer, String> specialSchemeMap = new LinkedHashMap<Integer, String>();
 		Concept specialScheme = Context.getConceptService().getConcept(
@@ -92,7 +95,7 @@ public class QueuePatientFragmentController {
 		model.addAttribute("specialSchemeMap", specialSchemeMap);
 		model.addAttribute("initialRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
-		
+		model.addAttribute("visitType", hasRevisits(patient));
 		model.addAttribute("childLessThanFiveYearRegistrationFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
@@ -104,8 +107,7 @@ public class QueuePatientFragmentController {
 	}
 	
 	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils, HttpServletResponse response,
-	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory,
-	        @RequestParam("visitType") Integer status) throws IOException {
+	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		
@@ -145,7 +147,6 @@ public class QueuePatientFragmentController {
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
 		model.addAttribute("initialRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
-		
 		model.addAttribute("childLessThanFiveYearRegistrationFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
 		model.addAttribute("specialClinicRegFee",
@@ -183,7 +184,7 @@ public class QueuePatientFragmentController {
 		}
 		return "redirect:"
 		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
-		                + "&visit=" + status + "&payCategory=" + paymentCategory);
+		                + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory);
 	}
 	
 	/**
@@ -270,7 +271,7 @@ public class QueuePatientFragmentController {
 			}
 		}
 		
-		Encounter encounter = RegistrationWebUtils.createEncounter(patient, getRevisit(status));
+		Encounter encounter = RegistrationWebUtils.createEncounter(patient, hasRevisits(patient));
 		
 		if (!StringUtils.isBlank(tNTriage)) {
 			
@@ -283,7 +284,7 @@ public class QueuePatientFragmentController {
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(triageObs);
-			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, getRevisit(status),
+			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, hasRevisits(patient),
 			    selectedCategory);
 		} else if (!StringUtils.isBlank(oNOpd)) {
 			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
@@ -294,7 +295,7 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, getRevisit(status), selectedCategory);
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, hasRevisits(patient), selectedCategory);
 			
 		} else {
 			Concept specialClinicConcept = Context.getConceptService().getConcept(
@@ -307,7 +308,7 @@ public class QueuePatientFragmentController {
 			opdObs.setValueCoded(selectedSpecialClinicConcept);
 			encounter.addObs(opdObs);
 			
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, getRevisit(status),
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, hasRevisits(patient),
 			    selectedCategory);
 			
 		}
@@ -335,12 +336,18 @@ public class QueuePatientFragmentController {
 		return encounter;
 	}
 	
-	private boolean getRevisit(int state) {
-		boolean status = false;
-		if (state == 2) {
-			status = true;
+	private boolean hasRevisits(Patient patient) {
+		boolean found = false;
+		List<Visit> visits = Context.getVisitService().getActiveVisitsByPatient(patient);
+		System.out.println("### Total visits" + visits.size());
+		//check the last visit date if the total visits is greator than 1
+		if (visits.size() > 0) {
+			Visit visit = visits.get((visits.size()) - 1);
+			if (visit.getDateCreated().compareTo(new Date()) < 0) {
+				found = true;
+			}
 		}
-		return status;
+		return found;
 	}
 	
 	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {

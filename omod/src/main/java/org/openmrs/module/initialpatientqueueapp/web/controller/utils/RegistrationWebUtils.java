@@ -31,6 +31,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class RegistrationWebUtils {
 	
@@ -72,6 +73,19 @@ public class RegistrationWebUtils {
 		StringBuilder sb = new StringBuilder();
 		for (ConceptAnswer ca : concept.getAnswers()) {
 			sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
+		}
+		return sb.toString();
+	}
+	
+	public static String getUniqueSubConceptsWithName(String conceptName) {
+		Concept concept = Context.getConceptService().getConcept(conceptName);
+		StringBuilder sb = new StringBuilder();
+		List<String> conceptNamesArray = new ArrayList<String>();
+		for (ConceptAnswer ca : concept.getAnswers()) {
+			if (conceptNamesArray.contains(ca.getAnswerConcept().getName().getName()) == false) {
+				conceptNamesArray.add(ca.getAnswerConcept().getName().getName());
+				sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
+			}
 		}
 		return sb.toString();
 	}
