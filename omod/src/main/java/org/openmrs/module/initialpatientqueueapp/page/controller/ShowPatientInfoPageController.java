@@ -29,7 +29,7 @@ public class ShowPatientInfoPageController {
 	public void get(@RequestParam("patientId") Integer patientId,
 	        @RequestParam(value = "encounterId", required = false) Integer encounterId,
 	        @RequestParam(value = "payCategory", required = false) String payCategory,
-	        @RequestParam(value = "visit", required = false) Integer visit, PageModel model) throws IOException,
+	        @RequestParam(value = "visit", required = false) boolean visit, PageModel model) throws IOException,
 	        ParseException {
 		
 		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy kk:mm");
@@ -81,18 +81,13 @@ public class ShowPatientInfoPageController {
 		}
 		model.addAttribute("selectedPaymentCategory", payCat);
 		String WhatToBePaid = "";
-		if (visit != null) {
-			// check if the patient is appearing for the first time so that they can pay registration fee, revisit fee or special clinic fees
-			if (visit == 1) {
-				//This a new patient and might be required to pay registration fees
-				WhatToBePaid = "Registration fees:		"
-				        + GlobalPropertyUtil
-				                .getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0");
-			} else {
-				WhatToBePaid = "Revisit fees:		"
-				        + GlobalPropertyUtil
-				                .getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0");
-			}
+		if (!visit) {
+			//This a new patient and might be required to pay registration fees
+			WhatToBePaid = "Registration fees:		"
+			        + GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0");
+		} else {
+			WhatToBePaid = "Revisit fees:		"
+			        + GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0");
 		}
 		model.addAttribute("WhatToBePaid", WhatToBePaid);
 		
