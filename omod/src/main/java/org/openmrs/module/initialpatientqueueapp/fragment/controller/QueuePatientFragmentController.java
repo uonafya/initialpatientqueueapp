@@ -338,7 +338,7 @@ public class QueuePatientFragmentController {
 	
 	private boolean hasRevisits(Patient patient) {
 		boolean found = false;
-		List<Visit> visits = Context.getVisitService().getActiveVisitsByPatient(patient);
+		List<Visit> visits = Context.getVisitService().getVisitsByPatient(patient);
 		System.out.println("### Total visits" + visits.size());
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
