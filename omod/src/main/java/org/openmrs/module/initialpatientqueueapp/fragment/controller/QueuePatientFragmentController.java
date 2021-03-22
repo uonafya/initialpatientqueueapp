@@ -155,7 +155,6 @@ public class QueuePatientFragmentController {
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		model.addAttribute("userLocation", kenyaEmrService.getDefaultLocation().getName());
 		model.addAttribute("receiptDate", new Date());
-		System.out.println("All the attribute passed>>" + parameters);
 		consolidateAllPersonalAttributes(parameters, patient);
 		try {
 			// create encounter for the visit here
@@ -249,7 +248,6 @@ public class QueuePatientFragmentController {
 				} else if (paymt2 == 4) {
 					nNotpayn = "PRISIONER";
 				}
-				
 				break;
 			}
 			case 3: {
@@ -294,7 +292,6 @@ public class QueuePatientFragmentController {
 			opdObs.setConcept(opdConcept);
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
-			
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, hasRevisits(patient), selectedCategory);
 			
 		} else {
