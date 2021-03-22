@@ -1209,6 +1209,10 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
+            // Remove Maternity Triage when gender is male
+            if (jq(".ke-patient-gender").text()[2] === "M") {
+                jq("#rooms2 option[value='165418']").remove();
+            }
         }
         else if (jq("#rooms1").val() == 2) {
             PAGE.fillOptions("#rooms2", {
@@ -1225,10 +1229,6 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
-            // Remove Maternity Triage when gender is male
-            if (jq(".ke-patient-gender").text()[2] === "M") {
-                jq("#rooms2 option[value='165418']").remove();
-            }
         }
         else if (jq("#rooms1").val() == 3) {
             PAGE.fillOptions("#rooms2", {
