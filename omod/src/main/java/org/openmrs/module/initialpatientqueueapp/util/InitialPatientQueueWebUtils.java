@@ -96,7 +96,6 @@ public class InitialPatientQueueWebUtils {
 		
 		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
 		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
-		if (queue == null) {
 			queue = new OpdPatientQueue();
 			queue.setUser(Context.getAuthenticatedUser());
 			queue.setPatient(patient);
@@ -117,8 +116,6 @@ public class InitialPatientQueueWebUtils {
 			queue.setVisitStatus(visitStatus.getName().getName());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
-			
-		}
 		
 	}
 	
@@ -133,7 +130,7 @@ public class InitialPatientQueueWebUtils {
 		
 		TriagePatientQueue queue = Context.getService(PatientQueueService.class).getTriagePatientQueue(
 		    patient.getPatientIdentifier().getIdentifier(), selectedTriageConcept.getConceptId());
-		if (queue == null) {
+
 			queue = new TriagePatientQueue();
 			queue.setUser(Context.getAuthenticatedUser());
 			queue.setPatient(patient);
@@ -154,10 +151,9 @@ public class InitialPatientQueueWebUtils {
 			queue.setVisitStatus(visitStatus.getName().getName());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveTriagePatientQueue(queue);
-			
-		}
 		
 	}
+
 	
 	/**
 	 * Get String value from a specific global property. Unless the global property is found, the
