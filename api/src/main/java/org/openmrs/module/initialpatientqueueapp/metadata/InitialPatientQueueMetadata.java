@@ -25,7 +25,7 @@ public class InitialPatientQueueMetadata extends AbstractMetadataBundle {
 	
 	public static final class _Role {
 		
-		public static final String APPLICATION_PQ_MODULE = "Patient Queue application";
+		public static final String APPLICATION_PQ_MODULE = "EHR Patient Queue application";
 	}
 	
 	//encounter type here
