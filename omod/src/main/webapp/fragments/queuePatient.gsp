@@ -7,6 +7,11 @@
     var oRegX = /^[a-zA-Z-` ]*\$/;
     emrMessages["requiredField"] = "Required";
     jq(document).ready(function () {
+        if (!${visitType}){
+            jq("#visitType").append("<option value='1'>New Patient</option>");
+        }else {
+            jq("#visitType").append("<option value='2'>Revisit Patient</option>");
+        }
         jq("input[name='paym_1']:radio").change(function () {
             var index = jq(this, '#simple-form-ui').val();
             alley = "";
@@ -1220,6 +1225,10 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
+            // Remove Maternity Triage when gender is male
+            if (jq(".ke-patient-gender").text()[2] === "M") {
+                jq("#rooms2 option[value='165418']").remove();
+            }
         }
         else if (jq("#rooms1").val() == 3) {
             PAGE.fillOptions("#rooms2", {
@@ -1672,14 +1681,14 @@ a.tooltip span {
                 </td>
             </tr>
             <tr>
-                <td><h2>is Revisit? </h2></td>
-                <td>
-                    <div>
-                        ${visitType}
-                    </div>
+                <td><h2>Visit type</h2></td>
+                <td><div>
+                    <select id="visitType" name="visitType">
+
+                    </select>
+                </div>
                 </td>
             </tr>
-
 
 
             <tr><td colspan="2"><h2>Room to Visit</h2></td></tr>
