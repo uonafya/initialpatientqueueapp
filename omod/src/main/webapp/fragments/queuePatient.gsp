@@ -220,12 +220,12 @@
             // Assign hidden attribute #waiverNumber value of waiver number
             if (select1 === "3" && select2 === "3" && jq("#modesummary").attr('placeholder') === "Waiver Number" ){
                 var waiver_number = jq('#modesummary').val();
-                jq('#studentId').val(waiver_number);
+                jq('#waiverNumber').val(waiver_number);
             }
             // Assign hidden attribute #studentID value of student id
             if (select1 === "3" && select2 === "1" && jq("#modesummary").attr('placeholder') === "Student Number" ){
                 var student_id = jq('#modesummary').val();
-                jq('#waiverNumber').val(student_id);
+                jq('#studentId').val(student_id);
             }
         });
         jq('input:text[id]').focus(function (event) {
