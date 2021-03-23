@@ -96,26 +96,27 @@ public class InitialPatientQueueWebUtils {
 		
 		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
 		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
-		queue = new OpdPatientQueue();
-		queue.setUser(Context.getAuthenticatedUser());
-		queue.setPatient(patient);
-		queue.setCreatedOn(new Date());
-		queue.setBirthDate(patient.getBirthdate());
-		queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
-		queue.setOpdConcept(selectedOPDConcept);
-		queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-		if (null != patient.getMiddleName()) {
-			queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
-		} else {
-			queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
-		}
-		//queue.setReferralConcept(referralConcept);
-		//queue.setReferralConceptName(referralConcept.getName().getName());
-		queue.setSex(patient.getGender());
-		queue.setCategory(selectedCategory);
-		queue.setVisitStatus(visitStatus.getName().getName());
-		PatientQueueService queueService = Context.getService(PatientQueueService.class);
-		queueService.saveOpdPatientQueue(queue);
+
+			queue = new OpdPatientQueue();
+			queue.setUser(Context.getAuthenticatedUser());
+			queue.setPatient(patient);
+			queue.setCreatedOn(new Date());
+			queue.setBirthDate(patient.getBirthdate());
+			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
+			queue.setOpdConcept(selectedOPDConcept);
+			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
+			if (null != patient.getMiddleName()) {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
+			} else {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
+			}
+			//queue.setReferralConcept(referralConcept);
+			//queue.setReferralConceptName(referralConcept.getName().getName());
+			queue.setSex(patient.getGender());
+			queue.setCategory(selectedCategory);
+			queue.setVisitStatus(visitStatus.getName().getName());
+			PatientQueueService queueService = Context.getService(PatientQueueService.class);
+			queueService.saveOpdPatientQueue(queue);
 		
 	}
 	
@@ -130,29 +131,30 @@ public class InitialPatientQueueWebUtils {
 		
 		TriagePatientQueue queue = Context.getService(PatientQueueService.class).getTriagePatientQueue(
 		    patient.getPatientIdentifier().getIdentifier(), selectedTriageConcept.getConceptId());
-		
-		queue = new TriagePatientQueue();
-		queue.setUser(Context.getAuthenticatedUser());
-		queue.setPatient(patient);
-		queue.setCreatedOn(new Date());
-		queue.setBirthDate(patient.getBirthdate());
-		queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
-		queue.setTriageConcept(selectedTriageConcept);
-		queue.setTriageConceptName(selectedTriageConcept.getName().getName());
-		if (null != patient.getMiddleName()) {
-			queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
-		} else {
-			queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
-		}
-		//queue.setReferralConcept(referralConcept);
-		//queue.setReferralConceptName(referralConcept.getName().getName());
-		queue.setSex(patient.getGender());
-		queue.setCategory(selectedCategory);
-		queue.setVisitStatus(visitStatus.getName().getName());
-		PatientQueueService queueService = Context.getService(PatientQueueService.class);
-		queueService.saveTriagePatientQueue(queue);
+
+			queue = new TriagePatientQueue();
+			queue.setUser(Context.getAuthenticatedUser());
+			queue.setPatient(patient);
+			queue.setCreatedOn(new Date());
+			queue.setBirthDate(patient.getBirthdate());
+			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
+			queue.setTriageConcept(selectedTriageConcept);
+			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
+			if (null != patient.getMiddleName()) {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
+			} else {
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
+			}
+			//queue.setReferralConcept(referralConcept);
+			//queue.setReferralConceptName(referralConcept.getName().getName());
+			queue.setSex(patient.getGender());
+			queue.setCategory(selectedCategory);
+			queue.setVisitStatus(visitStatus.getName().getName());
+			PatientQueueService queueService = Context.getService(PatientQueueService.class);
+			queueService.saveTriagePatientQueue(queue);
 		
 	}
+
 	
 	/**
 	 * Get String value from a specific global property. Unless the global property is found, the
