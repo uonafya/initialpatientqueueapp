@@ -96,6 +96,7 @@ public class InitialPatientQueueWebUtils {
 		
 		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
 		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
+
 			queue = new OpdPatientQueue();
 			queue.setUser(Context.getAuthenticatedUser());
 			queue.setPatient(patient);

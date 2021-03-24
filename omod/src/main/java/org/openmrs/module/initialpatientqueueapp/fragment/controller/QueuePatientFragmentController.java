@@ -68,6 +68,7 @@ public class QueuePatientFragmentController {
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_SCHEME));
 		model.addAttribute("universities",
 		    RegistrationWebUtils.getSubConceptsWithName(InitialPatientQueueConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
+		model.addAttribute("age", patient.getAge());
 		
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
 		Concept payingCategory = Context.getConceptService().getConcept(
@@ -205,7 +206,7 @@ public class QueuePatientFragmentController {
 		
 		String tNTriage = null, oNOpd = null, sNSpecial = null, nFNumber;
 		String nPayn = null, nNotpayn = null, nScheme = null, nNHIFnumb = null, nWaivernumb = null, nUniID = null, nStuID = null;
-		
+
 		switch (rooms1) {
 			case 1: {
 				tNTriage = parameters.get("rooms2");
@@ -247,6 +248,9 @@ public class QueuePatientFragmentController {
 					nNotpayn = "TB PATIENT";
 				} else if (paymt2 == 4) {
 					nNotpayn = "PRISIONER";
+				} else if (paymt2 == 6) {
+					nNotpayn = "NHIF PATIENT";
+					nNHIFnumb = parameters.get("modesummary");
 				}
 				break;
 			}
@@ -254,17 +258,18 @@ public class QueuePatientFragmentController {
 				paymt3 = "Special Schemes";
 				
 				if (paymt2 == 1) {
+					nWaivernumb = parameters.get("modesummary");
+					nScheme = "WAIVER CASE";
+				} else if (paymt2 == 2) {
+					nScheme = "DELIVERY CASE";
+				} else if (paymt2 == 3) {
 					nUniID = parameters.get("university");
 					nStuID = parameters.get("modesummary");
 					nScheme = "STUDENT SCHEME";
-				} else if (paymt2 == 2) {
-					nWaivernumb = parameters.get("modesummary");
-					nScheme = "WAIVER CASE";
-				} else if (paymt2 == 3) {
-					nScheme = "DELIVERY CASE";
 				}
-				
-				nFNumber = parameters.get("rooms3");
+				if (rooms1 == 1) {
+					nFNumber = parameters.get("rooms3");
+				}
 				break;
 			}
 		}

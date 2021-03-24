@@ -80,18 +80,24 @@
                 if (jq("#ipaym_12").text() === "DELIVERY CASE" && jq("#paym_202").is(':checked')){
                     jq().toastmessage('showErrorToast', 'This category is only valid for female');
                     jq('#paym_202').attr('checked', false);
-                    jq('#paym_202').attr('disabled', 'disabled');
+                    // jq('#paym_202').attr('disabled', 'disabled');
                 }
                 if (jq("#ipaym_12").text() === "CURRENTLY PREGNANT" && jq("#paym_202").is(':checked')){
                     jq().toastmessage('showErrorToast', 'This category is only valid for female');
                     jq('#paym_202').attr('checked', false);
-                    jq('#paym_202').attr('disabled', 'disabled');
+                    // jq('#paym_202').attr('disabled', 'disabled');
                 }
                 if (jq("#ipaym_13").text() === "CURRENTLY PREGNANT" && jq("#paym_203").is(':checked')){
                     jq().toastmessage('showErrorToast', 'This category is only valid for female');
                     jq('#paym_203').attr('checked', false);
-                    jq('#paym_203').attr('disabled', 'disabled');
+                    // jq('#paym_203').attr('disabled', 'disabled');
                 }
+            }
+            var age = ${age};
+            if (age > 5 && jq("#paym_201").attr('data-name') === "CHILD UNDER 5YRS" && jq("#paym_201").is(':checked')){
+                jq().toastmessage('showErrorToast', 'Selected Scheme should be for child at 5 years and below');
+                jq('#paym_201').attr('checked', false);
+                // jq('#paym_201').attr('disabled', 'disabled');
             }
 
         });
@@ -125,42 +131,42 @@
                 payingCategorySelection();
                 nonPayingCategorySelection();
             }
-            if (select3.indexOf("National Health Insurance Fund Member") >= 0) {
-                jq("#modesummary").attr("readonly", false);
-                jq("#modesummary").attr("name", 'person.attribute.34');
-                jq("#modesummary").val("");
-                jq('#universitydiv').hide();
-                jq('#university option').eq(0).prop('selected', true);
-                jq('#summtitle1').text('NHIF Details');
-                jq('#modesummary').attr("placeholder", "NHIF Number");
-            }
-            else if (select3.indexOf("Student") >= 0) {
-                jq("#modesummary").attr("readonly", false);
-                jq("#modesummary").attr("name", 'person.attribute.42');
-                jq("#modesummary").val("");
-                jq('#universitydiv').show();
-                jq('#university option').eq(1).prop('selected', true);
-                jq('#summtitle1').text('Student Details');
-                jq('#modesummary').attr("placeholder", "Student Number");
-            }
-            else if (select3.toUpperCase().indexOf("HOSPITAL WAIVER") >= 0) {
-                jq("#modesummary").attr("readonly", false);
-                jq("#modesummary").attr("name", 'person.attribute.32');
-                jq("#modesummary").val("");
-                jq('#universitydiv').hide();
-                jq('#university option').eq(0).prop('selected', true);
-                jq('#summtitle1').text('Waiver Details');
-                jq('#modesummary').attr("placeholder", "Waiver Number");
-            }
-            else {
-                jq("#modesummary").attr("readonly", false);
-                jq("#modesummary").attr("name", 'modesummary');
-                jq("#modesummary").val("N/A");
-                jq('#universitydiv').hide();
-                jq('#university option').eq(0).prop('selected', true);
-                jq('#summtitle1').text('Details');
-                jq('#modesummary').attr("placeholder", "Enter Value");
-            }
+            // if (select3.indexOf("National Health Insurance Fund Member") >= 0) {
+            //     jq("#modesummary").attr("readonly", false);
+            //     jq("#modesummary").attr("name", 'person.attribute.34');
+            //     jq("#modesummary").val("");
+            //     jq('#universitydiv').hide();
+            //     jq('#university option').eq(0).prop('selected', true);
+            //     jq('#summtitle1').text('NHIF Details');
+            //     jq('#modesummary').attr("placeholder", "NHIF Number");
+            // }
+            // else if (select3.indexOf("Student") >= 0) {
+            //     jq("#modesummary").attr("readonly", false);
+            //     jq("#modesummary").attr("name", 'person.attribute.42');
+            //     jq("#modesummary").val("");
+            //     jq('#universitydiv').show();
+            //     jq('#university option').eq(1).prop('selected', true);
+            //     jq('#summtitle1').text('Student Details');
+            //     jq('#modesummary').attr("placeholder", "Student Number");
+            // }
+            // else if (select3.toUpperCase().indexOf("HOSPITAL WAIVER") >= 0) {
+            //     jq("#modesummary").attr("readonly", false);
+            //     jq("#modesummary").attr("name", 'person.attribute.32');
+            //     jq("#modesummary").val("");
+            //     jq('#universitydiv').hide();
+            //     jq('#university option').eq(0).prop('selected', true);
+            //     jq('#summtitle1').text('Waiver Details');
+            //     jq('#modesummary').attr("placeholder", "Waiver Number");
+            // }
+            // else {
+            //     jq("#modesummary").attr("readonly", false);
+            //     jq("#modesummary").attr("name", 'modesummary');
+            //     jq("#modesummary").val("N/A");
+            //     jq('#universitydiv').hide();
+            //     jq('#university option').eq(0).prop('selected', true);
+            //     jq('#summtitle1').text('Details');
+            //     jq('#modesummary').attr("placeholder", "Enter Value");
+            // }
             jq('#summ_fees').text(jq('#selectedRegFeeValue').val() + '.00');
         }
         // Paying Category Map
@@ -199,12 +205,27 @@
         jq("#modesummary").blur(function () {
             var select1 = jq('input[name=paym_1]:checked', '#patientRegistrationForm').val();
             var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
-            if (select1 === 2 && select2 === 1) {
+            if (select1 === "2" && select2 === "1") {
                 jq('input[name="person.attribute.34"]').val(jq("#modesummary").val());
-            } else if (select1 === 3 && select2 === 1) {
+            } else if (select1 === "3" && select2 === "1") {
                 jq('input[name="person.attribute.42"]').val(jq("#modesummary").val());
-            } else if (select1 === 3 && select2 === 2) {
+            } else if (select1 === "3" && select2 === "2") {
                 jq('input[name="person.attribute.32"]').val(jq("#modesummary").val());
+            }
+            // Assign hidden attribute #nhifNumber value of nhif number
+            if (select1 === "2" && select2 === "6" && jq("#modesummary").attr('placeholder') === "NHIF Number" ){
+                var nhif_number = jq('#modesummary').val();
+                jq('#nhifNumber').val(nhif_number);
+            }
+            // Assign hidden attribute #waiverNumber value of waiver number
+            if (select1 === "3" && select2 === "1" && jq("#modesummary").attr('placeholder') === "Waiver Number" ){
+                var waiver_number = jq('#modesummary').val();
+                jq('#waiverNumber').val(waiver_number);
+            }
+            // Assign hidden attribute #studentID value of student id
+            if (select1 === "3" && select2 === "3" && jq("#modesummary").attr('placeholder') === "Student Number" ){
+                var student_id = jq('#modesummary').val();
+                jq('#studentId').val(student_id);
             }
         });
         jq('input:text[id]').focus(function (event) {
@@ -790,21 +811,6 @@
         var select3 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').data('name');
         var selectedPayingCategory = jq("#payingCategory option:checked").val();
         var estAge = jq("#estimatedAgeInYear").val();
-        if (select1 === 1 && select3 === 'CHILD UNDER 5YRS') {
-            if (estAge < 6) {
-                jq("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
-            } else {
-                jq().toastmessage('showErrorToast', 'Selected Scheme should be for child at 5 years and below');
-                jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                return false;
-            }
-        }
-        else {
-            if (select1 === 1 && select3 === 'CURRENTLY PREGNANT') {
-                if (jq(".ke-patient-gender").text()[2] === "M") {
-                    jq().toastmessage('showErrorToast', 'This category is only valid for female');
-                }
-            }
             if (select1 === 3) {
                 var initialRegFee = parseInt('${initialRegFee}');
                 var specialClinicRegFee = parseInt('${specialClinicRegFee}');
@@ -814,7 +820,6 @@
             else {
                 jq("#selectedRegFeeValue").val(${initialRegFee});
             }
-        }
         if (select1 === 1) {
             jq('#payingCategory option').eq(select2).prop('selected', true);
             jq('#nonPayingCategory option').eq(0).prop('selected', true);
@@ -839,35 +844,16 @@
         var select2 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').val();
         var select3 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').data('name');
         var estAge = jq("#estimatedAgeInYear").val();
-        if (select3 === 'CHILD UNDER 5YRS') {
-            if (estAge < 6) {
-                jq("#selectedRegFeeValue").val(0);
-            } else {
-                jq().toastmessage('showErrorToast', 'Selected Scheme should be for child at 5 years and below');
-                jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                return false;
-            }
-        }
-        // else {
-        //     if (select3 === 'CURRENTLY PREGNANT') {
-        //         if (jq(".ke-patient-gender").text()[2] === "M") {
-        //             jq('#paym_202').prop('checked', false);
-        //             jq('#paym_202').attr('disabled', 'disabled');
-        //             jq('#paym_203').prop('checked', false);
-        //             jq('#paym_203').attr('disabled', 'disabled');
-        //             jq().toastmessage('showErrorToast', 'This category is only valid for Females');
-        //         }
-        //     }
-        // }
+
         var selectedRoomToVisit = jq("#rooms1").val();
         var nonPayingCategorySelected = jq("#nonPayingCategory").val();
         var selectedNonPayingCategory = jq("#nonPayingCategory option:checked").val();
         //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
         if (selectedNonPayingCategory === "NHIF CIVIL SERVANT" || selectedNonPayingCategory === "National Health Insurance Fund Member") {
-            jq("#nhifNumberRow").show();
+            jq("#nhifNumber").show();
         }
         else {
-            jq("#nhifNumberRow").hide();
+            jq("#nhifNumber").hide();
         }
         if (selectedRoomToVisit === "3") {
             if (nonPayingCategorySelected === "CCC PATIENT" || nonPayingCategorySelected === "Patient lives with confirmed TB case") {
@@ -886,15 +872,6 @@
         var select3 = jq('input[name=paym_2]:checked', '#patientRegistrationForm').data('name');
         var estAge = jq("#estimatedAgeInYear").val();
 
-        if (select3 === 'CHILD UNDER 5YRS') {
-            if (estAge < 6) {
-                jq("#selectedRegFeeValue").val(0);
-            } else {
-                jq().toastmessage('showErrorToast', 'Selected Scheme should be for child at 5 years and below');
-                jq('input[name=paym_2][value="1"]').attr('checked', 'checked').change();
-                return false;
-            }
-        }
         if (selectedSpecialScheme === "Student") {
             jq("#universityRow").show();
             jq("#studentIdRow").show();
@@ -1209,8 +1186,10 @@
             jq('#referralDescription').removeClass("required");
             jq('#rooms3').hide();
             jq('#froom3').hide();
-            // Remove Maternity Triage when gender is male
+            // Remove Maternity Triage and MCH when gender is male
             if (jq(".ke-patient-gender").text()[2] === "M") {
+                jq("#rooms2 option[value='165417']").remove();
+
                 jq("#rooms2 option[value='165418']").remove();
             }
         }
