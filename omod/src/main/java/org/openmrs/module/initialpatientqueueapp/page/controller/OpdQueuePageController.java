@@ -20,18 +20,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@AppPage(InitialPatientQueueConstants.APP_PATIENT_OPD)
+@AppPage(InitialPatientQueueConstants.APP_PATIENT_QUEUE)
 public class OpdQueuePageController {
 	
 	public String get(@RequestParam(value = "currentApp", required = false) AppDescriptor appDescriptor,
 	        UiSessionContext sessionContext, PageModel model, UiUtils ui, HttpSession session, PageRequest pageRequest) {
-		Boolean isPriviledged = Context.hasPrivilege("Access OPD");
-		if (!isPriviledged) {
-			return "redirect: index.htm";
-		}
-		System.out.println("The discriptor value is >>" + appDescriptor);
-		//model.addAttribute("afterSelectedUrl", appDescriptor.getConfig().get("onSelectUrl").getTextValue());
-		/*location.href = '/' + OPENMRS_CONTEXT_PATH + ui.applyContextModel('${ ui.escapeJs(afterSelectedUrl) }', { patientId: row.patient.id, queueId: row.id, opdId: jq('#queue-choice').val()});*/
+
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "OPD Queue");
 		model.addAttribute("date", new Date());

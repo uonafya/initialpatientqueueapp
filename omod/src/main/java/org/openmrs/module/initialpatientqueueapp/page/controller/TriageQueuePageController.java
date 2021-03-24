@@ -6,7 +6,9 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.util.ConceptAnswerComparator;
+import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
@@ -22,14 +24,12 @@ import java.util.List;
  *
  */
 
+@AppPage(InitialPatientQueueConstants.APP_PATIENT_QUEUE)
 public class TriageQueuePageController {
 	
 	public String get(@RequestParam("app") AppDescriptor appDescriptor, UiSessionContext sessionContext, PageModel model,
 	        HttpSession session, PageRequest pageRequest, UiUtils ui) {
-		Boolean isPriviledged = Context.hasPrivilege("Access Triage");
-		if (!isPriviledged) {
-			return "redirect: index.htm";
-		}
+
 		model.addAttribute("afterSelectedUrl", appDescriptor.getConfig().get("onSelectUrl").getTextValue());
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "Triage Queue");

@@ -10,6 +10,7 @@ import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@AppPage(InitialPatientQueueConstants.APP_PATIENT_QUEUE)
 public class ShowPatientInfoPageController {
 	
 	private static Log logger = LogFactory.getLog(ShowPatientInfoPageController.class);
