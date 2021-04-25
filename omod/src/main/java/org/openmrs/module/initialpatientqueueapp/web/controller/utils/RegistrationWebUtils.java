@@ -13,12 +13,15 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ehrconfigs.utils.EhrConfigsUtils;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
 import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
+import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.util.OpenmrsUtil;
 import org.jaxen.JaxenException;
@@ -294,6 +297,7 @@ public class RegistrationWebUtils {
 	 */
 	public static Encounter createEncounter(Patient patient, boolean revisit) {
 		EncounterType encounterType = null;
+		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		if (!revisit) {
 			String encounterTypeName = GlobalPropertyUtil.getString(
 			    InitialPatientQueueConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT, "REGINITIAL");
@@ -304,17 +308,15 @@ public class RegistrationWebUtils {
 			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		}
 		
-		// get location
-		Location location = new Location(GlobalPropertyUtil.getInteger(InitialPatientQueueConstants.PROPERTY_LOCATION, 1));
-		
 		// create encounter
 		Encounter encounter = new Encounter();
 		encounter.setEncounterType(encounterType);
 		encounter.setCreator(Context.getAuthenticatedUser());
-		encounter.setProvider(Context.getAuthenticatedUser().getPerson());
+		encounter.setProvider(EhrConfigsUtils.getDefaultEncounterRole(),
+		    EhrConfigsUtils.getProvider(Context.getAuthenticatedUser().getPerson()));
 		encounter.setEncounterDatetime(new Date());
 		encounter.setPatient(patient);
-		encounter.setLocation(location);
+		encounter.setLocation(kenyaEmrService.getDefaultLocation());
 		return encounter;
 	}
 }

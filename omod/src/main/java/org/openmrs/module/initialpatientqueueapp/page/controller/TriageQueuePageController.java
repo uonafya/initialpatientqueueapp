@@ -29,7 +29,7 @@ public class TriageQueuePageController {
 	
 	public String get(@RequestParam("app") AppDescriptor appDescriptor, UiSessionContext sessionContext, PageModel model,
 	        HttpSession session, PageRequest pageRequest, UiUtils ui) {
-
+		
 		model.addAttribute("afterSelectedUrl", appDescriptor.getConfig().get("onSelectUrl").getTextValue());
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "Triage Queue");

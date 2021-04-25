@@ -77,6 +77,10 @@ public class InitialPatientQueueConstants {
 	
 	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
 	
+	public static final String CONCEPT_NAME_REVISIT_FEES = "Revisit fees";
+	
+	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "special clinic fees";
+	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
 	public static final String PROPERTY_NUMBER_OF_DATE_VALIDATION = MODULE_ID_EHR_CONFIGS + ".numberOfDateValidation";

@@ -24,8 +24,15 @@ import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ehrconfigs.metadata.EhrCommonMetadata;
+import org.openmrs.module.hospitalcore.BillingService;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.PatientDashboardService;
+import org.openmrs.module.hospitalcore.model.BillableService;
+import org.openmrs.module.hospitalcore.model.DepartmentConcept;
+import org.openmrs.module.hospitalcore.model.OpdTestOrder;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
+import org.openmrs.module.hospitalcore.util.PatientDashboardConstants;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.PatientAttributeValidatorService;
@@ -41,11 +48,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 4 Fragment to process the queueing information for a patient return processed patients
@@ -206,7 +216,7 @@ public class QueuePatientFragmentController {
 		
 		String tNTriage = null, oNOpd = null, sNSpecial = null, nFNumber;
 		String nPayn = null, nNotpayn = null, nScheme = null, nNHIFnumb = null, nWaivernumb = null, nUniID = null, nStuID = null;
-
+		
 		switch (rooms1) {
 			case 1: {
 				tNTriage = parameters.get("rooms2");
@@ -317,14 +327,43 @@ public class QueuePatientFragmentController {
 		
 		// payment category and registration fee
 		Concept cnrf = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
+		Concept revisitFeeConcept = Context.getConceptService().getConcept(
+		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
+		Concept specialClinicFeeConcept = Context.getConceptService().getConcept(
+		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
+		Concept resultantConceptFees = null;
+		
 		Concept cnp = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NEW_PATIENT);
+		Concept crp = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_REVISIT);
+		Concept csc = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC);
+		
 		Obs obsn = new Obs();
-		obsn.setConcept(cnrf);
-		obsn.setValueCoded(cnp);
-		double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
-		    InitialPatientQueueConstants.FORM_FIELD_REGISTRATION_FEE, "0.0"));
-		obsn.setValueNumeric(doubleVal);
-		obsn.setValueText(paymt3);
+		if (!hasRevisits(patient)) {
+			obsn.setConcept(cnrf);
+			obsn.setValueCoded(crp);
+			double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
+			    InitialPatientQueueConstants.FORM_FIELD_REGISTRATION_FEE, "0.0"));
+			obsn.setValueNumeric(doubleVal);
+			resultantConceptFees = cnrf;
+		} else {
+			obsn.setConcept(revisitFeeConcept);
+			obsn.setValueCoded(cnp);
+			double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
+			    InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0"));
+			obsn.setValueNumeric(doubleVal);
+			resultantConceptFees = revisitFeeConcept;
+		}
+		
+		if (StringUtils.isNotEmpty(sNSpecial)) {
+			obsn.setConcept(specialClinicFeeConcept);
+			obsn.setValueCoded(csc);
+			double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
+			    InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, "0.0"));
+			obsn.setValueNumeric(doubleVal);
+			resultantConceptFees = specialClinicFeeConcept;
+		}
+		
+		obsn.setValueText(paymt3 + "/" + paymt2);//we can add the paying sub category if needed
 		
 		if (paymt3 != null && paymt3.equals("Paying")) {
 			obsn.setComment(nPayn);
@@ -333,7 +372,9 @@ public class QueuePatientFragmentController {
 		} else {
 			obsn.setComment(nScheme);
 		}
+		
 		encounter.addObs(obsn);
+		sendPatientsToBilling(resultantConceptFees, encounter);
 		
 		return encounter;
 	}
@@ -341,11 +382,11 @@ public class QueuePatientFragmentController {
 	private boolean hasRevisits(Patient patient) {
 		boolean found = false;
 		List<Visit> visits = Context.getVisitService().getVisitsByPatient(patient);
-		System.out.println("### Total visits" + visits.size());
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
 			Visit visit = visits.get((visits.size()) - 1);
-			if (visit.getDateCreated().compareTo(new Date()) < 0) {
+			if (EhrRegistrationUtils.formatDate(visit.getDateCreated()).compareTo(
+			    EhrRegistrationUtils.formatDate(new Date())) < 0) {
 				found = true;
 			}
 		}
@@ -354,13 +395,14 @@ public class QueuePatientFragmentController {
 	
 	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {
 		VisitService visitService = Context.getVisitService();
+		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
 		if (visits.size() == 0) {
 			Visit visit = new Visit();
 			visit.addEncounter(encounter);
 			visit.setPatient(patient);
 			visit.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
 			visit.setStartDatetime(new Date());
-			visit.setLocation(Context.getLocationService().getLocation(1));
+			visit.setLocation(kenyaEmrService.getDefaultLocation());
 			visit.setCreator(Context.getAuthenticatedUser());
 			visitService.saveVisit(visit);
 		} else {
@@ -373,7 +415,7 @@ public class QueuePatientFragmentController {
 				visit1.setPatient(patient);
 				visit1.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
 				visit1.setStartDatetime(new Date());
-				visit1.setLocation(Context.getLocationService().getLocation(1));
+				visit1.setLocation(kenyaEmrService.getDefaultLocation());
 				visit1.setCreator(Context.getAuthenticatedUser());
 				visitService.saveVisit(visit1);
 			}
@@ -592,5 +634,36 @@ public class QueuePatientFragmentController {
 		getNhifNumberPersonAttribute(attributes, patient);
 		getStudentIdPersonAttribute(attributes, patient);
 		getWaiverNumberPersonAttribute(attributes, patient);
+	}
+	
+	private void sendPatientsToBilling(Concept serviceFee, Encounter encounter) {
+		Concept hospitalChargesConcept = Context.getConceptService()
+		        .getConceptByUuid("8dd49f34-554c-4060-a6cb-9b87f0a68b7a");
+		BillableService billableService = Context.getService(BillingService.class).getServiceByConceptId(serviceFee.getId());
+		OpdTestOrder opdTestOrder = new OpdTestOrder();
+		opdTestOrder.setPatient(encounter.getPatient());
+		opdTestOrder.setEncounter(encounter);
+		opdTestOrder.setConcept(hospitalChargesConcept);
+		opdTestOrder.setTypeConcept(DepartmentConcept.TYPES[2]);
+		opdTestOrder.setValueCoded(Context.getConceptService().getConcept(serviceFee.getId()));
+		opdTestOrder.setCreator(encounter.getCreator());
+		opdTestOrder.setCreatedOn(encounter.getDateCreated());
+		opdTestOrder.setBillableService(billableService);
+		opdTestOrder.setScheduleDate(encounter.getDateCreated());
+		opdTestOrder.setFromDept("Registration");
+		if (billableService.getPrice().compareTo(BigDecimal.ZERO) == 0) {
+			opdTestOrder.setBillingStatus(1);
+		}
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(encounter.getPatient().getPatientId());
+		
+		for (PersonAttribute pa : pas) {
+			String attributeValue = pa.getValue();
+			if (attributeValue.equals("Non paying")) {
+				opdTestOrder.setBillingStatus(1);
+				break;
+			}
+		}
+		Context.getService(PatientDashboardService.class).saveOrUpdateOpdOrder(opdTestOrder);
 	}
 }

@@ -25,7 +25,7 @@ public class OpdQueuePageController {
 	
 	public String get(@RequestParam(value = "currentApp", required = false) AppDescriptor appDescriptor,
 	        UiSessionContext sessionContext, PageModel model, UiUtils ui, HttpSession session, PageRequest pageRequest) {
-
+		
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "OPD Queue");
 		model.addAttribute("date", new Date());
