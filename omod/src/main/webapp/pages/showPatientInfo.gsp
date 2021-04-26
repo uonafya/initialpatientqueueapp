@@ -101,7 +101,7 @@
         </div>
         <% if(specialClinicFees) { %>
         <div>
-            <div class="col2" align="float" style="display:inline-block; width: 150px"><b>Special Clinic fees:</b></div>
+            <div class="col2" align="float" style="display:inline-block; width: 150px"></div>
             <div class="col2" align="left" style="display:inline-block;"><span id="specialClinicFees"></span>${specialClinicFees}</div>
         </div>
         <% } %>
