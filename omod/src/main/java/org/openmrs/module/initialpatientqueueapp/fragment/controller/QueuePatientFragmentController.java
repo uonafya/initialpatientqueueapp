@@ -118,6 +118,7 @@ public class QueuePatientFragmentController {
 	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory) throws IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
+		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
 		
 		Map<String, Object> redirectParams = new HashMap<String, Object>();
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
@@ -190,10 +191,9 @@ public class QueuePatientFragmentController {
 			//return null;
 		}
 		return "redirect:"
-		        + uiUtils
-		                .pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
-		                        + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory + "&parameters="
-		                        + parameters);
+		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
+		                + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory + "&roomToVisit="
+		                + roomToVisit);
 	}
 	
 	/**
