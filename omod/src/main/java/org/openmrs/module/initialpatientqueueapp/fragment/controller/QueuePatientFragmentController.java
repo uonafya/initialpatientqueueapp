@@ -32,7 +32,6 @@ import org.openmrs.module.hospitalcore.model.DepartmentConcept;
 import org.openmrs.module.hospitalcore.model.OpdTestOrder;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
-import org.openmrs.module.hospitalcore.util.PatientDashboardConstants;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.includable.validator.attribute.PatientAttributeValidatorService;
@@ -51,11 +50,9 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 4 Fragment to process the queueing information for a patient return processed patients
@@ -193,8 +190,10 @@ public class QueuePatientFragmentController {
 			//return null;
 		}
 		return "redirect:"
-		        + uiUtils.pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
-		                + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory);
+		        + uiUtils
+		                .pageLink("initialpatientqueueapp", "showPatientInfo?patientId=" + patient.getPatientId()
+		                        + "&visit=" + hasRevisits(patient) + "&payCategory=" + paymentCategory + "&parameters="
+		                        + parameters);
 	}
 	
 	/**
@@ -360,7 +359,6 @@ public class QueuePatientFragmentController {
 			double doubleVal = Double.parseDouble(GlobalPropertyUtil.getString(
 			    InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, "0.0"));
 			obsn.setValueNumeric(doubleVal);
-			resultantConceptFees = specialClinicFeeConcept;
 		}
 		
 		obsn.setValueText(paymt3 + "/" + paymt2);//we can add the paying sub category if needed
@@ -375,6 +373,9 @@ public class QueuePatientFragmentController {
 		
 		encounter.addObs(obsn);
 		sendPatientsToBilling(resultantConceptFees, encounter);
+		if (StringUtils.isNotEmpty(sNSpecial)) {
+			sendPatientsToBilling(specialClinicFeeConcept, encounter);
+		}
 		
 		return encounter;
 	}
