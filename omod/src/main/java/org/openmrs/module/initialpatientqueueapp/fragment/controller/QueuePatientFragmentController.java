@@ -119,6 +119,7 @@ public class QueuePatientFragmentController {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
+		int payCat = Integer.parseInt(paymentCategory);
 		
 		Map<String, Object> redirectParams = new HashMap<String, Object>();
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
@@ -169,10 +170,10 @@ public class QueuePatientFragmentController {
 			// create encounter for the visit here
 			Encounter encounter = createEncounter(patient, parameters);
 			hasActiveVisit(patientVisit, patient, encounter);
-			encounter.setVisit(getLastVisitForPatient(patient));
-			encounter = Context.getEncounterService().saveEncounter(encounter);
+			//encounter = Context.getEncounterService().saveEncounter(encounter);
+			//encounter.setVisit(getLastVisitForPatient(patient));
 			//try sending this patient as an opd test order such that it can be seen at the billing point
-			sendToBillingDependingOnTheBill(parameters, encounter);
+			sendToBillingDependingOnTheBill(parameters, encounter, payCat);
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print("success");
@@ -408,6 +409,10 @@ public class QueuePatientFragmentController {
 				visit1.setLocation(kenyaEmrService.getDefaultLocation());
 				visit1.setCreator(Context.getAuthenticatedUser());
 				visitService.saveVisit(visit1);
+			} else {
+				//there is a visit with start date that is note stopped
+				lastVisit.addEncounter(encounter);
+				visitService.saveVisit(lastVisit);
 			}
 		}
 	}
@@ -664,7 +669,7 @@ public class QueuePatientFragmentController {
 		}
 	}
 	
-	private void sendToBillingDependingOnTheBill(Map<String, String> parameters, Encounter encounter) {
+	private void sendToBillingDependingOnTheBill(Map<String, String> parameters, Encounter encounter, int payCat) {
 		Concept registrationFeesConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
@@ -673,16 +678,18 @@ public class QueuePatientFragmentController {
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
 		//find the special clinic
 		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
-		//check if is a revisit or a new patient
-		if (hasRevisits(encounter.getPatient())) {
-			sendPatientsToBilling(revisitFeeConcept, encounter);
-		} else {
-			// just save the registration fees
-			sendPatientsToBilling(registrationFeesConcept, encounter);
-		}
-		//check if this patient is going for any special clinic
-		if (roomToVisit == 3) {
-			sendPatientsToBilling(specialClinicFeeConcept, encounter);
+		if (payCat == 1) {
+			//check if is a revisit or a new patient
+			if (hasRevisits(encounter.getPatient())) {
+				sendPatientsToBilling(revisitFeeConcept, encounter);
+			} else {
+				// just save the registration fees
+				sendPatientsToBilling(registrationFeesConcept, encounter);
+			}
+			//check if this patient is going for any special clinic
+			if (roomToVisit == 3) {
+				sendPatientsToBilling(specialClinicFeeConcept, encounter);
+			}
 		}
 		
 	}

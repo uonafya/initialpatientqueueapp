@@ -94,16 +94,18 @@
             <b>Gender:</b></div>
             <div class="col2" align="left" style="display:inline-block;"><span id="gender"></span>${gender}</div>
         </div>
-        <div>
-            <div class="col2" align="float" style="display:inline-block; width: 150px">
-                <b>What to be paid:</b></div>
-            <div class="col2" align="left" style="display:inline-block;"><span id="payment"></span>${WhatToBePaid}</div>
-        </div>
-        <% if(specialClinicFees) { %>
-        <div>
-            <div class="col2" align="float" style="display:inline-block; width: 150px"></div>
-            <div class="col2" align="left" style="display:inline-block;"><span id="specialClinicFees"></span>${specialClinicFees}</div>
-        </div>
+        <% if(paying){ %>
+            <div>
+                <div class="col2" align="float" style="display:inline-block; width: 150px">
+                    <b>What to be paid:</b></div>
+                <div class="col2" align="left" style="display:inline-block;"><span id="payment"></span>${WhatToBePaid}</div>
+            </div>
+            <% if(specialClinicFees) { %>
+            <div>
+                <div class="col2" align="float" style="display:inline-block; width: 150px"></div>
+                <div class="col2" align="left" style="display:inline-block;"><span id="specialClinicFees"></span>${specialClinicFees}</div>
+            </div>
+            <% } %>
         <% } %>
         <div>
             <div class="col2" align="float" style="display:inline-block; width: 150px"><b>Served by:</b></div>

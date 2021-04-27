@@ -78,14 +78,17 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("gender", Context.getPatientService().getPatient(patientId).getGender());
 		model.addAttribute("previousVisit", lastVisitTime);
 		String payCat = "";
+		boolean paying = false;
 		if (payCategory.equals("1")) {
 			payCat = "PAYING";
+			paying = true;
 		} else if (payCategory.equals("2")) {
 			payCat = "NON-PAYING";
 		} else if (payCategory.equals("3")) {
 			payCat = "SPECIAL SCHEMES";
 		}
 		model.addAttribute("selectedPaymentCategory", payCat);
+		model.addAttribute("paying", paying);
 		Concept registrationFeesConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
