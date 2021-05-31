@@ -22,11 +22,11 @@ public class InitialPatientQueueConstants {
 	
 	public static final String APP_PATIENT_OPD = MODULE_ID + ".opd";
 	
-	public static final String CONCEPT_NAME_TRIAGE = "TRIAGE";
+	public static final String CONCEPT_NAME_TRIAGE = "Triage Room";
 	
-	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
+	public static final String CONCEPT_NAME_OPD_WARD = "OPD Room";
 	
-	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "SPECIAL CLINIC";
+	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "Special Clinic";
 	
 	public static final String PROPERTY_ENCOUNTER_TYPE_REGINIT = MODULE_ID_EHR_CONFIGS + ".encounterType.init";
 	
@@ -34,13 +34,13 @@ public class InitialPatientQueueConstants {
 	
 	public static final String PROPERTY_LOCATION = MODULE_ID_EHR_CONFIGS + ".location";
 	
-	public static final String CONCEPT_NAME_PAYING_CATEGORY = "PAYING CATEGORY";
+	public static final String CONCEPT_NAME_PAYING_CATEGORY = "Paying";
 	
-	public static final String CONCEPT_NAME_SPECIAL_SCHEME = "SPECIAL SCHEME";
+	public static final String CONCEPT_NAME_SPECIAL_SCHEME = "Special Scheme";
 	
-	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "NON-PAYING CATEGORY";
+	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "Non Paying";
 	
-	public static final String CONCEPT_NAME_LIST_OF_UNIVERSITIES = "LIST OF UNIVERSITIES";
+	public static final String CONCEPT_NAME_LIST_OF_UNIVERSITIES = "Education institution";
 	
 	public static final String PROPERTY_INITIAL_REGISTRATION_FEE = MODULE_ID_EHR_CONFIGS + ".initialVisitRegistrationFee";
 	
