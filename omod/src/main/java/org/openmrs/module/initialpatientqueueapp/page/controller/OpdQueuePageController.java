@@ -29,8 +29,8 @@ public class OpdQueuePageController {
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "OPD Queue");
 		model.addAttribute("date", new Date());
-		Concept opdWardConcept = Context.getConceptService().getConceptByName("OPD WARD");
-		Concept specialClinicConcept = Context.getConceptService().getConceptByName("SPECIAL CLINIC");
+		Concept opdWardConcept = Context.getConceptService().getConceptByName("OPD Room");
+		Concept specialClinicConcept = Context.getConceptService().getConceptByName("Special Clinic");
 		List<ConceptAnswer> patientList = new ArrayList<ConceptAnswer>();
 		List<ConceptAnswer> opdList = (opdWardConcept != null ? new ArrayList<ConceptAnswer>(opdWardConcept.getAnswers())
 		        : null);

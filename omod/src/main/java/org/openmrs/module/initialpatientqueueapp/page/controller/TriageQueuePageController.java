@@ -34,7 +34,7 @@ public class TriageQueuePageController {
 		User usr = Context.getAuthenticatedUser();
 		model.addAttribute("title", "Triage Queue");
 		model.addAttribute("date", new Date());
-		Concept triageConcept = Context.getConceptService().getConceptByName("TRIAGE");
+		Concept triageConcept = Context.getConceptService().getConceptByName("Triage Room");
 		List<ConceptAnswer> list = (triageConcept != null ? new ArrayList<ConceptAnswer>(triageConcept.getAnswers()) : null);
 		if (CollectionUtils.isNotEmpty(list)) {
 			Collections.sort(list, new ConceptAnswerComparator());

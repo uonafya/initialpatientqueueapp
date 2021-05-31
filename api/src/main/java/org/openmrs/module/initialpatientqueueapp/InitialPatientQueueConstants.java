@@ -59,7 +59,7 @@ public class InitialPatientQueueConstants {
 	
 	public static final String FORM_FIELD_PAYMENT_CATEGORY = "person.attribute.14";
 	
-	public static final String CONCEPT_NEW_PATIENT = "New Patient";
+	public static final String CONCEPT_NEW_PATIENT = "New client";
 	
 	public static final String PROPERTY_IDENTIFIER_PREFIX = MODULE_ID + ".identifier_prefix";
 	
@@ -75,11 +75,11 @@ public class InitialPatientQueueConstants {
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";
 	
-	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
+	public static final String CONCEPT_NAME_REGISTRATION_FEE = "Registration Fee";
 	
-	public static final String CONCEPT_NAME_REVISIT_FEES = "Revisit fee";
+	public static final String CONCEPT_NAME_REVISIT_FEES = "Revisit Fee";
 	
-	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "special clinic fees";
+	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "Special Clinic Fee";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
@@ -91,7 +91,7 @@ public class InitialPatientQueueConstants {
 	
 	public static final String FORM_FIELD_PATIENT_MLC = "patient.mlc";
 	
-	public static final String CONCEPT_REVISIT = "Revisit";
+	public static final String CONCEPT_REVISIT = "Revisit Patient";
 	
 	public static final String FORM_FIELD_SELECTED_PAYMENT_CATEGORY = "patient.selectedPaymentCategory";
 	
