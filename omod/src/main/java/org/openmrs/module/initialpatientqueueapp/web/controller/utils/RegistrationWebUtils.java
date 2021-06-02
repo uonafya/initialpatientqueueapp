@@ -111,9 +111,9 @@ public class RegistrationWebUtils {
 	        String selectedCategory) {
 		Concept visitStatus = null;
 		if (!revisit) {
-			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
+			visitStatus = Context.getConceptService().getConceptByUuid("164144AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		} else {
-			visitStatus = Context.getConceptService().getConcept("REVISIT");
+			visitStatus = Context.getConceptService().getConceptByUuid("d5ea1533-7346-4e0b-8626-9bff6cd183b2");
 		}
 		
 		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
@@ -148,9 +148,9 @@ public class RegistrationWebUtils {
 	        String selectedCategory) {
 		Concept visitStatus = null;
 		if (!revisit) {
-			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
+			visitStatus = Context.getConceptService().getConceptByUuid("164144AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		} else {
-			visitStatus = Context.getConceptService().getConcept("REVISIT");
+			visitStatus = Context.getConceptService().getConceptByUuid("d5ea1533-7346-4e0b-8626-9bff6cd183b2");
 		}
 		
 		TriagePatientQueue queue = Context.getService(PatientQueueService.class).getTriagePatientQueue(
