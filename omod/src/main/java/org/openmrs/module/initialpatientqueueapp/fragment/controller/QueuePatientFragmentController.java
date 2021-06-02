@@ -285,7 +285,7 @@ public class QueuePatientFragmentController {
 		
 		if (!StringUtils.isBlank(tNTriage)) {
 			
-			Concept triageConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE);
+			Concept triageConcept = Context.getConceptService().getConceptByUuid("e8acf3d5-d451-475b-a3b5-37f0ce6a0260");
 			
 			Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(tNTriage);
 			
@@ -297,7 +297,7 @@ public class QueuePatientFragmentController {
 			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, hasRevisits(patient),
 			    selectedCategory);
 		} else if (!StringUtils.isBlank(oNOpd)) {
-			Concept opdConcept = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD);
+			Concept opdConcept = Context.getConceptService().getConceptByUuid("03880388-07ce-4961-abe7-0e58f787dd23");
 			Concept selectedOPDConcept = Context.getConceptService().getConcept(oNOpd);
 			String selectedCategory = paymt3;
 			Obs opdObs = new Obs();
@@ -307,9 +307,8 @@ public class QueuePatientFragmentController {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, hasRevisits(patient), selectedCategory);
 			
 		} else {
-			Concept specialClinicConcept = Context.getConceptService().getConcept(
-			    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC);
-			//PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
+			Concept specialClinicConcept = Context.getConceptService().getConceptByUuid(
+			    "b5e0cfd3-1009-4527-8e36-83b5e902b3ea");
 			Concept selectedSpecialClinicConcept = Context.getConceptService().getConcept(sNSpecial);
 			String selectedCategory = paymt3;
 			Obs opdObs = new Obs();
@@ -638,7 +637,7 @@ public class QueuePatientFragmentController {
 	
 	private void sendPatientsToBilling(Concept serviceFee, Encounter encounter) {
 		Concept hospitalChargesConcept = Context.getConceptService()
-		        .getConceptByUuid("8dd49f34-554c-4060-a6cb-9b87f0a68b7a");
+		        .getConceptByUuid("eb458ded-1fa0-4c1b-92fa-322cada4aff2");
 		BillableService billableService = Context.getService(BillingService.class).getServiceByConceptId(serviceFee.getId());
 		if (billableService != null) {
 			OpdTestOrder opdTestOrder = new OpdTestOrder();
