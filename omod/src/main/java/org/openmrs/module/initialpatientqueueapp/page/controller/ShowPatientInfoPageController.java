@@ -71,7 +71,7 @@ public class ShowPatientInfoPageController {
 		
 		model.addAttribute("user", user.getPersonName().getFullName());
 		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());
-		model.addAttribute("patientId", Context.getPatientService().getPatient(patientId).getActiveIdentifiers().get(0)
+		model.addAttribute("patientId", Context.getPatientService().getPatient(patientId).getPatientIdentifier()
 		        .getIdentifier());
 		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
 		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
@@ -93,7 +93,7 @@ public class ShowPatientInfoPageController {
 		    InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
-		Concept specialClinicFeeConcept = Context.getConceptService().getConcept(
+		Concept specialClinicFeeConcept = Context.getConceptService().getConceptByUuid(
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
 		BillableService registrationFee = Context.getService(BillingService.class).getServiceByConceptId(
 		    registrationFeesConcept.getId());

@@ -79,7 +79,7 @@ public class InitialPatientQueueConstants {
 	
 	public static final String CONCEPT_NAME_REVISIT_FEES = "Revisit Fee";
 	
-	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "Special Clinic Fee";
+	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "430fc46d-94bb-4fbc-b7bd-894b7cc98058";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	

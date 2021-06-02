@@ -326,7 +326,7 @@ public class QueuePatientFragmentController {
 		Concept cnrf = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
-		Concept specialClinicFeeConcept = Context.getConceptService().getConcept(
+		Concept specialClinicFeeConcept = Context.getConceptService().getConceptByUuid(
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
 		
 		Concept cnp = Context.getConceptService().getConcept(InitialPatientQueueConstants.CONCEPT_NEW_PATIENT);
@@ -674,7 +674,7 @@ public class QueuePatientFragmentController {
 		    InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
-		Concept specialClinicFeeConcept = Context.getConceptService().getConcept(
+		Concept specialClinicFeeConcept = Context.getConceptService().getConceptByUuid(
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
 		//find the special clinic
 		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
