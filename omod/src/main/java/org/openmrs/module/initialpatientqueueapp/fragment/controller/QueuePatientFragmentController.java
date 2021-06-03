@@ -24,6 +24,7 @@ import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ehrconfigs.metadata.EhrCommonMetadata;
+import org.openmrs.module.ehrconfigs.utils.EhrConfigsUtils;
 import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
@@ -375,9 +376,8 @@ public class QueuePatientFragmentController {
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
 			Visit visit = visits.get(0);
-			System.out.println("The visit date is >>>" + visit.getStartDatetime());
-			if (visit.getStartDatetime().compareTo(new Date()) < 0) {
-				System.out.println("Patient>>" + patient + " >> has a revisit");
+			if (EhrRegistrationUtils.formatDate(visit.getStartDatetime()).compareTo(
+			    EhrRegistrationUtils.formatDate(new Date())) < 0) {
 				found = true;
 			}
 		}
