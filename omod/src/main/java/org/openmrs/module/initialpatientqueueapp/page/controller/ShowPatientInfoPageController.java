@@ -45,9 +45,9 @@ public class ShowPatientInfoPageController {
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		PatientModel patientModel = new PatientModel(patient);
 		
-		model.addAttribute("patient", patientModel);
+		/*model.addAttribute("patient", patientModel);
 		model.addAttribute("patientAge", patient.getAge());
-		model.addAttribute("patientGender", patient.getGender());
+		model.addAttribute("patientGender", patient.getGender());*/
 		
 		Date lastVisitTime = hcs.getLastVisitTime(patient);
 		Date currentVisitTime = new Date();
@@ -55,19 +55,19 @@ public class ShowPatientInfoPageController {
 		if (lastVisitTime != null) {
 			visitTimeDifference = this.dateDiffInHours(lastVisitTime, currentVisitTime);
 		}
-		model.addAttribute("visitTimeDifference", visitTimeDifference);
+		//model.addAttribute("visitTimeDifference", visitTimeDifference);
 		
 		model.addAttribute("firstTimeVisit", false);
 		
 		User user = Context.getAuthenticatedUser();
-		model.addAttribute("reVisitFee",
+		/*model.addAttribute("reVisitFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0"));
 		model.addAttribute("childLessThanFiveYearRegistrationFee", GlobalPropertyUtil.getString(
 		    InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, "0.0"));
 		model.addAttribute("specialClinicRegFee",
 		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, "0.0"));
 		model.addAttribute("registrationFees",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0"));
+		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0"));*/
 		
 		model.addAttribute("user", user.getPersonName().getFullName());
 		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());

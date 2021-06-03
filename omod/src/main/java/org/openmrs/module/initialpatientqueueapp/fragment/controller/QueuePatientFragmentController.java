@@ -375,8 +375,9 @@ public class QueuePatientFragmentController {
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
 			Visit visit = visits.get((visits.size()) - 1);
-			if (EhrRegistrationUtils.formatDate(visit.getDateCreated()).compareTo(
+			if (EhrRegistrationUtils.formatDate(visit.getStartDatetime()).compareTo(
 			    EhrRegistrationUtils.formatDate(new Date())) < 0) {
+				System.out.println("Patient>>" + patient + " >> has a revisit");
 				found = true;
 			}
 		}
@@ -386,6 +387,7 @@ public class QueuePatientFragmentController {
 	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {
 		VisitService visitService = Context.getVisitService();
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
+		
 		if (visits.size() == 0) {
 			Visit visit = new Visit();
 			visit.addEncounter(encounter);
@@ -395,24 +397,22 @@ public class QueuePatientFragmentController {
 			visit.setLocation(kenyaEmrService.getDefaultLocation());
 			visit.setCreator(Context.getAuthenticatedUser());
 			visitService.saveVisit(visit);
+		} else if (visits.get(visits.size() - 1).getStartDatetime() != null
+		        && visits.get(visits.size() - 1).getStopDatetime() != null) {
+			//this means there is no active visit, we will end up creating one for this patient
+			Visit visit1 = new Visit();
+			visit1.addEncounter(encounter);
+			visit1.setPatient(patient);
+			visit1.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
+			visit1.setStartDatetime(new Date());
+			visit1.setLocation(kenyaEmrService.getDefaultLocation());
+			visit1.setCreator(Context.getAuthenticatedUser());
+			visitService.saveVisit(visit1);
 		} else {
-			//pick the last visit and check if it is still active
-			Visit lastVisit = visits.get(visits.size() - 1);
-			if (lastVisit.getStartDatetime() != null && lastVisit.getStopDatetime() != null) {
-				//this means there is no active visit, we will end up creating one for this patient
-				Visit visit1 = new Visit();
-				visit1.addEncounter(encounter);
-				visit1.setPatient(patient);
-				visit1.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
-				visit1.setStartDatetime(new Date());
-				visit1.setLocation(kenyaEmrService.getDefaultLocation());
-				visit1.setCreator(Context.getAuthenticatedUser());
-				visitService.saveVisit(visit1);
-			} else {
-				//there is a visit with start date that is note stopped
-				lastVisit.addEncounter(encounter);
-				visitService.saveVisit(lastVisit);
-			}
+			//there is a visit with start date that is note stopped
+			System.out.println("There is a visit to accomodate this request so we need to visit");
+			visits.get(visits.size() - 1).addEncounter(encounter);
+			//visitService.saveVisit(visits.get(visits.size() - 1));
 		}
 	}
 	
