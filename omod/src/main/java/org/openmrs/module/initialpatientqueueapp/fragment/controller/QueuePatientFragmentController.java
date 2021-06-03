@@ -374,7 +374,7 @@ public class QueuePatientFragmentController {
 		List<Visit> visits = Context.getVisitService().getVisitsByPatient(patient);
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
-			Visit visit = visits.get((visits.size()) - 1);
+			Visit visit = visits.get(0);
 			System.out.println("The visit date is >>>" + visit.getStartDatetime());
 			if (visit.getStartDatetime().compareTo(new Date()) < 0) {
 				System.out.println("Patient>>" + patient + " >> has a revisit");
@@ -397,8 +397,7 @@ public class QueuePatientFragmentController {
 			visit.setLocation(kenyaEmrService.getDefaultLocation());
 			visit.setCreator(Context.getAuthenticatedUser());
 			visitService.saveVisit(visit);
-		} else if (visits.get(visits.size() - 1).getStartDatetime() != null
-		        && visits.get(visits.size() - 1).getStopDatetime() != null) {
+		} else if (visits.get(0).getStartDatetime() != null && visits.get(0).getStopDatetime() != null) {
 			//this means there is no active visit, we will end up creating one for this patient
 			Visit visit1 = new Visit();
 			visit1.addEncounter(encounter);
@@ -410,9 +409,7 @@ public class QueuePatientFragmentController {
 			visitService.saveVisit(visit1);
 		} else {
 			//there is a visit with start date that is note stopped
-			System.out.println("There is a visit to accomodate this request so we need to visit");
-			visits.get(visits.size() - 1).addEncounter(encounter);
-			//visitService.saveVisit(visits.get(visits.size() - 1));
+			visits.get(0).addEncounter(encounter);
 		}
 	}
 	
@@ -681,17 +678,14 @@ public class QueuePatientFragmentController {
 		if (payCat == 1) {
 			//check if is a revisit or a new patient
 			if (hasRevisits(encounter.getPatient())) {
-				System.out.println("Has to pay revisit fee");
 				sendPatientsToBilling(revisitFeeConcept, encounter);
 			} else {
 				// just save the registration fees
 				sendPatientsToBilling(registrationFeesConcept, encounter);
-				System.out.println("Has to pay registartion fees");
 			}
 			//check if this patient is going for any special clinic
 			if (roomToVisit == 3) {
 				sendPatientsToBilling(specialClinicFeeConcept, encounter);
-				System.out.println("Has to pay consultations fees");
 			}
 		}
 		
