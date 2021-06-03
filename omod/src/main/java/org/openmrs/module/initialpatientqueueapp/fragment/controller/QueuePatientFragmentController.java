@@ -375,8 +375,8 @@ public class QueuePatientFragmentController {
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
 			Visit visit = visits.get((visits.size()) - 1);
-			if (EhrRegistrationUtils.formatDate(visit.getStartDatetime()).compareTo(
-			    EhrRegistrationUtils.formatDate(new Date())) < 0) {
+			System.out.println("The visit date is >>>" + visit.getStartDatetime());
+			if (visit.getStartDatetime().compareTo(new Date()) < 0) {
 				System.out.println("Patient>>" + patient + " >> has a revisit");
 				found = true;
 			}
@@ -640,6 +640,7 @@ public class QueuePatientFragmentController {
 		        .getConceptByUuid("eb458ded-1fa0-4c1b-92fa-322cada4aff2");
 		BillableService billableService = Context.getService(BillingService.class).getServiceByConceptId(serviceFee.getId());
 		if (billableService != null) {
+			System.out.println("Setting up the bills for patients at registration");
 			OpdTestOrder opdTestOrder = new OpdTestOrder();
 			opdTestOrder.setPatient(encounter.getPatient());
 			opdTestOrder.setEncounter(encounter);
@@ -680,14 +681,17 @@ public class QueuePatientFragmentController {
 		if (payCat == 1) {
 			//check if is a revisit or a new patient
 			if (hasRevisits(encounter.getPatient())) {
+				System.out.println("Has to pay revisit fee");
 				sendPatientsToBilling(revisitFeeConcept, encounter);
 			} else {
 				// just save the registration fees
 				sendPatientsToBilling(registrationFeesConcept, encounter);
+				System.out.println("Has to pay registartion fees");
 			}
 			//check if this patient is going for any special clinic
 			if (roomToVisit == 3) {
 				sendPatientsToBilling(specialClinicFeeConcept, encounter);
+				System.out.println("Has to pay consultations fees");
 			}
 		}
 		
