@@ -24,7 +24,6 @@ import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ehrconfigs.metadata.EhrCommonMetadata;
-import org.openmrs.module.ehrconfigs.utils.EhrConfigsUtils;
 import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.PatientDashboardService;
@@ -49,6 +48,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -62,7 +62,7 @@ public class QueuePatientFragmentController {
 	
 	private static Log logger = LogFactory.getLog(QueuePatientFragmentController.class);
 	
-	public void controller(@FragmentParam("patient") Patient patient, FragmentModel model) {
+	public void controller(@FragmentParam("patient") Patient patient, FragmentModel model) throws ParseException {
 		
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(InitialPatientQueueConstants.CONCEPT_NAME_OPD_WARD));
@@ -116,7 +116,8 @@ public class QueuePatientFragmentController {
 	}
 	
 	public String post(HttpServletRequest request, PageModel model, UiUtils uiUtils, HttpServletResponse response,
-	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory) throws IOException {
+	        @RequestParam("patientId") Patient patient, @RequestParam("paym_1") String paymentCategory) throws IOException,
+	        ParseException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
 		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
@@ -205,7 +206,7 @@ public class QueuePatientFragmentController {
 	 * @param parameters
 	 * @return
 	 */
-	private Encounter createEncounter(Patient patient, Map<String, String> parameters) {
+	private Encounter createEncounter(Patient patient, Map<String, String> parameters) throws ParseException {
 		int rooms1 = Integer.parseInt(parameters.get("rooms1"));
 		int paymt1 = Integer.parseInt(parameters.get("paym_1"));
 		int paymt2 = Integer.parseInt(parameters.get("paym_2"));
@@ -370,14 +371,14 @@ public class QueuePatientFragmentController {
 		return encounter;
 	}
 	
-	private boolean hasRevisits(Patient patient) {
+	private boolean hasRevisits(Patient patient) throws ParseException {
 		boolean found = false;
 		List<Visit> visits = Context.getVisitService().getVisitsByPatient(patient);
 		//check the last visit date if the total visits is greator than 1
 		if (visits.size() > 0) {
 			Visit visit = visits.get(0);
-			if (EhrRegistrationUtils.formatDate(visit.getStartDatetime()).compareTo(
-			    EhrRegistrationUtils.formatDate(new Date())) < 0) {
+			if (EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(visit.getStartDatetime())).before(
+			    EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(new Date())))) {
 				found = true;
 			}
 		}
@@ -666,7 +667,8 @@ public class QueuePatientFragmentController {
 		}
 	}
 	
-	private void sendToBillingDependingOnTheBill(Map<String, String> parameters, Encounter encounter, int payCat) {
+	private void sendToBillingDependingOnTheBill(Map<String, String> parameters, Encounter encounter, int payCat)
+	        throws ParseException {
 		Concept registrationFeesConcept = Context.getConceptService().getConcept(
 		    InitialPatientQueueConstants.CONCEPT_NAME_REGISTRATION_FEE);
 		Concept revisitFeeConcept = Context.getConceptService().getConcept(
