@@ -10,6 +10,7 @@ import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.BillableService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
+import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
@@ -95,12 +96,19 @@ public class ShowPatientInfoPageController {
 		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
 		Concept specialClinicFeeConcept = Context.getConceptService().getConceptByUuid(
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
+		
+		Concept specialClinicRevisitFeeConcept = Context.getConceptService().getConceptByUuid(
+		    InitialPatientQueueConstants.SPECIAL_CLINIC_REVISIT_FEES_UUID);
+		
 		BillableService registrationFee = Context.getService(BillingService.class).getServiceByConceptId(
 		    registrationFeesConcept.getId());
 		BillableService revisitFees = Context.getService(BillingService.class).getServiceByConceptId(
 		    revisitFeeConcept.getId());
 		BillableService specialClinicFeesAmount = Context.getService(BillingService.class).getServiceByConceptId(
 		    specialClinicFeeConcept.getId());
+		
+		BillableService specialClinicRevisitFeesAmount = Context.getService(BillingService.class).getServiceByConceptId(
+		    specialClinicRevisitFeeConcept.getId());
 		
 		String WhatToBePaid = "";
 		String specialClinicFees = "";
@@ -110,9 +118,12 @@ public class ShowPatientInfoPageController {
 		} else {
 			WhatToBePaid = "Revisit fees:		" + revisitFees.getPrice();
 		}
-		if (roomToVisit != null && roomToVisit == 3) {
+		if (roomToVisit != null && roomToVisit == 3 && !EhrRegistrationUtils.getLastSpecialClinicVisitForPatient(patient)) {
 			specialClinicFees = "Special Clinic fees:		" + specialClinicFeesAmount.getPrice();
+		} else {
+			specialClinicFees = "Special Clinic revisit fees:		" + specialClinicRevisitFeesAmount.getPrice();
 		}
+		
 		model.addAttribute("WhatToBePaid", WhatToBePaid);
 		model.addAttribute("specialClinicFees", specialClinicFees);
 		

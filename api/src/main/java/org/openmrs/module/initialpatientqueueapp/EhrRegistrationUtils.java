@@ -22,26 +22,33 @@ package org.openmrs.module.initialpatientqueueapp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
 import org.openmrs.Location;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PatientIdentifierType;
+import org.openmrs.Person;
 import org.openmrs.PersonAddress;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
+import org.openmrs.api.ObsService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.PatientUtils;
+import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 
 public class EhrRegistrationUtils {
 	
@@ -238,4 +245,18 @@ public class EhrRegistrationUtils {
 		
 		Context.getService(HospitalCoreService.class).savePatientSearch(ps);
 	}
+	
+	public static boolean getLastSpecialClinicVisitForPatient(Person patient) {
+		boolean hasLastSpecialClinic = false;
+		ObsService obsService = Context.getObsService();
+		Concept specialClinic = Context.getConceptService().getConceptByUuid("b5e0cfd3-1009-4527-8e36-83b5e902b3ea");
+		Location defaultLocation = Context.getService(KenyaEmrService.class).getDefaultLocation();
+		List<Obs> getObsForLastSpecialClinicVisit = obsService.getObservations(Arrays.asList(patient), null,
+		    Arrays.asList(specialClinic), null, null, Arrays.asList(defaultLocation), null, null, null, null, null, false);
+		if (getObsForLastSpecialClinicVisit.size() > 0) {
+			hasLastSpecialClinic = true;
+		}
+		return hasLastSpecialClinic;
+	}
+	
 }

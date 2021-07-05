@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Person;
@@ -49,6 +50,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -373,12 +376,21 @@ public class QueuePatientFragmentController {
 	
 	private boolean hasRevisits(Patient patient) throws ParseException {
 		boolean found = false;
-		List<Visit> visits = Context.getVisitService().getVisitsByPatient(patient);
-		//check the last visit date if the total visits is greator than 1
-		if (visits.size() > 0) {
-			Visit visit = visits.get(0);
-			if (EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(visit.getStartDatetime())).before(
-			    EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(new Date())))) {
+		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
+		EncounterType patientQueueEncounter = Context.getEncounterService().getEncounterTypeByUuid(
+		    "356d447a-b494-11ea-8337-f7bcaf3e8fec");
+		EncounterType triageEncounter = Context.getEncounterService().getEncounterTypeByUuid(
+		    "2af60550-f291-11ea-b725-9753b5f685ae");
+		EncounterType opdEncounter = Context.getEncounterService().getEncounterTypeByUuid(
+		    "ba45c278-f290-11ea-9666-1b3e6e848887");
+		List<Encounter> filteredVisits = Context.getEncounterService().getEncounters(patient,
+		    kenyaEmrService.getDefaultLocation(), null, null, null,
+		    Arrays.asList(patientQueueEncounter, triageEncounter, opdEncounter), null, null, null, false);
+		
+		if (filteredVisits.size() > 0) {
+			Encounter encounterVisit = filteredVisits.get(0);
+			if (EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(encounterVisit.getEncounterDatetime()))
+			        .before(EhrRegistrationUtils.parseDate(EhrRegistrationUtils.formatDate(new Date())))) {
 				found = true;
 			}
 		}
@@ -688,7 +700,7 @@ public class QueuePatientFragmentController {
 				sendPatientsToBilling(registrationFeesConcept, encounter);
 			}
 			//check if this patient is going for any special clinic
-			if (roomToVisit == 3 && hasRevisits(encounter.getPatient())) {
+			if (roomToVisit == 3 && EhrRegistrationUtils.getLastSpecialClinicVisitForPatient(encounter.getPatient())) {
 				sendPatientsToBilling(specialClinicRevisitFeeConcept, encounter);
 			} else {
 				sendPatientsToBilling(specialClinicFeeConcept, encounter);
