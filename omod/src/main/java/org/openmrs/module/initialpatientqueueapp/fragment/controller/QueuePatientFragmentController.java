@@ -675,6 +675,8 @@ public class QueuePatientFragmentController {
 		    InitialPatientQueueConstants.CONCEPT_NAME_REVISIT_FEES);
 		Concept specialClinicFeeConcept = Context.getConceptService().getConceptByUuid(
 		    InitialPatientQueueConstants.CONCEPT_NAME_SPECIAL_CLINIC_FEES);
+		Concept specialClinicRevisitFeeConcept = Context.getConceptService().getConceptByUuid(
+		    InitialPatientQueueConstants.SPECIAL_CLINIC_REVISIT_FEES_UUID);
 		//find the special clinic
 		int roomToVisit = Integer.parseInt(parameters.get("rooms1"));
 		if (payCat == 1) {
@@ -686,7 +688,9 @@ public class QueuePatientFragmentController {
 				sendPatientsToBilling(registrationFeesConcept, encounter);
 			}
 			//check if this patient is going for any special clinic
-			if (roomToVisit == 3) {
+			if (roomToVisit == 3 && hasRevisits(encounter.getPatient())) {
+				sendPatientsToBilling(specialClinicRevisitFeeConcept, encounter);
+			} else {
 				sendPatientsToBilling(specialClinicFeeConcept, encounter);
 			}
 		}

@@ -81,6 +81,8 @@ public class InitialPatientQueueConstants {
 	
 	public static final String CONCEPT_NAME_SPECIAL_CLINIC_FEES = "430fc46d-94bb-4fbc-b7bd-894b7cc98058";
 	
+	public static final String SPECIAL_CLINIC_REVISIT_FEES_UUID = "7da33864-3183-4764-a1e8-d86bca84c9ef";
+	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
 	public static final String PROPERTY_NUMBER_OF_DATE_VALIDATION = MODULE_ID_EHR_CONFIGS + ".numberOfDateValidation";
