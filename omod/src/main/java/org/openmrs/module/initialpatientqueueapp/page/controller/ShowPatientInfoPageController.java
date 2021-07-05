@@ -9,7 +9,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.BillableService;
-import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
 import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
@@ -46,29 +45,16 @@ public class ShowPatientInfoPageController {
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		PatientModel patientModel = new PatientModel(patient);
 		
-		/*model.addAttribute("patient", patientModel);
-		model.addAttribute("patientAge", patient.getAge());
-		model.addAttribute("patientGender", patient.getGender());*/
-		
 		Date lastVisitTime = hcs.getLastVisitTime(patient);
 		Date currentVisitTime = new Date();
 		long visitTimeDifference = 0;
 		if (lastVisitTime != null) {
 			visitTimeDifference = this.dateDiffInHours(lastVisitTime, currentVisitTime);
 		}
-		//model.addAttribute("visitTimeDifference", visitTimeDifference);
 		
 		model.addAttribute("firstTimeVisit", false);
 		
 		User user = Context.getAuthenticatedUser();
-		/*model.addAttribute("reVisitFee",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_REVISIT_REGISTRATION_FEE, "0.0"));
-		model.addAttribute("childLessThanFiveYearRegistrationFee", GlobalPropertyUtil.getString(
-		    InitialPatientQueueConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, "0.0"));
-		model.addAttribute("specialClinicRegFee",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, "0.0"));
-		model.addAttribute("registrationFees",
-		    GlobalPropertyUtil.getString(InitialPatientQueueConstants.PROPERTY_INITIAL_REGISTRATION_FEE, "0.0"));*/
 		
 		model.addAttribute("user", user.getPersonName().getFullName());
 		model.addAttribute("names", Context.getPersonService().getPerson(patientId).getPersonName().getFullName());
