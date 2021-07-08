@@ -1,38 +1,19 @@
 package org.openmrs.module.initialpatientqueueapp.util;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.jaxen.JaxenException;
-import org.jaxen.XPath;
-import org.jaxen.dom4j.Dom4jXPath;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
-import org.openmrs.Encounter;
-import org.openmrs.EncounterType;
-import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
 import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
-import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
-import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
-import org.openmrs.ui.framework.page.PageModel;
-import org.openmrs.util.OpenmrsUtil;
-import org.springframework.ui.Model;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InitialPatientQueueWebUtils {
 	

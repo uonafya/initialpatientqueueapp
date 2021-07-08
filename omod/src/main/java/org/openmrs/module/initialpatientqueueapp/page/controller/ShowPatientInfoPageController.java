@@ -11,7 +11,6 @@ import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.BillableService;
 import org.openmrs.module.initialpatientqueueapp.EhrRegistrationUtils;
 import org.openmrs.module.initialpatientqueueapp.InitialPatientQueueConstants;
-import org.openmrs.module.initialpatientqueueapp.model.PatientModel;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.page.PageModel;
@@ -43,16 +42,6 @@ public class ShowPatientInfoPageController {
 		
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
-		PatientModel patientModel = new PatientModel(patient);
-		
-		Date lastVisitTime = hcs.getLastVisitTime(patient);
-		Date currentVisitTime = new Date();
-		long visitTimeDifference = 0;
-		if (lastVisitTime != null) {
-			visitTimeDifference = this.dateDiffInHours(lastVisitTime, currentVisitTime);
-		}
-		
-		model.addAttribute("firstTimeVisit", false);
 		
 		User user = Context.getAuthenticatedUser();
 		
@@ -63,7 +52,7 @@ public class ShowPatientInfoPageController {
 		model.addAttribute("location", Context.getService(KenyaEmrService.class).getDefaultLocation().getName());
 		model.addAttribute("age", Context.getPatientService().getPatient(patientId).getAge());
 		model.addAttribute("gender", Context.getPatientService().getPatient(patientId).getGender());
-		model.addAttribute("previousVisit", lastVisitTime);
+		model.addAttribute("previousVisit", hcs.getLastVisitTime(patient));
 		String payCat = "";
 		boolean paying = false;
 		if (payCategory.equals("1")) {
@@ -104,20 +93,15 @@ public class ShowPatientInfoPageController {
 		} else {
 			WhatToBePaid = "Revisit fees:		" + revisitFees.getPrice();
 		}
-		if (roomToVisit != null && roomToVisit == 3 && !EhrRegistrationUtils.getLastSpecialClinicVisitForPatient(patient)) {
+		if (roomToVisit != null && roomToVisit == 3 && !EhrRegistrationUtils.hasSpecialClinicVisit(patient)) {
 			specialClinicFees = "Special Clinic fees:		" + specialClinicFeesAmount.getPrice();
-		} else {
+		} else if (roomToVisit != null && roomToVisit == 3 && EhrRegistrationUtils.hasSpecialClinicVisit(patient)) {
 			specialClinicFees = "Special Clinic revisit fees:		" + specialClinicRevisitFeesAmount.getPrice();
 		}
 		
 		model.addAttribute("WhatToBePaid", WhatToBePaid);
 		model.addAttribute("specialClinicFees", specialClinicFees);
 		
-	}
-	
-	private long dateDiffInHours(Date d1, Date d2) {
-		long diff = Math.abs(d1.getTime() - d2.getTime());
-		return (diff / (1000 * 60 * 60));
 	}
 	
 }

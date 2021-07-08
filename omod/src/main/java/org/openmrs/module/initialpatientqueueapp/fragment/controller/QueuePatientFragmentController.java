@@ -400,8 +400,11 @@ public class QueuePatientFragmentController {
 	private void hasActiveVisit(List<Visit> visits, Patient patient, Encounter encounter) {
 		VisitService visitService = Context.getVisitService();
 		KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
-		
-		if (visits.size() == 0) {
+		if (visits.size() > 0) {
+			System.out.println("There is an existing visit we can use");
+			visits.get(0).addEncounter(encounter);
+		} else {
+			System.out.println("This patient has no open visit at all - we are creating new one");
 			Visit visit = new Visit();
 			visit.addEncounter(encounter);
 			visit.setPatient(patient);
@@ -410,25 +413,7 @@ public class QueuePatientFragmentController {
 			visit.setLocation(kenyaEmrService.getDefaultLocation());
 			visit.setCreator(Context.getAuthenticatedUser());
 			visitService.saveVisit(visit);
-		} else if (visits.get(0).getStartDatetime() != null && visits.get(0).getStopDatetime() != null) {
-			//this means there is no active visit, we will end up creating one for this patient
-			Visit visit1 = new Visit();
-			visit1.addEncounter(encounter);
-			visit1.setPatient(patient);
-			visit1.setVisitType(visitService.getVisitTypeByUuid("3371a4d4-f66f-4454-a86d-92c7b3da990c"));
-			visit1.setStartDatetime(new Date());
-			visit1.setLocation(kenyaEmrService.getDefaultLocation());
-			visit1.setCreator(Context.getAuthenticatedUser());
-			visitService.saveVisit(visit1);
-		} else {
-			//there is a visit with start date that is note stopped
-			visits.get(0).addEncounter(encounter);
 		}
-	}
-	
-	private Visit getLastVisitForPatient(Patient patient) {
-		VisitService visitService = Context.getVisitService();
-		return visitService.getActiveVisitsByPatient(patient).get(visitService.getActiveVisitsByPatient(patient).size() - 1);
 	}
 	
 	private Person setAttributes(Patient patient, Map<String, String> attributes) throws Exception {
@@ -650,7 +635,6 @@ public class QueuePatientFragmentController {
 		        .getConceptByUuid("eb458ded-1fa0-4c1b-92fa-322cada4aff2");
 		BillableService billableService = Context.getService(BillingService.class).getServiceByConceptId(serviceFee.getId());
 		if (billableService != null) {
-			System.out.println("Setting up the bills for patients at registration");
 			OpdTestOrder opdTestOrder = new OpdTestOrder();
 			opdTestOrder.setPatient(encounter.getPatient());
 			opdTestOrder.setEncounter(encounter);
@@ -700,9 +684,9 @@ public class QueuePatientFragmentController {
 				sendPatientsToBilling(registrationFeesConcept, encounter);
 			}
 			//check if this patient is going for any special clinic
-			if (roomToVisit == 3 && EhrRegistrationUtils.getLastSpecialClinicVisitForPatient(encounter.getPatient())) {
+			if (roomToVisit == 3 && EhrRegistrationUtils.hasSpecialClinicVisit(encounter.getPatient())) {
 				sendPatientsToBilling(specialClinicRevisitFeeConcept, encounter);
-			} else {
+			} else if (roomToVisit == 3 && !EhrRegistrationUtils.hasSpecialClinicVisit(encounter.getPatient())) {
 				sendPatientsToBilling(specialClinicFeeConcept, encounter);
 			}
 		}

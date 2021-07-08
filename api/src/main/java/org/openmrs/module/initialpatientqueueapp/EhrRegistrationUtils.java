@@ -42,6 +42,7 @@ import org.openmrs.PersonAddress;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
+import org.openmrs.Visit;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
@@ -246,17 +247,21 @@ public class EhrRegistrationUtils {
 		Context.getService(HospitalCoreService.class).savePatientSearch(ps);
 	}
 	
-	public static boolean getLastSpecialClinicVisitForPatient(Person patient) {
-		boolean hasLastSpecialClinic = false;
+	private static List<Obs> getLastSpecialClinicVisitForPatient(Person patient) {
 		ObsService obsService = Context.getObsService();
 		Concept specialClinic = Context.getConceptService().getConceptByUuid("b5e0cfd3-1009-4527-8e36-83b5e902b3ea");
 		Location defaultLocation = Context.getService(KenyaEmrService.class).getDefaultLocation();
-		List<Obs> getObsForLastSpecialClinicVisit = obsService.getObservations(Arrays.asList(patient), null,
-		    Arrays.asList(specialClinic), null, null, Arrays.asList(defaultLocation), null, null, null, null, null, false);
-		if (getObsForLastSpecialClinicVisit.size() > 0) {
-			hasLastSpecialClinic = true;
+		return obsService.getObservations(Arrays.asList(patient), null, Arrays.asList(specialClinic), null, null,
+		    Arrays.asList(defaultLocation), null, null, null, null, null, false);
+	}
+	
+	public static boolean hasSpecialClinicVisit(Person person) {
+		boolean hasSecondSpecialClinicVisit = false;
+		
+		if (getLastSpecialClinicVisitForPatient(person).size() > 1) {
+			hasSecondSpecialClinicVisit = true;
 		}
-		return hasLastSpecialClinic;
+		return hasSecondSpecialClinicVisit;
 	}
 	
 }
